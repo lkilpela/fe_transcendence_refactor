@@ -1,4 +1,4 @@
-import { content, layouts, typography } from '@/assets/design-system'
+import { content, foundation, layouts } from '@/assets/design-system'
 import { LoginForm, useAuth } from '@/components/features/auth'
 import { PageLayout } from '@/components/layout'
 import { cn } from '@/utils/cn'
@@ -31,25 +31,27 @@ const LandingPage: React.FC = () => {
     >
       <div className={layouts.hero.section}>
         <div className={layouts.hero.container}>
-          <h1 className={cn(typography.h1, layouts.hero.title)}>
+          <h1 className={cn(foundation.typography.h1, layouts.hero.title)}>
             {content.landing.welcome.title}
           </h1>
-          <p className={cn(typography.body, layouts.hero.subtitle)}>
+          <p className={cn(foundation.typography.body, layouts.hero.subtitle)}>
             {content.landing.welcome.subtitle}
           </p>
-          <p className={cn(typography.body, layouts.hero.description)}>
+          <p
+            className={cn(foundation.typography.body, layouts.hero.description)}
+          >
             {content.landing.welcome.description}
           </p>
         </div>
 
         {/* Login Form */}
         <div className="w-full">
-           <LoginForm
-             onSubmit={handleLoginSubmit}
-             onForgotPassword={() => console.log('Forgot password')}
-             onSignUp={() => console.log('Sign up')}
-             onGoogleSignIn={handleGoogleSignIn}
-           />
+          <LoginForm
+            onSubmit={handleLoginSubmit}
+            onForgotPassword={() => console.log('Forgot password')}
+            onSignUp={() => console.log('Sign up')}
+            onGoogleSignIn={handleGoogleSignIn}
+          />
         </div>
       </div>
     </PageLayout>

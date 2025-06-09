@@ -1,4 +1,4 @@
-import { forms, typography } from '@/assets/design-system'
+import { forms, foundation } from '@/assets/design-system'
 import React from 'react'
 
 interface AuthFooterProps {
@@ -16,7 +16,7 @@ const AuthFooter: React.FC<AuthFooterProps> = ({
 }) => {
   return (
     <div className={forms.auth.footer}>
-      <span className={typography.small}>{text} </span>
+      <span className={foundation.typography.small}>{text} </span>
       <button
         type="button"
         onClick={onLinkClick}

@@ -1,12 +1,17 @@
-import React from 'react'
-import { components, states } from '@/assets/design-system'
+import { components, foundation } from '@/assets/design-system'
 import { cn } from '@/utils/cn'
+import React from 'react'
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ label, id, className, ...props }) => {
+const Checkbox: React.FC<CheckboxProps> = ({
+  label,
+  id,
+  className,
+  ...props
+}) => {
   const checkboxId = id || `checkbox-${Math.random().toString(36).slice(2, 9)}`
 
   return (
@@ -16,8 +21,8 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, id, className, ...props }) =
         type="checkbox"
         className={cn(
           components.checkbox.input,
-          states.focus,
-          className
+          foundation.states.focus,
+          className,
         )}
         {...props}
       />

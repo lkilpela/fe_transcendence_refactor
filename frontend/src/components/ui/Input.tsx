@@ -1,4 +1,4 @@
-import { components, tokens, typography } from '@/assets/design-system'
+import { components, foundation } from '@/assets/design-system'
 import { cn } from '@/utils/cn'
 import React from 'react'
 
@@ -41,9 +41,13 @@ const Input: React.FC<InputProps> = ({
         {...props}
       />
       {error && (
-        <p className={cn('text-sm', tokens.colors.semantic.error)}>{error}</p>
+        <p className={foundation.colors.semantic.error}>
+          {error}
+        </p>
       )}
-      {helperText && !error && <p className={typography.small}>{helperText}</p>}
+      {helperText && !error && (
+        <p className={foundation.typography.body}>{helperText}</p>
+      )}
     </div>
   )
 }
