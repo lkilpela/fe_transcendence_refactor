@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== BASE STYLES ===== */
+@layer base {
+  html,
+  body {
+    @apply m-0 bg-slate-900 p-0;
+  }
+
+  #root {
+    @apply min-h-screen bg-slate-900;
+  }
+}
+
+/* ===== COMPONENT STYLES ===== */
+@layer components {
+  /* Button Components */
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2 font-medium transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 active:bg-blue-800;
+    @apply border border-transparent text-white shadow-sm focus:ring-blue-500;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-white/10 active:bg-white/20;
+    @apply border border-white/20 text-white hover:border-white/30;
+    @apply backdrop-blur-sm focus:ring-white/50;
+  }
+
+  .btn-sm {
+    @apply rounded-md px-3 py-2 text-sm;
+  }
+  .btn-md {
+    @apply rounded-lg px-4 py-2.5 text-sm;
+  }
+  .btn-lg {
+    @apply rounded-lg px-6 py-3 text-base;
+  }
+
+  /* Card Components */
+  .card-base {
+    @apply rounded-2xl border backdrop-blur-sm transition-all duration-200;
+  }
+
+  .card-glass {
+    @apply border-white/10 bg-white/5 backdrop-blur-md hover:border-white/20 hover:bg-white/10;
+  }
+
+  /* Input Components */
+  .input-base {
+    @apply w-full rounded-lg transition-all duration-200;
+    @apply focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500;
+    @apply placeholder:text-gray-400;
+  }
+
+  .input-default {
+    @apply border border-white/20 bg-white/5 text-white;
+    @apply hover:border-white/30 focus:bg-white/10;
+  }
+
+  .input-error {
+    @apply border border-red-500 bg-white/5 text-white;
+    @apply focus:border-red-500 focus:ring-red-500;
+  }
+
+  /* Pong Background */
+  .pong-container {
+    @apply absolute inset-0 z-0 overflow-hidden rounded-[inherit];
+  }
+
+  .pong-canvas {
+    @apply absolute left-0 top-0 h-full w-full;
+  }
+}
+
+/* ===== UTILITY CLASSES ===== */
+@layer utilities {
+  /* Glass morphism */
+  .glass {
+    @apply border border-white/10 bg-white/5 backdrop-blur-sm;
+  }
+
+  /* Typography */
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent;
+  }
+
+  /* Backgrounds */
+  .bg-app-gradient {
+    @apply bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900;
+  }
+
+  /* Interactive states */
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  .hover-glow {
+    @apply transition-shadow duration-200 hover:shadow-lg hover:shadow-blue-500/25;
+  }
+
+  .active-scale {
+    @apply transition-transform duration-75 active:scale-95;
+  }
+
+  /* Responsive visibility */
+  .show-mobile {
+    @apply block sm:hidden;
+  }
+  .show-desktop {
+    @apply hidden lg:block;
+  }
+}
+
+/* ===== PONG BACKGROUND ANIMATIONS ===== */
+
+/* Center line drift animation */
+@keyframes center-line-drift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 20px;
+  }
+}
+
+/* Smooth CSS interpolation for JS-controlled positions */
+.pong-paddle-left {
+  top: var(--left-paddle-y);
+  transform: translateY(-50%);
+  transition: top 150ms ease-out;
+}
+
+.pong-paddle-right {
+  top: var(--right-paddle-y);
+  transform: translateY(-50%);
+  transition: top 150ms ease-out;
+}
+
+.pong-ball {
+  left: var(--ball-x);
+  top: var(--ball-y);
+  transform: translate(-50%, -50%);
+  transition:
+    left 150ms ease-out,
+    top 150ms ease-out;
+}
+
+.pong-ball-trail {
+  left: var(--ball-x);
+  top: var(--ball-y);
+  transform: translate(-50%, -50%);
+  transition:
+    left 200ms ease-out,
+    top 200ms ease-out;
+  opacity: 0.3;
+}
+
+/* ===== RESPONSIVE & ACCESSIBILITY ===== */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
