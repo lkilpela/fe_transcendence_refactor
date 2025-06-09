@@ -1,4 +1,4 @@
-import { sidebar, states } from '@/assets/design-system'
+import { foundation, layouts } from '@/assets/design-system'
 import { cn } from '@/utils/cn'
 import { HelpCircle, Home, Settings, Trophy, User } from 'lucide-react'
 import React from 'react'
@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 interface SidebarProps {
   isOpen?: boolean
-  variant?: keyof typeof sidebar.variants
+  variant?: keyof typeof layouts.sidebar.variants
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -27,12 +27,12 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside
       className={cn(
-        sidebar.base,
-        sidebar.variants[variant],
-        isOpen ? states.open : states.closed,
+        layouts.sidebar.base,
+        layouts.sidebar.variants[variant],
+        isOpen ? foundation.states.open : foundation.states.closed,
       )}
     >
-      <nav className={sidebar.nav.container}>
+      <nav className={layouts.sidebar.nav.container}>
         {navItems.map((item) => {
           const Icon = item.icon
           const isActive = location.pathname === item.path
@@ -42,17 +42,17 @@ const Sidebar: React.FC<SidebarProps> = ({
               key={item.path}
               onClick={() => navigate(item.path)}
               className={cn(
-                sidebar.nav.button.base,
+                layouts.sidebar.nav.button.base,
                 isActive
-                  ? sidebar.nav.button.active
-                  : sidebar.nav.button.inactive,
+                  ? layouts.sidebar.nav.button.active
+                  : layouts.sidebar.nav.button.inactive,
               )}
               title={item.label}
             >
-              <Icon className={sidebar.nav.icon} />
+              <Icon className={layouts.sidebar.nav.icon} />
 
               {/* Tooltip */}
-              <span className={sidebar.nav.tooltip}>{item.label}</span>
+              <span className={layouts.sidebar.nav.tooltip}>{item.label}</span>
             </button>
           )
         })}
@@ -62,4 +62,3 @@ const Sidebar: React.FC<SidebarProps> = ({
 }
 
 export default Sidebar
- 

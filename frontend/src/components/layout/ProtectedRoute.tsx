@@ -1,4 +1,6 @@
+import { foundation } from '@/assets/design-system'
 import { useAuth } from '@/hooks/useAuth'
+import { cn } from '@/utils/cn'
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
@@ -12,8 +14,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-white">Loading...</div>
+      <div
+        className={cn(
+          foundation.colors.text.primary,
+          foundation.states.loading,
+        )}
+      >
+        Loading...
       </div>
     )
   }

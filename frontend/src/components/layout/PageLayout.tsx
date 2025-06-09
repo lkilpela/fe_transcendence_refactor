@@ -1,10 +1,4 @@
-import {
-  layouts,
-  sidebar,
-  structure,
-  tokens,
-  utils,
-} from '@/assets/design-system'
+import { foundation, layouts, utils } from '@/assets/design-system'
 import { PongBackground } from '@/components/ui'
 import { cn } from '@/utils/cn'
 import React from 'react'
@@ -20,7 +14,7 @@ interface PageLayoutProps {
   showPongBackground?: boolean
   isLoading?: boolean
   sidebarProps?: {
-    variant?: keyof typeof sidebar.variants
+    variant?: keyof typeof layouts.sidebar.variants
   }
   className?: string
   background?: 'primary' | 'dark' | 'glass'
@@ -49,11 +43,11 @@ const PageLayout: React.FC<PageLayoutProps> = ({
 
   if (isLoading) {
     return (
-      <div className={structure.sidebarWrapper}>
+      <div className={layouts.page.sidebarWrapper}>
         {renderSidebar()}
-        <div className={cn(structure.loadingContainer, className)}>
+        <div className={cn(layouts.page.loadingContainer, className)}>
           {renderPong()}
-          <div className={structure.contentWrapper}>{children}</div>
+          <div className={layouts.page.contentWrapper}>{children}</div>
         </div>
       </div>
     )
@@ -61,17 +55,17 @@ const PageLayout: React.FC<PageLayoutProps> = ({
 
   const backgroundClass =
     background === 'primary'
-      ? tokens.colors.bg.primary
+      ? foundation.colors.bg.primary
       : background === 'dark'
-        ? tokens.colors.bg.dark
-        : tokens.colors.bg.glass
+        ? foundation.colors.bg.dark
+        : foundation.colors.bg.glass
 
   return (
-    <div className={cn(structure.pageBase, backgroundClass)}>
+    <div className={cn(layouts.page.base, backgroundClass)}>
       {renderSidebar()}
       {renderPong()}
       {showHeader && <Header />}
-      <main className={cn(structure.main, spacing.main)}>{children}</main>
+      <main className={cn(layouts.page.main, spacing.main)}>{children}</main>
       {showFooter && <Footer />}
     </div>
   )

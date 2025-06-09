@@ -1,11 +1,11 @@
-import { header } from '@/assets/design-system'
+import { layouts } from '@/assets/design-system'
 import React from 'react'
 
 const Header: React.FC = () => {
   return (
-    <header className={header.base}>
-      <div className={header.container}>
-        <h1 className={header.title}>Ping.Pong.Play!</h1>
+    <header className={layouts.header.base}>
+      <div className={layouts.header.container}>
+        <h1 className={layouts.header.title}>Ping.Pong.Play!</h1>
       </div>
     </header>
   )
