@@ -1,3 +1,4 @@
+import { GoogleCallback } from '@/components/features/auth'
 import { ProtectedRoute } from '@/components/layout'
 import { LandingPage, RegisterPage } from '@/pages'
 import DesignSystemDemo from '@/pages/DesignSystemDemo'
@@ -37,6 +38,7 @@ const AppRoutes: React.FC = () => {
       /> */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/auth/google/callback" element={<GoogleCallback />} />
       <Route path="/design-system" element={<DesignSystemDemo />} />
 
       {/* Protected Dashboard route */}

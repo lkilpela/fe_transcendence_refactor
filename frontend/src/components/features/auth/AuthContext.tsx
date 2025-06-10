@@ -12,13 +12,22 @@ interface AuthState {
   isAuthenticated: boolean
   isLoading: boolean
   error: string | null
+  requires2FA: boolean
+  tempToken: string | null
 }
 
 interface AuthContextType extends AuthState {
-  login: (username: string, password: string) => Promise<void>
+  login: (
+    username: string,
+    password: string,
+    rememberMe?: boolean,
+  ) => Promise<void>
   register: (username: string, email: string, password: string) => Promise<void>
+  loginWithGoogle: (code: string) => Promise<void>
+  verify2FA: (token: string) => void
   logout: () => Promise<void>
   clearError: () => void
+  refreshUser: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -31,6 +40,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     isAuthenticated: false,
     isLoading: true,
     error: null,
+    requires2FA: false,
+    tempToken: null,
   })
 
   const setUser = (user: User | null) => {
@@ -59,27 +70,53 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
     try {
       apiService.setToken(token)
-      // For now, we'll assume token is valid if it exists
-      // You might want to implement a /me endpoint in backend
+      // Fetch actual user data from backend
+      const user = await apiService.getCurrentUser()
+
       setState((prev) => ({
         ...prev,
+        user,
         isAuthenticated: true,
         isLoading: false,
-        user: { id: 0, username: '', email: '' }, // Placeholder user with correct type
+        error: null,
       }))
-    } catch {
-      // Token is invalid
+    } catch (error) {
+      // Token is invalid or expired
+      console.error('Auth check failed:', error)
       localStorage.removeItem('token')
-      setState((prev) => ({ ...prev, isLoading: false }))
+      apiService.setToken(null)
+      setState((prev) => ({
+        ...prev,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+        error: null,
+      }))
     }
   }
 
-  const login = async (username: string, password: string) => {
+  const login = async (
+    username: string,
+    password: string,
+    rememberMe?: boolean,
+  ) => {
     try {
       setState((prev) => ({ ...prev, error: null, isLoading: true }))
 
       const response = await apiService.login(username, password)
-      apiService.setToken(response.token)
+
+      // Check if 2FA is required
+      if (response.requires_2fa && response.temp_token) {
+        setState((prev) => ({
+          ...prev,
+          requires2FA: true,
+          tempToken: response.temp_token || null,
+          isLoading: false,
+        }))
+        return
+      }
+
+      apiService.setToken(response.token, rememberMe)
 
       const user: User = {
         id: response.id,
@@ -141,16 +178,63 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setError(null)
   }
 
+  const refreshUser = async () => {
+    try {
+      const user = await apiService.getCurrentUser()
+      setUser(user)
+    } catch (error) {
+      console.error('Refresh user error:', error)
+    }
+  }
+
   useEffect(() => {
     checkAuthStatus()
   }, [])
+
+  const loginWithGoogle = async (code: string) => {
+    try {
+      setState((prev) => ({ ...prev, error: null, isLoading: true }))
+
+      const response = await apiService.loginWithGoogle(code)
+      apiService.setToken(response.token, true) // Remember Google users by default
+
+      const user: User = {
+        id: response.id,
+        username: response.username,
+        email: '', // Backend may not return email in Google login response
+      }
+
+      setUser(user)
+    } catch (error) {
+      setState((prev) => ({
+        ...prev,
+        error: error instanceof Error ? error.message : 'Google login failed',
+        isLoading: false,
+      }))
+      throw error
+    }
+  }
+
+  const verify2FA = (token: string) => {
+    apiService.setToken(token, true)
+    setState((prev) => ({
+      ...prev,
+      requires2FA: false,
+      tempToken: null,
+      isAuthenticated: true,
+      isLoading: false,
+    }))
+  }
 
   const contextValue: AuthContextType = {
     ...state,
     login,
     register,
+    loginWithGoogle,
+    verify2FA,
     logout,
     clearError,
+    refreshUser,
   }
 
   return (

@@ -1,4 +1,5 @@
 import { components } from '@/assets/design-system'
+import { apiService } from '@/services/api'
 import { cn } from '@/utils/cn'
 import React from 'react'
 
@@ -7,6 +8,7 @@ interface SocialButtonProps
   provider: 'google'
   isLoading?: boolean
   children?: React.ReactNode
+  onGoogleAuth?: (code: string) => void
 }
 
 const googleIcon = (
@@ -23,8 +25,19 @@ const SocialButton: React.FC<SocialButtonProps> = ({
   children,
   className,
   disabled,
+  onGoogleAuth,
+  onClick,
   ...props
 }) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (provider === 'google' && !onGoogleAuth) {
+      // Default Google OAuth flow
+      window.location.href = apiService.getGoogleAuthUrl()
+    } else if (onClick) {
+      onClick(e)
+    }
+  }
+
   return (
     <button
       className={cn(
@@ -34,6 +47,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({
         className,
       )}
       disabled={disabled || isLoading}
+      onClick={handleClick}
       {...props}
     >
       {isLoading ? (
