@@ -25,6 +25,11 @@ const Sidebar: React.FC<SidebarProps> = ({
     { icon: HelpCircle, label: 'Help', path: '/help' },
   ]
 
+  const handleNavigation = (path: string) => {
+    console.log('Navigating to:', path)
+    navigate(path)
+  }
+
   return (
     <aside
       className={cn(
@@ -41,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           return (
             <button
               key={item.path}
-              onClick={() => navigate(item.path)}
+              onClick={() => handleNavigation(item.path)}
               className={cn(
                 layouts.sidebar.nav.button.base,
                 isActive
