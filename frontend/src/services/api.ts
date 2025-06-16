@@ -20,7 +20,7 @@ const createHeaders = (token: string | null) => ({
 const handleResponse = async <T>(res: Response): Promise<T> => {
   if (res.status === 401) {
     storage.remove('token')
-    window.location.href = '/login?expired=1'
+    window.location.href = '/?expired=1'
     throw new Error('Session expired')
   }
 
