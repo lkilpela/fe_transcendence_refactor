@@ -1,6 +1,6 @@
 import { foundation, layouts } from '@/assets/design-system'
 import { cn } from '@/utils/cn'
-import { HelpCircle, Home, Settings, Trophy, User } from 'lucide-react'
+import { BarChart3, HelpCircle, Home, Settings, Trophy, User } from 'lucide-react'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -18,6 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const navItems = [
     { icon: Home, label: 'Home', path: '/' },
+    { icon: BarChart3, label: 'Dashboard', path: '/dashboard' },
     { icon: User, label: 'Profile', path: '/profile' },
     { icon: Trophy, label: 'Tournament', path: '/tournament' },
     { icon: Settings, label: 'Settings', path: '/settings' },
