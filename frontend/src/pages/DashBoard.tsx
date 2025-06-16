@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useAuth, useAvatar, useUserPlayers, useMatchHistories } from '@/hooks'
+import React from 'react'
+// import { useAuth, useAvatar, useUserPlayers, useMatchHistories } from '@/hooks'
 import { PageLayout } from '@/components/layout'
 import {
   PlayerManagement,
@@ -12,29 +12,29 @@ import { SearchBar, AvatarMenu } from '@/components/ui'
 import { useNavigate } from 'react-router-dom'
 import { foundation, layouts } from '@/assets/design-system'
 import { cn } from '@/utils/cn'
-import { request } from '@/services'
+// import { request } from '@/services'
 
 const Dashboard: React.FC = () => {
-  const { user, logout } = useAuth()
-  const { avatar, handleAvatarChange } = useAvatar(user?.id?.toString() || '')
-  const { userPlayers, createPlayer, updatePlayer, deletePlayer } = useUserPlayers()
-  const { matches } = useMatchHistories()
+  // const { user, logout } = useAuth()
+  // const { avatar, handleAvatarChange } = useAvatar(user?.id?.toString() || '')
+  // const { userPlayers, createPlayer, updatePlayer, deletePlayer } = useUserPlayers()
+  // const { matches } = useMatchHistories()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (!user?.id) return
+  // useEffect(() => {
+  //   if (!user?.id) return
 
-    const deleteUnfinishedMatches = async () => {
-      try {
-        await request<{ message: string }>('/match-histories', {
-          method: 'DELETE'
-        })
-      } catch (error) {
-        console.error('Error deleting unfinished matches:', error)
-      }
-    }
-    deleteUnfinishedMatches()
-  }, [user?.id])
+  //   const deleteUnfinishedMatches = async () => {
+  //     try {
+  //         await request<{ message: string }>('/match-histories', {
+  //           method: 'DELETE'
+  //         })
+  //     } catch (error) {
+  //         console.error('Error deleting unfinished matches:', error)
+  //     }
+  //   }
+  //   deleteUnfinishedMatches()
+  // }, [user?.id])
 
   const handleSearch = (query: string) => {
     if (query.trim()) {
@@ -42,20 +42,20 @@ const Dashboard: React.FC = () => {
     }
   }
 
-  if (!user?.username) {
-    return (
-      <PageLayout
-        showSidebar={true}
-        showHeader={true}
-        showFooter={true}
-        background="primary"
-      >
-        <div className={cn(foundation.typography.body, layouts.hero.section)}>
-          Please log in to view the dashboard
-        </div>
-      </PageLayout>
-    )
-  }
+  // if (!user?.username) {
+  //   return (
+  //     <PageLayout
+  //       showSidebar={true}
+  //       showHeader={true}
+  //       showFooter={true}
+  //       background="primary"
+  //     >
+  //       <div className={cn(foundation.typography.body, layouts.hero.section)}>
+  //         Please log in to view the dashboard
+  //       </div>
+  //     </PageLayout>
+  //   )
+  // }
 
   return (
     <PageLayout
@@ -66,38 +66,38 @@ const Dashboard: React.FC = () => {
     >
       <div className={layouts.hero.section}>
         <div className={layouts.hero.container}>
-          <div className="flex justify-between items-center mb-8">
+          <div className={layouts.grid.header}>
             <h1 className={cn(foundation.typography.h1, layouts.hero.title)}>
-              Welcome, {user?.username}!
+              Welcome to Dashboard
             </h1>
             <SearchBar onSearch={handleSearch} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className={layouts.grid.twoColumn}>
             <PlayerManagement
-              userPlayers={userPlayers}
-              onCreatePlayer={createPlayer}
-              onUpdatePlayer={updatePlayer}
-              onDeletePlayer={deletePlayer}
+              userPlayers={[]}
+              onCreatePlayer={() => {}}
+              onUpdatePlayer={() => {}}
+              onDeletePlayer={() => {}}
             />
 
-            <QuickPlay userPlayers={userPlayers} />
+            <QuickPlay userPlayers={[]} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            <GameStats userPlayers={userPlayers} />
-            <MatchHistory matches={matches} />
+          <div className={layouts.grid.twoColumnWithMargin}>
+            <GameStats userPlayers={[]} />
+            <MatchHistory matches={[]} />
           </div>
 
           <div className="mt-6">
-            <TopPlayers players={userPlayers} />
+            <TopPlayers players={[]} />
           </div>
 
           <div className="mt-6">
             <AvatarMenu
-              avatar={avatar}
-              onAvatarChange={handleAvatarChange}
-              onLogout={logout}
+              avatar=""
+              onAvatarChange={() => {}}
+              onLogout={() => {}}
             />
           </div>
         </div>

@@ -318,6 +318,13 @@ export const layouts = {
     },
   },
 
+  // Grid layouts
+  grid: {
+    header: 'flex justify-between items-center mb-8',
+    twoColumn: 'grid grid-cols-1 md:grid-cols-2 gap-6',
+    twoColumnWithMargin: 'grid grid-cols-1 md:grid-cols-2 gap-6 mt-6',
+  },
+
   // UNUSED PATTERNS - COMMENTED OUT ❌
   // flex: {
   //   center: 'flex items-center justify-center',
