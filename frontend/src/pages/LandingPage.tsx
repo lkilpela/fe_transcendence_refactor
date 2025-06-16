@@ -1,5 +1,6 @@
 import { content, foundation, layouts } from '@/assets/design-system'
-import { LoginForm, TwoFactorForm, useAuth } from '@/components/features/auth'
+import { LoginForm, TwoFactorForm } from '@/components/features'
+import { useAuth } from '@/hooks/useAuth'
 import { PageLayout } from '@/components/layout'
 import { cn } from '@/utils/cn'
 import React from 'react'
