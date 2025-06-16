@@ -236,6 +236,7 @@ export const forms = {
     link: 'text-sm text-blue-400 hover:text-blue-300 transition-colors',
     fullWidth: 'w-full',
     icon: 'h-20 w-20 rounded-full border-2 border-white/20 shadow-lg',
+    error: 'text-sm text-red-400',
   }
 }
 

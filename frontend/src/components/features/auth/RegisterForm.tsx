@@ -10,12 +10,14 @@ import {
 } from '@/components/ui'
 import React, { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { authService } from '@/services/authService'
 
 interface RegisterFormData {
   username: string
   email: string
   password: string
   confirmPassword: string
+  submit: string
 }
 
 interface RegisterFormProps {
@@ -25,17 +27,18 @@ interface RegisterFormProps {
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({
-  onSubmit,
   onGoogleSignUp,
   isLoading = false,
 }) => {
   const navigate = useNavigate()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [formData, setFormData] = useState<RegisterFormData>({
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
+    submit: '',
   })
 
   const [errors, setErrors] = useState<Partial<RegisterFormData>>({})
@@ -79,10 +82,33 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (validateForm()) {
-      onSubmit?.(formData)
+      try {
+        setIsSubmitting(true)
+        await authService.register(
+          formData.username,
+          formData.email,
+          formData.password
+        )
+        navigate('/profile')
+      } catch (error) {
+        console.log('Registration error:', error)
+        if (error instanceof Error) {
+          if (error.message.includes('409')) {
+            setErrors({ 
+              submit: 'Username or email already exists. Please try another one.' 
+            })
+          } else {
+            setErrors({ 
+              submit: error.message 
+            })
+          }
+        }
+      } finally {
+        setIsSubmitting(false)
+      }
     }
   }
 
@@ -152,13 +178,19 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             required
           />
 
+          {errors.submit && (
+            <div className={forms.field}>
+              <p className={forms.auth.error}>{errors.submit}</p>
+            </div>
+          )}
+
           <Button
             type="submit"
             className={forms.auth.fullWidth}
             size="lg"
-            disabled={isLoading}
+            disabled={isSubmitting}
           >
-            {isLoading ? 'Creating Account...' : 'Create Account'}
+            {isSubmitting ? 'Creating Account...' : 'Create Account'}
           </Button>
 
           <Divider text="or" />

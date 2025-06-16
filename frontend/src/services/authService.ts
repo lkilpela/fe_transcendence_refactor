@@ -64,6 +64,15 @@ export const authService = {
     return response
   },
 
+  register: async (username: string, email: string, password: string): Promise<void> => {
+    const { token, id, username: name } = await request<LoginResponse>('/register', {
+      method: 'POST',
+      body: JSON.stringify({ username, email, password }),
+    })
+    storage.set('token', token)
+    storage.set('user', { id, username: name })
+  },
+
   logout: async (): Promise<void> => {
     await request('/logout', { method: 'POST' })
     storage.remove('token')

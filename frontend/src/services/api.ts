@@ -25,7 +25,12 @@ const handleResponse = async <T>(res: Response): Promise<T> => {
   }
 
   const data = await res.json().catch(() => null)
-  if (!res.ok) throw new Error(data?.message || 'Request failed')
+  if (!res.ok) {
+    // Log the actual response for debugging
+    console.log('Server response:', data)
+    // Use the server's error message if available
+    throw new Error(data?.message || `Request failed with status ${res.status}`)
+  }
   return data
 }
 
