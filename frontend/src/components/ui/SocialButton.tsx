@@ -1,5 +1,5 @@
 import { components } from '@/assets/design-system'
-import { apiService } from '@/services/api'
+import { authService } from '@/services/authService'
 import { cn } from '@/utils/cn'
 import React from 'react'
 
@@ -32,7 +32,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (provider === 'google' && !onGoogleAuth) {
       // Default Google OAuth flow
-      window.location.href = apiService.getGoogleAuthUrl()
+      window.location.href = authService.getGoogleAuthUrl()
     } else if (onClick) {
       onClick(e)
     }

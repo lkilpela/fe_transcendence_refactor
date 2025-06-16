@@ -1,6 +1,6 @@
 import { forms } from '@/assets/design-system'
 import { AuthCard, AuthHeader, Button, FormField } from '@/components/ui'
-import { apiService } from '@/services/api'
+import { authService } from '@/services/authService'
 import React, { useState } from 'react'
 
 interface ForgotPasswordFormProps {
@@ -28,7 +28,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
     setError(undefined)
 
     try {
-      await apiService.requestPasswordReset(email)
+      await authService.requestPasswordReset(email)
       setSuccess(true)
       onSubmitSuccess?.()
     } catch (err) {

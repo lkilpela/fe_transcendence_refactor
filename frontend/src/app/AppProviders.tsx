@@ -1,5 +1,5 @@
 //import { ErrorBoundary } from '@/components'
-import { AuthProvider } from '@/components/features/auth'
+import { AuthProvider } from '@/contexts/AuthProvider'
 import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 

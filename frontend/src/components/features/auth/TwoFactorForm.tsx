@@ -1,6 +1,6 @@
 import { forms } from '@/assets/design-system'
 import { AuthCard, AuthHeader, Button, FormField } from '@/components/ui'
-import { apiService } from '@/services/api'
+import { authService } from '@/services/authService'
 import React, { useState } from 'react'
 
 interface TwoFactorFormProps {
@@ -29,7 +29,7 @@ const TwoFactorForm: React.FC<TwoFactorFormProps> = ({
     setError(undefined)
 
     try {
-      const response = await apiService.verify2FA(code, tempToken)
+      const response = await authService.verify2FA(code, tempToken)
       onSuccess(response.token)
     } catch (err) {
       setError(err instanceof Error ? err.message : '2FA verification failed')
