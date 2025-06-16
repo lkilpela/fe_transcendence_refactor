@@ -6,7 +6,11 @@ export interface AuthContextType {
   isAuthenticated: boolean
   isLoading: boolean
   error: string | null
-  login: (username: string, password: string) => Promise<void>
+  login: (
+    username: string,
+    password: string,
+    rememberMe?: boolean,
+  ) => Promise<void>
   login2FA: (code: string) => Promise<void>
   loginWithGoogle: (googleToken: string) => Promise<void>
   logout: () => Promise<void>

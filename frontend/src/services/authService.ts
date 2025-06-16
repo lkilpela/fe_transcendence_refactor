@@ -1,23 +1,35 @@
-import { request } from './api'
-import { storage } from '../utils/storage'
 import { LoginResponse, User } from '../types'
+import { storage } from '../utils/storage'
+import { request } from './api'
 
 /**
  * Authentication service
  * @description Handles authentication-related API calls
  */
 export const authService = {
-  login: async (username: string, password: string): Promise<void> => {
-    const { token, id, username: name } = await request<LoginResponse>('/login', {
+  login: async (
+    username: string,
+    password: string,
+    rememberMe?: boolean,
+  ): Promise<void> => {
+    const {
+      token,
+      id,
+      username: name,
+    } = await request<LoginResponse>('/', {
       method: 'POST',
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, password, rememberMe }),
     })
     storage.set('token', token)
     storage.set('user', { id, username: name })
   },
 
   login2FA: async (code: string): Promise<void> => {
-    const { token, id, username: name } = await request<LoginResponse>('/login/2fa', {
+    const {
+      token,
+      id,
+      username: name,
+    } = await request<LoginResponse>('/login/2fa', {
       method: 'POST',
       body: JSON.stringify({ code }),
     })
@@ -26,10 +38,13 @@ export const authService = {
   },
 
   googleLogin: async (googleToken: string): Promise<void> => {
-    const { token, id, username } = await request<LoginResponse>('/api/auth/google', {
-      method: 'POST',
-      body: JSON.stringify({ token: googleToken }),
-    })
+    const { token, id, username } = await request<LoginResponse>(
+      '/api/auth/google',
+      {
+        method: 'POST',
+        body: JSON.stringify({ token: googleToken }),
+      },
+    )
     storage.set('token', token)
     storage.set('user', { id, username })
   },
@@ -38,8 +53,15 @@ export const authService = {
     return request('/2fa/status')
   },
 
-  verify2FA: async (code: string): Promise<void> => {
-    await authService.login2FA(code)
+  verify2FA: async (
+    code: string,
+    tempToken: string,
+  ): Promise<{ token: string }> => {
+    const response = await request<{ token: string }>('/auth/2fa/verify', {
+      method: 'POST',
+      body: JSON.stringify({ code, tempToken }),
+    })
+    return response
   },
 
   logout: async (): Promise<void> => {
@@ -50,4 +72,14 @@ export const authService = {
 
   isAuthenticated: (): boolean => !!storage.get('token', null),
   getCurrentUser: (): User | null => storage.get('user', null),
+
+  getGoogleAuthUrl: (): string =>
+    `${import.meta.env.VITE_API_URL}/api/auth/google`,
+
+  requestPasswordReset: async (email: string): Promise<void> => {
+    await request('/password-reset', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    })
+  },
 }
