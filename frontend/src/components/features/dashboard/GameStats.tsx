@@ -1,50 +1,84 @@
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import { Card } from '@/components/ui'
-import { cn } from '@/utils/cn'
-import { foundation } from '@/assets/design-system'
-import { UserPlayer } from '@/types'
-
-interface GameStatsProps {
-  userPlayers: UserPlayer[]
-  className?: string
-}
+import { foundation, patterns } from '@/assets/design-system'
+import { GameStatsProps } from '@/types'
+import useTranslate from '@/hooks/useTranslate'
 
 const GameStats: React.FC<GameStatsProps> = ({
   userPlayers,
-  className,
 }) => {
-  const totalGames = userPlayers.reduce((sum, player) => sum + player.wins + player.losses, 0)
-  const totalWins = userPlayers.reduce((sum, player) => sum + player.wins, 0)
-  const totalLosses = userPlayers.reduce((sum, player) => sum + player.losses, 0)
-  const winRate = totalGames ? Math.round((totalWins / totalGames) * 100) : 0
+  const [selectedPlayerId, setSelectedPlayerId] = useState<number | null>(null)
+  const t = useTranslate()
+
+  const selectedPlayer = useMemo(
+    () => userPlayers.find((p) => p.id === selectedPlayerId),
+    [selectedPlayerId, userPlayers]
+  )
+
+  const totalGames = (selectedPlayer?.wins ?? 0) + (selectedPlayer?.losses ?? 0)
+  const winRate = totalGames > 0
+    ? Math.round((selectedPlayer!.wins / totalGames) * 100)
+    : 0
 
   return (
-    <Card variant="glass" padding="lg" className={className}>
-      <h2 className={foundation.typography.h3}>Game Statistics</h2>
-      
-      <div className="mt-6 grid grid-cols-2 gap-4">
-        <div className={cn('p-4 rounded-lg', foundation.glass.light)}>
-          <h3 className={foundation.typography.small}>Total Games</h3>
-          <p className={cn(foundation.typography.h3, 'mt-1')}>{totalGames}</p>
-        </div>
+    <Card padding="lg">
+      <div className={patterns.spacing.stack.md}>
+        <h2 className={foundation.typography.h3}>{t('Player Stats')}</h2>
         
-        <div className={cn('p-4 rounded-lg', foundation.glass.light)}>
-          <h3 className={foundation.typography.small}>Win Rate</h3>
-          <p className={cn(foundation.typography.h3, 'mt-1')}>{winRate}%</p>
+        <div className={patterns.select.container}>
+          {/* <label htmlFor="player-select" className={patterns.select.label}>
+            {t('Select Player')}:
+          </label> */}
+          <select 
+            id="player-select"
+            value={selectedPlayerId ?? ''}
+            onChange={(e) => setSelectedPlayerId(Number(e.target.value))}
+            className={patterns.select.input}
+          >
+            <option value="" disabled>{t('Select a player')}</option>
+            {userPlayers.map((player) => (
+              <option key={player.id} value={player.id}>
+                {player.display_name}
+              </option>
+            ))}
+          </select>
         </div>
-        
-        <div className={cn('p-4 rounded-lg', foundation.glass.light)}>
-          <h3 className={foundation.typography.small}>Wins</h3>
-          <p className={cn(foundation.typography.h3, 'mt-1')}>{totalWins}</p>
-        </div>
-        
-        <div className={cn('p-4 rounded-lg', foundation.glass.light)}>
-          <h3 className={foundation.typography.small}>Losses</h3>
-          <p className={cn(foundation.typography.h3, 'mt-1')}>{totalLosses}</p>
-        </div>
+
+        {selectedPlayer && (
+          <div className={patterns.stats.grid}>
+            <StatCard 
+              title={t('stats.wins')}
+              value={selectedPlayer.wins}
+            />
+            <StatCard 
+              title={t('stats.losses')}
+              value={selectedPlayer.losses}
+            />
+            <StatCard 
+              title={t('stats.winRate')}
+              value={`${winRate}%`}
+            />
+            <StatCard 
+              title={t('stats.totalGames')}
+              value={totalGames}
+            />
+          </div>
+        )}
       </div>
     </Card>
   )
 }
+
+interface StatCardProps {
+  title: string
+  value: string | number
+}
+
+const StatCard: React.FC<StatCardProps> = ({ title, value }) => (
+  <div className={patterns.stats.card.base}>
+    <h3 className={patterns.stats.card.title}>{title}</h3>
+    <p className={patterns.stats.card.value}>{value}</p>
+  </div>
+)
 
 export default GameStats 
