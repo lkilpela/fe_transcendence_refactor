@@ -15,4 +15,4 @@ export { useAvatar } from './useAvatar'
 export { useMatchHistories } from './useMatchHistories'
 
 // // Utility hooks
-// export { default as useTranslate } from './useTranslate'
+export { default as useTranslate } from './useTranslate'
