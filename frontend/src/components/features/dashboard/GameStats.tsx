@@ -25,15 +25,12 @@ const GameStats: React.FC<GameStatsProps> = ({
       <div className={patterns.spacing.stack.md}>
         <h2 className={foundation.typography.h3}>{t('Player Stats')}</h2>
         
-        <div className={patterns.select.container}>
-          {/* <label htmlFor="player-select" className={patterns.select.label}>
-            {t('Select Player')}:
-          </label> */}
+        <div className={patterns.form.container}>
           <select 
             id="player-select"
             value={selectedPlayerId ?? ''}
             onChange={(e) => setSelectedPlayerId(Number(e.target.value))}
-            className={patterns.select.input}
+            className={patterns.form.input}
           >
             <option value="" disabled>{t('Select a player')}</option>
             {userPlayers.map((player) => (

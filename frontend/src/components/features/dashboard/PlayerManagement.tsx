@@ -1,99 +1,138 @@
 import React, { useState } from 'react'
+import { UserPlus, Trash2 } from 'lucide-react'
 import { Card, Button, Input } from '@/components/ui'
+import { foundation, patterns } from '@/assets/design-system'
 import { UserPlayer } from '@/types'
-import { cn } from '@/utils/cn'
-import { foundation } from '@/assets/design-system'
+import useTranslate from '@/hooks/useTranslate'
 
 interface PlayerManagementProps {
   userPlayers: UserPlayer[]
-  onCreatePlayer: (name: string) => void
-  onUpdatePlayer: (id: string, updates: Partial<UserPlayer>) => void
-  onDeletePlayer: (id: string) => void
-  className?: string
+  onCreatePlayer: (playerName: string) => void
+  onDeletePlayer: (playerId: string) => void
+}
+
+const CreatePlayerModal: React.FC<{
+  onClose: () => void
+  onCreatePlayer: (playerName: string) => void
+}> = ({ onClose, onCreatePlayer }) => {
+  const [playerName, setPlayerName] = useState('')
+  const [error, setError] = useState('')
+  const t = useTranslate()
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!playerName.trim()) {
+      setError('Player name cannot be empty')
+      return
+    }
+    if (playerName.length > 20) {
+      setError('Player name must be 20 characters or less')
+      return
+    }
+    onCreatePlayer(playerName.trim())
+    onClose()
+  }
+
+  return (
+    <div className={patterns.modal.overlay}>
+      <div className={patterns.modal.content}>
+        <h3 className={foundation.typography.h3}>{t('Create New Player')}</h3>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <Input
+              type="text"
+              value={playerName}
+              onChange={(e) => {
+                setPlayerName(e.target.value)
+                setError('')
+              }}
+              placeholder={t('Enter player name')}
+              maxLength={16}
+              required
+            />
+            {error && <div className="text-sm text-red-400 mt-1">{error}</div>}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              onClick={onClose}
+              variant="ghost"
+              size="md"
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="primary"
+              size="md"
+            >
+              {t('Create Player')}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
 }
 
 const PlayerManagement: React.FC<PlayerManagementProps> = ({
   userPlayers,
   onCreatePlayer,
-  onUpdatePlayer,
   onDeletePlayer,
-  className,
 }) => {
-  const [newPlayerName, setNewPlayerName] = useState('')
-
-  const handleCreatePlayer = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (newPlayerName.trim()) {
-      onCreatePlayer(newPlayerName.trim())
-      setNewPlayerName('')
-    }
-  }
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const t = useTranslate()
 
   return (
-    <Card variant="glass" padding="lg" className={className}>
-      <h2 className={foundation.typography.h3}>Player Management</h2>
-      
-      <form onSubmit={handleCreatePlayer} className="mt-6">
-        <div className="flex gap-2">
-          <Input
-            type="text"
-            value={newPlayerName}
-            onChange={(e) => setNewPlayerName(e.target.value)}
-            placeholder="Enter player name"
-            size="md"
-          />
+    <Card padding="lg">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className={foundation.typography.h3}>{t('Your Players')}</h2>
           <Button
-            type="submit"
+            onClick={() => setShowCreateModal(true)}
             variant="primary"
-            size="md"
+            size="sm"
+            className="flex items-center gap-2"
           >
-            Add Player
+            <UserPlus size={16} />
+            <span>{t('Create Player')}</span>
           </Button>
         </div>
-      </form>
 
-      <div className="mt-6 space-y-4">
-        {userPlayers.map((player) => (
-          <div
-            key={player.id}
-            className={cn(
-              'flex items-center justify-between p-4 rounded-lg',
-              foundation.glass.light
-            )}
-          >
-            <div className="flex items-center gap-3">
-              <img
-                src={player.avatar}
-                alt={player.display_name}
-                className="w-10 h-10 rounded-full border-2 border-white/20"
-              />
-              <div>
-                <h3 className={foundation.typography.body}>{player.display_name}</h3>
-                <p className={foundation.typography.small}>
-                  Wins: {player.wins} | Losses: {player.losses}
-                </p>
+        <div className="space-y-3">
+          {userPlayers.map((player) => (
+            <div
+              key={player.id}
+              className="flex items-center justify-between p-4 rounded-lg bg-white/5 backdrop-blur-sm"
+            >
+              <div className="flex items-center gap-3">
+                <img
+                  src={player.avatar}
+                  alt="Current avatar"
+                  className="w-8 h-8 rounded-full border-2"
+                />
+                <span className={foundation.typography.body}>{player.display_name}</span>
               </div>
-            </div>
-            <div className="flex gap-2">
-              <Button
-                onClick={() => onUpdatePlayer(player.id.toString(), { isActive: !player.isActive })}
-                variant="ghost"
-                size="sm"
-              >
-                {player.isActive ? 'Deactivate' : 'Activate'}
-              </Button>
               <Button
                 onClick={() => onDeletePlayer(player.id.toString())}
                 variant="ghost"
                 size="sm"
                 className="text-red-400 hover:text-red-300"
+                title="Delete player"
               >
-                Delete
+                <Trash2 size={16} />
               </Button>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+
+      {showCreateModal && (
+        <CreatePlayerModal
+          onClose={() => setShowCreateModal(false)}
+          onCreatePlayer={onCreatePlayer}
+        />
+      )}
     </Card>
   )
 }
