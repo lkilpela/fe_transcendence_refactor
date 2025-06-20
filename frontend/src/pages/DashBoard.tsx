@@ -1,5 +1,5 @@
-import React from 'react'
-// import { useAuth, useAvatar, useUserPlayers, useMatchHistories } from '@/hooks'
+import React, { useEffect } from 'react'
+import { useAuth, useAvatar, useUserPlayers, useMatchHistories } from '@/hooks'
 import { PageLayout } from '@/components/layout'
 import {
   PlayerManagement,
@@ -12,29 +12,29 @@ import { SearchBar, AvatarMenu } from '@/components/ui'
 import { useNavigate } from 'react-router-dom'
 import { foundation, layouts } from '@/assets/design-system'
 import { cn } from '@/utils/cn'
-// import { request } from '@/services'
+import { request } from '@/services'
 
 const Dashboard: React.FC = () => {
-  // const { user, logout } = useAuth()
-  // const { avatar, handleAvatarChange } = useAvatar(user?.id?.toString() || '')
-  // const { userPlayers, createPlayer, updatePlayer, deletePlayer } = useUserPlayers()
-  // const { matches } = useMatchHistories()
+  const { user, logout } = useAuth()
+  const { avatar, handleAvatarChange } = useAvatar(user?.id?.toString() || '')
+  const { userPlayers, createPlayer, updatePlayer, deletePlayer } = useUserPlayers()
+  const { matches } = useMatchHistories()
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (!user?.id) return
+  useEffect(() => {
+    if (!user?.id) return
 
-  //   const deleteUnfinishedMatches = async () => {
-  //     try {
-  //         await request<{ message: string }>('/match-histories', {
-  //           method: 'DELETE'
-  //         })
-  //     } catch (error) {
-  //         console.error('Error deleting unfinished matches:', error)
-  //     }
-  //   }
-  //   deleteUnfinishedMatches()
-  // }, [user?.id])
+    const deleteUnfinishedMatches = async () => {
+      try {
+          await request<{ message: string }>('/match-histories', {
+            method: 'DELETE'
+          })
+      } catch (error) {
+          console.error('Error deleting unfinished matches:', error)
+      }
+    }
+    deleteUnfinishedMatches()
+  }, [user?.id])
 
   const handleSearch = (query: string) => {
     if (query.trim()) {
@@ -75,29 +75,33 @@ const Dashboard: React.FC = () => {
 
           <div className={layouts.grid.twoColumn}>
             <PlayerManagement
-              userPlayers={[]}
-              onCreatePlayer={() => {}}
-              onUpdatePlayer={() => {}}
-              onDeletePlayer={() => {}}
+              userPlayers={userPlayers}
+              onCreatePlayer={createPlayer}
+              onUpdatePlayer={updatePlayer}
+              onDeletePlayer={deletePlayer}
             />
 
-            <QuickPlay userPlayers={[]} />
+            <QuickPlay 
+              userPlayers={userPlayers} 
+              onStartGame={() => {}} 
+              onJoinGame={() => {}} 
+            />
           </div>
 
           <div className={layouts.grid.twoColumnWithMargin}>
-            <GameStats userPlayers={[]} />
-            <MatchHistory matches={[]} />
+            <GameStats userPlayers={userPlayers} />
+            <MatchHistory matches={matches} />
           </div>
 
           <div className="mt-6">
-            <TopPlayers players={[]} />
+            <TopPlayers players={userPlayers} />
           </div>
 
           <div className="mt-6">
             <AvatarMenu
-              avatar=""
-              onAvatarChange={() => {}}
-              onLogout={() => {}}
+              avatar={avatar}
+              onAvatarChange={handleAvatarChange}
+              onLogout={logout}
             />
           </div>
         </div>

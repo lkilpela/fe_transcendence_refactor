@@ -1,7 +1,6 @@
 import React from 'react'
 import { Card } from '@/components/ui'
-import { cn } from '@/utils/cn'
-import { foundation } from '@/assets/design-system'
+import { foundation, patterns } from '@/assets/design-system'
 
 interface Player {
   id: string
@@ -22,29 +21,23 @@ const TopPlayers: React.FC<TopPlayersProps> = ({
   className,
 }) => {
   return (
-    <Card variant="glass" padding="lg" className={className}>
+    <Card padding="lg" className={className}>
       <h2 className={foundation.typography.h3}>Top Players</h2>
       
-      <div className="mt-6 space-y-3">
+      <div className={patterns.spacing.stack.md}>
         {players.map((player, index) => (
           <div
             key={player.id}
-            className={cn(
-              'flex items-center justify-between p-4 rounded-lg',
-              foundation.glass.light
-            )}
+            className={patterns.match.container}
           >
-            <div className="flex items-center gap-3">
-              <div className={cn(
-                'w-8 h-8 flex items-center justify-center rounded-full',
-                foundation.glass.medium
-              )}>
+            <div className={patterns.match.players.container}>
+              <div className={patterns.avatar.md}>
                 <span className={foundation.typography.body}>{index + 1}</span>
               </div>
               <img
                 src={player.avatar}
                 alt={player.name}
-                className="w-10 h-10 rounded-full border-2 border-white/20"
+                className={patterns.avatar.md}
               />
               <div>
                 <p className={foundation.typography.body}>{player.name}</p>
@@ -53,7 +46,7 @@ const TopPlayers: React.FC<TopPlayersProps> = ({
                 </p>
               </div>
             </div>
-            <div className="text-right">
+            <div className={patterns.align.right}>
               <p className={foundation.typography.body}>{player.winRate}%</p>
               <p className={foundation.typography.small}>Win Rate</p>
             </div>

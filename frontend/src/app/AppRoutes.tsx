@@ -1,9 +1,8 @@
-import { GoogleCallback } from '@/components/features/auth'
-import { ProtectedRoute } from '@/components/layout'
-import { LandingPage, RegisterPage } from '@/pages'
-import DesignSystemDemo from '@/pages/DesignSystemDemo'
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import Dashboard from '@/pages/DashBoard'
+import { LandingPage, RegisterPage, DesignSystemDemo } from '@/pages'
+import GoogleCallback from '@/components/features/auth/GoogleCallback'
 
 /**
  * AppRoutes Component
@@ -41,17 +40,10 @@ const AppRoutes: React.FC = () => {
       <Route path="/auth/google/callback" element={<GoogleCallback />} />
       <Route path="/design-system" element={<DesignSystemDemo />} />
 
-      {/* Protected Dashboard route */}
+      {/* Dashboard route */}
       <Route
         path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <div className="p-8 text-center text-white">
-              <h2>🎉 Welcome to Your Dashboard!</h2>
-              <p>Registration successful! Dashboard features coming soon...</p>
-            </div>
-          </ProtectedRoute>
-        }
+        element={<Dashboard />}
       />
 
       {/* Protected Routes - Only accessible to authenticated users */}

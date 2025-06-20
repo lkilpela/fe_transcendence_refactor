@@ -105,7 +105,8 @@ export const components = {
     },
     loading: {
       spinner: 'h-4 w-4 animate-spin rounded-full border-b-2 border-current',
-    }
+    },
+    danger: 'text-red-400 hover:text-red-300'
   },
 
   // Card system
@@ -222,20 +223,154 @@ export const utils = {
   }),
 }
 
+// ===== PATTERNS =====
+export const patterns = {
+  // Layout patterns
+  flex: {
+    row: 'flex items-center',
+    rowBetween: 'flex items-center justify-between',
+    rowGap: {
+      sm: 'flex items-center gap-2',
+      md: 'flex items-center gap-3',
+      lg: 'flex items-center gap-4',
+    },
+  },
+  spacing: {
+    section: 'mt-6 space-y-3',
+    stack: {
+      sm: 'space-y-2',
+      md: 'space-y-3',
+      lg: 'space-y-4',
+      xl: 'space-y-6',
+    },
+  },
+  align: {
+    right: 'text-right',
+    left: 'text-left',
+    center: 'text-center',
+  },
+
+  // Component patterns
+  avatar: {
+    sm: 'w-6 h-6 rounded-full border-2',
+    md: 'w-8 h-8 rounded-full border-2',
+    lg: 'w-12 h-12 rounded-full border-2',
+    xl: 'h-20 w-20 rounded-full border-2',
+  },
+  button: {
+    danger: 'text-red-400 hover:text-red-300'
+  },
+  message: {
+    error: cn(
+      foundation.typography.small,
+      'text-red-400'
+    )
+  },
+
+  // Form patterns
+  form: {
+    container: 'flex flex-col gap-2',
+    label: foundation.typography.small,
+    input: cn(
+      foundation.glass.light,
+      'p-2 rounded-lg text-white border border-white/20 focus:border-blue-500 focus:outline-none'
+    ),
+    error: cn(
+      foundation.typography.small,
+      'text-red-400'
+    )
+  },
+
+  // Modal patterns
+  modal: {
+    overlay: cn(
+      'fixed inset-0 bg-black/50 flex items-center justify-center',
+      foundation.glass.strong
+    ),
+    content: cn(
+      'w-full max-w-md p-6 rounded-lg',
+      foundation.glass.light
+    ),
+    header: cn(
+      foundation.typography.h3,
+      'mb-4'
+    ),
+    footer: 'flex items-center gap-2 mt-4'
+  },
+
+  // Feature-specific patterns
+  match: {
+    container: cn(
+      'flex items-center justify-between p-4 rounded-lg',
+      foundation.glass.light
+    ),
+    icon: {
+      base: 'text-xl',
+      mode: {
+        '1v1': foundation.colors.semantic.info,
+        tournament: foundation.colors.semantic.warning
+      }
+    },
+    players: {
+      container: 'flex items-center gap-3',
+      list: 'flex items-center gap-2'
+    }
+  },
+  stats: {
+    grid: 'mt-6 grid grid-cols-2 gap-4',
+    card: {
+      base: cn(
+        components.card.base,
+        foundation.glass.light,
+        'p-4'
+      ),
+      title: foundation.typography.small,
+      value: foundation.typography.h3
+    }
+  },
+  select: {
+    container: 'flex flex-col gap-2',
+    label: foundation.typography.small,
+    input: cn(
+      foundation.glass.light,
+      'p-2 rounded-lg text-white border border-white/20 focus:border-blue-500 focus:outline-none'
+    )
+  },
+  gameModeButton: {
+    base: cn(
+      'flex flex-col items-center justify-center p-8',
+      'bg-slate-800/50 hover:bg-slate-700/50',
+      'rounded-xl transition-all duration-200',
+      'min-w-[200px] aspect-square'
+    ),
+    icon: cn(
+      'text-4xl mb-4',
+      'text-slate-400'
+    ),
+    title: cn(
+      'text-2xl font-medium text-slate-300',
+      'mb-2'
+    ),
+    players: cn(
+      'text-sm text-slate-400'
+    )
+  },
+} as const
+
 // ===== FORMS SYSTEM
 export const forms = {
-  container: 'space-y-6',
-  field: 'space-y-2',
+  container: patterns.spacing.stack.xl,
+  field: patterns.spacing.stack.sm,
   
   // Auth-specific styles
   auth: {
     card: 'mx-auto max-w-md p-8',
     header: 'mb-6 text-center',
-    controls: 'flex items-center justify-between',
-    footer: 'text-center',
+    controls: patterns.flex.rowBetween,
+    footer: patterns.align.center,
     link: 'text-sm text-blue-400 hover:text-blue-300 transition-colors',
     fullWidth: 'w-full',
-    icon: 'h-20 w-20 rounded-full border-2 border-white/20 shadow-lg',
+    icon: patterns.avatar.xl,
     error: 'text-sm text-red-400',
   }
 }
@@ -404,7 +539,6 @@ export const layouts = {
   //   main: 'relative z-10 flex-1 pb-16',
   // }
 }
-
 
 // ===== CONTENT
 export const content = {

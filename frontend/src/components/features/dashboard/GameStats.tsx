@@ -1,8 +1,20 @@
 import React, { useState, useMemo } from 'react'
 import { Card } from '@/components/ui'
 import { foundation, patterns } from '@/assets/design-system'
-import { GameStatsProps } from '@/types'
 import useTranslate from '@/hooks/useTranslate'
+
+interface Player {
+  id: number
+  display_name: string
+  wins: number
+  losses: number
+  avatar_url: string
+  created_at: string
+}
+
+interface GameStatsProps {
+  userPlayers: Player[]
+}
 
 const GameStats: React.FC<GameStatsProps> = ({
   userPlayers,
