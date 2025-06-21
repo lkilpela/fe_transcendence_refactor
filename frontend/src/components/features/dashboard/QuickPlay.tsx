@@ -1,4 +1,4 @@
-import { foundation, patterns } from '@/assets/design-system'
+import { components, foundation, patterns } from '@/assets/design-system'
 import { Button, Card } from '@/components/ui'
 import useTranslate from '@/hooks/useTranslate'
 import { gameService } from '@/services/gameService'
@@ -203,7 +203,7 @@ const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
                       !selected1v1Players.includes(player.id) &&
                       selected1v1Players.length >= 2
                     }
-                    className="h-4 w-4"
+                    className={components.checkbox.input}
                   />
                 </label>
               ))}
@@ -250,7 +250,7 @@ const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
                       !selectedTournamentPlayers.includes(player.id) &&
                       selectedTournamentPlayers.length >= 8
                     }
-                    className="h-4 w-4"
+                    className={components.checkbox.input}
                   />
                 </label>
               ))}
