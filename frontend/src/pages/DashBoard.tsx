@@ -122,24 +122,23 @@ export const Dashboard: React.FC = () => {
     }
   }
 
-  // Extract cleanup logic to separate function
-  const cleanupUnfinishedMatches = async () => {
+  useEffect(() => {
     if (!user?.id) return
 
-    try {
-      const token = storage.get('token', null)
-      await fetch(`${import.meta.env.VITE_API_URL || 'https://localhost:3001'}/match-histories`, {
-        method: 'DELETE',
-        headers: {
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-      })
-    } catch (error) {
-      console.error('Error deleting unfinished matches:', error)
+    const cleanupUnfinishedMatches = async () => {
+      try {
+        const token = storage.get('token', null)
+        await fetch(`${import.meta.env.VITE_API_URL || 'https://localhost:3001'}/match-histories`, {
+          method: 'DELETE',
+          headers: {
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+        })
+      } catch (error) {
+        console.error('Error deleting unfinished matches:', error)
+      }
     }
-  }
 
-  useEffect(() => {
     cleanupUnfinishedMatches()
   }, [user?.id])
 
