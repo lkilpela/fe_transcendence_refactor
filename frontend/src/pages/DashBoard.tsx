@@ -8,7 +8,8 @@ import {
   QuickPlay,
   TopPlayers,
 } from '@/components/features/dashboard'
-import { SearchBar, AvatarMenu } from '@/components/ui'
+import { SearchBar } from '@/components/ui'
+import { Avatar, AvatarInput } from '@/components/ui/AvatarMenu'
 import { useNavigate } from 'react-router-dom'
 import { foundation, layouts } from '@/assets/design-system'
 import { cn } from '@/utils/cn'
@@ -70,19 +71,24 @@ const Dashboard: React.FC = () => {
             <h1 className={cn(foundation.typography.h1, layouts.hero.title)}>
               Welcome to Dashboard
             </h1>
-            <SearchBar onSearch={handleSearch} />
+            <div className="flex items-center gap-4">
+              <SearchBar onSearch={handleSearch} />
+              <AvatarInput onAvatarChange={handleAvatarChange}>
+                <Avatar src={avatar} alt="User Avatar" size="md" />
+              </AvatarInput>
+              <button onClick={logout} className="ml-4">Logout</button>
+            </div>
           </div>
 
           <div className={layouts.grid.twoColumn}>
+            <QuickPlay 
+              userPlayers={userPlayers} 
+            />
             <PlayerManagement
               userPlayers={userPlayers}
               onCreatePlayer={createPlayer}
               onUpdatePlayer={updatePlayer}
               onDeletePlayer={deletePlayer}
-            />
-
-            <QuickPlay 
-              userPlayers={userPlayers} 
             />
           </div>
 
@@ -93,14 +99,6 @@ const Dashboard: React.FC = () => {
 
           <div className="mt-6">
             <TopPlayers players={userPlayers} />
-          </div>
-
-          <div className="mt-6">
-            <AvatarMenu
-              avatar={avatar}
-              onAvatarChange={handleAvatarChange}
-              onLogout={logout}
-            />
           </div>
         </div>
       </div>
