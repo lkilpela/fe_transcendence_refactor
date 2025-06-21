@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
 import useTranslate from '@/hooks/useTranslate'
 import { Card } from '@/components/ui'
-import { foundation, patterns } from '@/assets/design-system'
+import { foundation, patterns, components } from '@/assets/design-system'
+import { cn } from '@/utils/cn'
 
 interface TopPlayer {
   id: string
@@ -48,7 +49,7 @@ const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
                 <img
                   src={player.avatar}
                   alt={`${player.name}'s avatar`}
-                  className={patterns.avatar.md}
+                  className={cn(components.avatar.base, components.avatar.sizes.md)}
                 />
                 <div>
                   <p className={foundation.typography.body}>{player.name}</p>

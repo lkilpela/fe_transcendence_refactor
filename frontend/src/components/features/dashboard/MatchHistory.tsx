@@ -4,6 +4,7 @@ import { cn } from '@/utils/cn'
 import { foundation, patterns } from '@/assets/design-system'
 import { useUserPlayers, useTranslate } from '@/hooks'
 import { MatchHistoryProps, ProcessedMatch } from '@/types'
+import { components } from '@/assets/design-system'
 
 const MatchHistory: React.FC<MatchHistoryProps> = ({ matches, className }) => {
   const { userPlayers } = useUserPlayers()
@@ -85,7 +86,7 @@ const PlayerInfo: React.FC<{ player: { name: string; avatar: string } }> = ({ pl
     <img 
       src={player.avatar} 
       alt={player.name} 
-      className={patterns.avatar.md}
+      className={cn(components.avatar.base, components.avatar.sizes.md)}
     />
     <span className={foundation.typography.body}>{player.name}</span>
   </div>
