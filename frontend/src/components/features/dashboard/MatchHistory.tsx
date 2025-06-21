@@ -6,7 +6,7 @@ import { useUserPlayers, useTranslate } from '@/hooks'
 import { MatchHistoryProps, ProcessedMatch } from '@/types'
 import { components } from '@/assets/design-system'
 
-const MatchHistory: React.FC<MatchHistoryProps> = ({ matches, className }) => {
+export const MatchHistory: React.FC<MatchHistoryProps> = ({ matches, className }) => {
   const { userPlayers } = useUserPlayers()
   const t = useTranslate()
 
@@ -91,6 +91,4 @@ const PlayerInfo: React.FC<{ player: { name: string; avatar: string } }> = ({ pl
     <span className={foundation.typography.body}>{player.name}</span>
   </div>
 )
-
-export default MatchHistory
   

@@ -389,6 +389,51 @@ export const patterns = {
         result: 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4'
       }
     }
+  },
+
+  // Dropdown patterns
+  dropdown: {
+    container: cn(
+      'absolute top-full right-0 mt-2 w-48',
+      foundation.glass.medium,
+      'border rounded-lg p-4'
+    ),
+    content: 'space-y-2',
+    button: cn(
+      'w-full flex items-center gap-3 px-3 py-2',
+      'text-white rounded-lg transition-colors',
+      foundation.states.hover
+    ),
+    buttonDanger: cn(
+      'w-full flex items-center gap-3 px-3 py-2',
+      'text-red-400 hover:text-red-300 rounded-lg transition-colors',
+      foundation.states.hover
+    )
+  },
+
+  // Status indicator patterns
+  status: {
+    base: 'absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white',
+    variants: {
+      online: 'bg-green-400',
+      offline: 'bg-gray-400',
+      away: 'bg-yellow-400',
+      busy: 'bg-red-400'
+    }
+  },
+
+  // Avatar menu patterns
+  avatarMenu: {
+    container: 'relative',
+    trigger: 'flex items-center',
+    avatar: {
+      container: 'mb-4 relative flex justify-center',
+      editButton: cn(
+        'absolute bottom-0 right-0',
+        'bg-blue-600 hover:bg-blue-700 text-white',
+        'p-1 rounded-full transition-colors'
+      )
+    }
   }
 } as const
 

@@ -77,7 +77,7 @@ const CreatePlayerModal: React.FC<{
   )
 }
 
-const PlayerManagement: React.FC<PlayerManagementProps> = ({
+export const PlayerManagement: React.FC<PlayerManagementProps> = ({
   userPlayers,
   onCreatePlayer,
   onDeletePlayer,
@@ -140,5 +140,3 @@ const PlayerManagement: React.FC<PlayerManagementProps> = ({
     </Card>
   )
 }
-
-export default PlayerManagement 

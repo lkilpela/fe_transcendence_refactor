@@ -17,7 +17,7 @@ interface TopPlayersProps {
   players: TopPlayer[]
 }
 
-const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
+export const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
   // Sort and slice top 4 players based on win percentage
   const topPlayers = useMemo(() => {
     if (!Array.isArray(players)) return []
@@ -69,5 +69,3 @@ const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
     </Card>
   )
 }
-
-export default TopPlayers

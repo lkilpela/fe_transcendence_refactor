@@ -16,7 +16,7 @@ interface GameStatsProps {
   userPlayers: Player[]
 }
 
-const GameStats: React.FC<GameStatsProps> = ({
+export const GameStats: React.FC<GameStatsProps> = ({
   userPlayers,
 }) => {
   const [selectedPlayerId, setSelectedPlayerId] = useState<number | null>(null)
@@ -89,5 +89,3 @@ const StatCard: React.FC<StatCardProps> = ({ title, value }) => (
     <p className={patterns.stats.card.value}>{value}</p>
   </div>
 )
-
-export default GameStats 

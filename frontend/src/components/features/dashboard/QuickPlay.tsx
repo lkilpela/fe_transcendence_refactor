@@ -23,7 +23,7 @@ interface QuickPlayProps {
  * @param {UserPlayer[]} userPlayers - The list of user players
  * @returns {React.FC} The QuickPlay component
  */
-const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
+export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
   const navigate = useNavigate()
   const hasActivePlayers = userPlayers.length > 0
   const hasEnoughPlayers1v1 = userPlayers.length >= 2
@@ -288,5 +288,3 @@ const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
     </Card>
   )
 }
-
-export default QuickPlay
