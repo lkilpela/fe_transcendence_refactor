@@ -197,7 +197,7 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
             <div className={patterns.modal.header}>
               <h3 className={patterns.modal.title}>
                 {t('Select Players')}
-              </h3>
+            </h3>
               <p className={patterns.modal.subtitle}>
                 {t('Choose 2 players')} ({selected1v1Players.length}/2)
               </p>
@@ -205,8 +205,8 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
             
             {/* Body */}
             <div className={patterns.modal.body}>
-              <div className={patterns.spacing.stack.sm}>
-                {userPlayers.map((player) => (
+            <div className={patterns.spacing.stack.sm}>
+              {userPlayers.map((player) => (
                   <div
                     key={player.id}
                     className={`${patterns.modal.playerItem} ${
@@ -220,22 +220,22 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
                         alt={player.display_name}
                         className={patterns.avatar.sm}
                       />
-                      <span className={foundation.typography.body}>
-                        {player.display_name}
-                      </span>
+                  <span className={foundation.typography.body}>
+                    {player.display_name}
+                  </span>
                     </div>
-                    <input
-                      type="checkbox"
-                      checked={selected1v1Players.includes(player.id)}
+                  <input
+                    type="checkbox"
+                    checked={selected1v1Players.includes(player.id)}
                       onChange={() => {}} // Handled by div onClick
-                      disabled={
-                        !selected1v1Players.includes(player.id) &&
-                        selected1v1Players.length >= 2
-                      }
+                    disabled={
+                      !selected1v1Players.includes(player.id) &&
+                      selected1v1Players.length >= 2
+                    }
                       className="pointer-events-none"
-                    />
+                  />
                   </div>
-                ))}
+              ))}
               </div>
             </div>
             
@@ -266,9 +266,9 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
         <div className={patterns.modal.overlay}>
           <div className={patterns.modal.content}>
             <div className={patterns.modal.header}>
-              <h3 className={foundation.typography.h3}>
-                {t('Select 4-8 Players for Tournament')}
-              </h3>
+            <h3 className={foundation.typography.h3}>
+              {t('Select 4-8 Players for Tournament')}
+            </h3>
               <p className={foundation.typography.small}>
                 {t('Choose between 4-8 players for tournament')} ({selectedTournamentPlayers.length}/8)
               </p>
@@ -289,21 +289,21 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
                         alt={player.display_name}
                         className={patterns.avatar.sm}
                       />
-                      <span className={foundation.typography.body}>
-                        {player.display_name}
-                      </span>
+                  <span className={foundation.typography.body}>
+                    {player.display_name}
+                  </span>
                     </div>
-                    <input
-                      type="checkbox"
-                      checked={selectedTournamentPlayers.includes(player.id)}
-                      onChange={() => handleToggleTournamentPlayer(player.id)}
-                      disabled={
-                        !selectedTournamentPlayers.includes(player.id) &&
-                        selectedTournamentPlayers.length >= 8
-                      }
-                      className={components.checkbox.input}
-                    />
-                  </label>
+                  <input
+                    type="checkbox"
+                    checked={selectedTournamentPlayers.includes(player.id)}
+                    onChange={() => handleToggleTournamentPlayer(player.id)}
+                    disabled={
+                      !selectedTournamentPlayers.includes(player.id) &&
+                      selectedTournamentPlayers.length >= 8
+                    }
+                    className={components.checkbox.input}
+                  />
+                </label>
                 </div>
               ))}
             </div>
