@@ -66,6 +66,8 @@ export const foundation = {
     h3: 'text-2xl font-bold text-white sm:text-3xl',
     body: 'text-base text-gray-300 leading-relaxed',
     small: 'text-sm text-gray-400',
+    medium: 'text-base text-gray-300',
+    large: 'text-lg text-gray-300',
     label: 'block text-sm font-medium text-gray-300',
   },
 
@@ -259,7 +261,9 @@ export const patterns = {
   },
   button: {
     danger: 'text-red-400 hover:text-red-300',
-    back: 'flex items-center gap-2 text-white hover:text-gray-200'
+    back: 'flex items-center gap-2 text-white hover:text-gray-200',
+    icon: 'p-2 rounded-lg transition-colors',
+    iconDanger: 'p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors'
   },
   message: {
     error: cn(
@@ -370,6 +374,16 @@ export const patterns = {
     ),
     players: cn(
       'text-sm text-gray-300'
+    )
+  },
+
+  // User menu patterns
+  userMenu: {
+    container: 'flex items-center gap-3',
+    username: cn(foundation.typography.large, 'text-white'),
+    logoutButton: cn(
+      'p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20',
+      'rounded-lg transition-colors'
     )
   },
 
@@ -489,7 +503,7 @@ export const layouts = {
   // Header section
   header: {
     base: 'relative z-10 border-b border-white/10 px-6 py-4',
-    container: 'mx-auto flex max-w-6xl items-center justify-between',
+    container: 'mx-auto flex max-w-6xl items-center justify-center relative',
     title: 'text-xl font-bold text-white',
   },
 

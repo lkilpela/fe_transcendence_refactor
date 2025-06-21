@@ -58,4 +58,5 @@ export const AvatarInput: React.FC<AvatarInputProps> = ({
   )
 }
 
-export default { Avatar, AvatarInput } 
+// Named exports for clarity
+export { Avatar as default } 
