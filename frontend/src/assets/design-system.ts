@@ -236,13 +236,13 @@ export const patterns = {
   // Modal patterns - Simple & Clean
   modal: {
     // Base overlay - covers entire screen
-    overlay: 'fixed inset-0 bg-black/60 flex items-center justify-center z-50',
+    overlay: 'fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]',
     
-    // Content container - clean and simple
+    // Content container - more opaque for better readability
     content: cn(
-      'bg-white/10 backdrop-blur-md border border-white/20',
-      'rounded-xl p-6 mx-4 max-w-md w-full',
-      'shadow-xl'
+      'bg-slate-800/95 backdrop-blur-lg border border-white/30',
+      'rounded-xl p-6 mx-4 max-w-lg w-full max-h-[80vh] overflow-y-auto',
+      'shadow-2xl relative z-[9999]'
     ),
     
     // Header - simple title area
@@ -256,13 +256,13 @@ export const patterns = {
     // Footer - action buttons
     footer: 'flex gap-3 justify-end',
     
-    // Player selection item
+    // Player selection item - more opaque
     playerItem: cn(
       'flex items-center justify-between p-3 rounded-lg',
-      'bg-white/5 border border-white/10 hover:bg-white/10',
+      'bg-slate-700/80 border border-white/20 hover:bg-slate-600/80',
       'transition-colors cursor-pointer'
     ),
-    playerSelected: 'ring-2 ring-blue-500 bg-blue-500/10'
+    playerSelected: 'ring-2 ring-blue-500 bg-blue-500/20 border-blue-500/50'
   },
 
   // Feature-specific patterns

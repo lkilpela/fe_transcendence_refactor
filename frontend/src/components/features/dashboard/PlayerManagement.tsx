@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { UserPlus, Trash2 } from 'lucide-react'
 import { Card, Button, Input } from '@/components/ui'
-import { foundation, patterns, components } from '@/assets/design-system'
+import { foundation, patterns } from '@/assets/design-system'
 import { UserPlayer } from '@/types'
 import useTranslate from '@/hooks/useTranslate'
-import { cn } from '@/utils/cn'
 
 interface PlayerManagementProps {
   userPlayers: UserPlayer[]
@@ -87,7 +86,7 @@ export const PlayerManagement: React.FC<PlayerManagementProps> = ({
 
   return (
     <Card padding="lg">
-      <div className={patterns.spacing.stack.lg}>
+      <div className={patterns.spacing.stack.md}>
         <div className={patterns.flex.rowBetween}>
           <h2 className={foundation.typography.h3}>{t('Your Players')}</h2>
           <Button
@@ -101,34 +100,39 @@ export const PlayerManagement: React.FC<PlayerManagementProps> = ({
           </Button>
         </div>
 
-        <div className={patterns.spacing.stack.md}>
-          {userPlayers.map((player) => (
-            <div
-              key={player.id}
-              className={cn(components.card.base, components.card.variants.glass, components.card.padding.md)}
-            >
-              <div className={patterns.flex.rowBetween}>
-                <div className={patterns.flex.rowGap.md}>
+        {/* Simplified Player List */}
+        {userPlayers.length > 0 ? (
+          <div className="space-y-2">
+            {userPlayers.map((player) => (
+              <div
+                key={player.id}
+                className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+              >
+                <div className={patterns.flex.rowGap.sm}>
                   <img
                     src={player.avatar}
-                    alt={t('Player avatar')}
+                    alt={player.display_name}
                     className={patterns.avatar.sm}
                   />
                   <span className={foundation.typography.body}>{player.display_name}</span>
                 </div>
-                <Button
+                <button
                   onClick={() => onDeletePlayer(player.id.toString())}
-                  variant="ghost"
-                  size="sm"
-                  className={foundation.colors.semantic.error}
+                  className="p-1 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded transition-colors"
                   title={t('Delete player')}
                 >
-                  <Trash2 size={16} />
-                </Button>
+                  <Trash2 size={14} />
+                </button>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-4">
+            <p className={foundation.typography.small}>
+              {t('No players created yet')}
+            </p>
+          </div>
+        )}
       </div>
 
       {showCreateModal && (

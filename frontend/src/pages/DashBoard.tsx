@@ -12,81 +12,104 @@ import {
 import { SearchBar } from '@/components/ui'
 import { useNavigate } from 'react-router-dom'
 import { foundation, layouts, patterns } from '@/assets/design-system'
+import { UserPlayer } from '@/types'
 
-// Smart Primary Action Component
-const SmartPrimaryAction: React.FC<{
-  userPlayers: any[]
+// Types for clean interfaces
+interface PlayerActions {
   onCreatePlayer: (name: string) => void
-  onUpdatePlayer: (id: string, updates: any) => void
+  onUpdatePlayer: (id: string, updates: Partial<UserPlayer>) => void
   onDeletePlayer: (id: string) => void
-}> = ({ userPlayers, onCreatePlayer, onUpdatePlayer, onDeletePlayer }) => {
-  const hasPlayers = userPlayers.length > 0
-  const hasEnoughFor1v1 = userPlayers.length >= 2
-  const hasEnoughForTournament = userPlayers.length >= 4
+}
 
+interface SmartPrimaryActionProps extends PlayerActions {
+  userPlayers: UserPlayer[]
+}
+
+// Extracted header component for reusability
+const DashboardHeader: React.FC<{
+  title: string
+  subtitle: string
+}> = ({ title, subtitle }) => (
+  <div className={patterns.spacing.stack.sm}>
+    <h2 className={foundation.typography.h2}>{title}</h2>
+    <p className={foundation.typography.body}>{subtitle}</p>
+  </div>
+)
+
+// Clean Smart Primary Action Component
+const SmartPrimaryAction: React.FC<SmartPrimaryActionProps> = ({
+  userPlayers,
+  onCreatePlayer,
+  onUpdatePlayer,
+  onDeletePlayer
+}) => {
+  const playerCount = userPlayers.length
+  const hasPlayers = playerCount > 0
+  const hasEnoughFor1v1 = playerCount >= 2
+  const hasEnoughForTournament = playerCount >= 4
+
+  // Common player management props
+  const playerManagementProps = {
+    userPlayers,
+    onCreatePlayer,
+    onUpdatePlayer,
+    onDeletePlayer
+  }
+
+  // State 1: No players
   if (!hasPlayers) {
-    // No players - Show create player as primary action
     return (
-      <div className="text-center space-y-6 py-8">
-        <div className="space-y-3">
-          <h2 className={foundation.typography.h2}>🎮 Ready to Play?</h2>
-          <p className={foundation.typography.body}>
-            Create your first player to start playing Pong!
-          </p>
+      <div className={patterns.align.center}>
+        <div className={patterns.spacing.stack.lg}>
+          <DashboardHeader
+            title="🎮 Ready to Play?"
+            subtitle="Create your first player to start playing Pong!"
+          />
+          <PlayerManagement {...playerManagementProps} />
         </div>
-        <PlayerManagement
-          userPlayers={userPlayers}
-          onCreatePlayer={onCreatePlayer}
-          onUpdatePlayer={onUpdatePlayer}
-          onDeletePlayer={onDeletePlayer}
-        />
       </div>
     )
   }
 
-  if (hasPlayers && !hasEnoughFor1v1) {
-    // Has some players but not enough for 1v1
+  // State 2: Not enough players for 1v1
+  if (!hasEnoughFor1v1) {
+    const playersNeeded = 2 - playerCount
     return (
-      <div className="space-y-6">
-        <div className="text-center space-y-3 py-4">
-          <h2 className={foundation.typography.h2}>🏓 Almost Ready!</h2>
-          <p className={foundation.typography.body}>
-            You have {userPlayers.length} player{userPlayers.length !== 1 ? 's' : ''}. 
-            Create {2 - userPlayers.length} more to start playing!
-          </p>
+      <div className={patterns.spacing.stack.lg}>
+        <div className={patterns.align.center}>
+          <DashboardHeader
+            title="🏓 Almost Ready!"
+            subtitle={`You have ${playerCount} player${playerCount !== 1 ? 's' : ''}. Create ${playersNeeded} more to start playing!`}
+          />
         </div>
         <div className={layouts.grid.twoColumn}>
           <QuickPlay userPlayers={userPlayers} />
-          <PlayerManagement
-            userPlayers={userPlayers}
-            onCreatePlayer={onCreatePlayer}
-            onUpdatePlayer={onUpdatePlayer}
-            onDeletePlayer={onDeletePlayer}
-          />
+          <PlayerManagement {...playerManagementProps} />
         </div>
       </div>
     )
   }
 
-  // Has enough players - Show QuickPlay as primary action
+  // State 3: Ready to play
+  const title = hasEnoughForTournament ? '🏆 Tournament Ready!' : '🏓 Game Time!'
+  const subtitle = hasEnoughForTournament 
+    ? `${playerCount} players ready - Start a match or tournament!`
+    : `${playerCount} players ready - Start a 1v1 match!`
+
   return (
-    <div className="space-y-6">
-      <div className="text-center space-y-3 py-4">
-        <h2 className={foundation.typography.h2}>
-          {hasEnoughForTournament ? '🏆 Tournament Ready!' : '🏓 Game Time!'}
-        </h2>
-        <p className={foundation.typography.body}>
-          {hasEnoughForTournament 
-            ? `${userPlayers.length} players ready - Start a match or tournament!`
-            : `${userPlayers.length} players ready - Start a 1v1 match!`
-          }
-        </p>
+    <div className={patterns.spacing.stack.lg}>
+      <div className={patterns.align.center}>
+        <DashboardHeader title={title} subtitle={subtitle} />
       </div>
+      
       <QuickPlay userPlayers={userPlayers} />
+      
+      <PlayerManagement {...playerManagementProps} />
     </div>
   )
 }
 
+// Clean up the main Dashboard component
 export const Dashboard: React.FC = () => {
   const { user } = useAuth()
   const { userPlayers, createPlayer, updatePlayer, deletePlayer } = useUserPlayers()
@@ -99,33 +122,31 @@ export const Dashboard: React.FC = () => {
     }
   }
 
-  useEffect(() => {
+  // Extract cleanup logic to separate function
+  const cleanupUnfinishedMatches = async () => {
     if (!user?.id) return
 
-    const deleteUnfinishedMatches = async () => {
-      try {
-          const token = storage.get('token', null)
-          await fetch(`${import.meta.env.VITE_API_URL || 'https://localhost:3001'}/match-histories`, {
-            method: 'DELETE',
-            headers: {
-              ...(token ? { Authorization: `Bearer ${token}` } : {}),
-            },
-          })
-      } catch (error) {
-          console.error('Error deleting unfinished matches:', error)
-      }
+    try {
+      const token = storage.get('token', null)
+      await fetch(`${import.meta.env.VITE_API_URL || 'https://localhost:3001'}/match-histories`, {
+        method: 'DELETE',
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      })
+    } catch (error) {
+      console.error('Error deleting unfinished matches:', error)
     }
-    deleteUnfinishedMatches()
+  }
+
+  useEffect(() => {
+    cleanupUnfinishedMatches()
   }, [user?.id])
 
+  // Early return for unauthenticated state
   if (!user?.username) {
     return (
-      <PageLayout
-        showSidebar={true}
-        showHeader={true}
-        showFooter={true}
-        background="primary"
-      >
+      <PageLayout showSidebar showHeader showFooter background="primary">
         <div className={foundation.typography.body}>
           Please log in to view the dashboard
         </div>
@@ -133,13 +154,11 @@ export const Dashboard: React.FC = () => {
     )
   }
 
+  const hasMatches = matches.length > 0
+  const hasPlayers = userPlayers.length > 0
+
   return (
-    <PageLayout
-      showSidebar={true}
-      showHeader={true}
-      showFooter={true}
-      background="primary"
-    >
+    <PageLayout showSidebar showHeader showFooter background="primary">
       <div className={layouts.hero.section}>
         <div className={layouts.hero.container}>
           {/* Header */}
@@ -152,10 +171,10 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          {/* Main Content - Smart Adaptive Layout */}
+          {/* Main Content */}
           <div className={patterns.spacing.stack.xl}>
             
-            {/* Smart Primary Action - Adapts based on player count */}
+            {/* Smart Primary Action */}
             <SmartPrimaryAction
               userPlayers={userPlayers}
               onCreatePlayer={createPlayer}
@@ -163,25 +182,25 @@ export const Dashboard: React.FC = () => {
               onDeletePlayer={deletePlayer}
             />
 
-            {/* Secondary Info - Only show if user has played games */}
-            {matches.length > 0 && (
-              <div className={layouts.grid.twoColumn}>
-                <MatchHistory matches={matches as any} />
-                <TopPlayers players={userPlayers as any} />
-              </div>
-            )}
+                         {/* Secondary Info - Conditional rendering */}
+             {hasMatches && (
+               <div className={layouts.grid.twoColumn}>
+                 <MatchHistory matches={matches as any} />
+                 <TopPlayers players={userPlayers as any} />
+               </div>
+             )}
 
-            {/* Tertiary Actions - Only show if user has players */}
-            {userPlayers.length > 0 && (
-              <details className="mt-8">
-                <summary className="cursor-pointer text-lg font-semibold text-white hover:text-blue-400 transition-colors mb-4">
-                  📊 View Detailed Stats
-                </summary>
-                <div className={patterns.spacing.stack.lg}>
-                  <GameStats userPlayers={userPlayers as any} />
-                </div>
-              </details>
-            )}
+             {/* Tertiary Actions - Detailed Stats */}
+             {hasPlayers && (
+               <details className={patterns.spacing.section}>
+                 <summary className={patterns.button.back}>
+                   📊 View Detailed Stats
+                 </summary>
+                 <div className={patterns.spacing.stack.lg}>
+                   <GameStats userPlayers={userPlayers as any} />
+                 </div>
+               </details>
+             )}
           </div>
         </div>
       </div>

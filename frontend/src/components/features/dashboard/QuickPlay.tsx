@@ -1,4 +1,4 @@
-import { components, foundation, patterns, layouts } from '@/assets/design-system'
+import { foundation, patterns, layouts } from '@/assets/design-system'
 import { Button, Card } from '@/components/ui'
 import useTranslate from '@/hooks/useTranslate'
 import { gameService } from '@/services/gameService'
@@ -160,34 +160,36 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
   }
 
   return (
-    <Card padding="lg">
-      <div className={patterns.spacing.stack.md}>
-        <h2 className={foundation.typography.h3}>{t('Game Modes')}</h2>
-        <div className={layouts.grid.gameModes}>
-          <Button
-            onClick={handleOneVsOneClick}
-            variant="primary"
-            size="lg"
-            className={patterns.gameModeButton.base}
-            disabled={!hasEnoughPlayers1v1}
-          >
-            <span className={patterns.gameModeButton.icon}>🏓</span>
-            <span className={patterns.gameModeButton.title}>{t('1v1 Match')}</span>
-            <span className={patterns.gameModeButton.players}>{t('2 players')}</span>
-          </Button>
-          <Button
-            onClick={handleTournamentClick}
-            variant="primary"
-            size="lg"
-            className={patterns.gameModeButton.base}
-            disabled={!hasEnoughPlayersTourn}
-          >
-            <span className={patterns.gameModeButton.icon}>🏆</span>
-            <span className={patterns.gameModeButton.title}>{t('Tournament Mode')}</span>
-            <span className={patterns.gameModeButton.players}>{t('4-8 players')}</span>
-          </Button>
+    <>
+      <Card padding="lg">
+        <div className={patterns.spacing.stack.md}>
+          <h2 className={foundation.typography.h3}>{t('Game Modes')}</h2>
+          <div className={layouts.grid.gameModes}>
+            <Button
+              onClick={handleOneVsOneClick}
+              variant="primary"
+              size="lg"
+              className={patterns.gameModeButton.base}
+              disabled={!hasEnoughPlayers1v1}
+            >
+              <span className={patterns.gameModeButton.icon}>🏓</span>
+              <span className={patterns.gameModeButton.title}>{t('1v1 Match')}</span>
+              <span className={patterns.gameModeButton.players}>{t('2 players')}</span>
+            </Button>
+            <Button
+              onClick={handleTournamentClick}
+              variant="primary"
+              size="lg"
+              className={patterns.gameModeButton.base}
+              disabled={!hasEnoughPlayersTourn}
+            >
+              <span className={patterns.gameModeButton.icon}>🏆</span>
+              <span className={patterns.gameModeButton.title}>{t('Tournament Mode')}</span>
+              <span className={patterns.gameModeButton.players}>{t('4-8 players')}</span>
+            </Button>
+          </div>
         </div>
-      </div>
+      </Card>
 
       {/* 1v1 Modal */}
       {showModal1v1 && (
@@ -266,46 +268,47 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
         <div className={patterns.modal.overlay}>
           <div className={patterns.modal.content}>
             <div className={patterns.modal.header}>
-            <h3 className={foundation.typography.h3}>
-              {t('Select 4-8 Players for Tournament')}
-            </h3>
-              <p className={foundation.typography.small}>
+              <h3 className={patterns.modal.title}>
+                {t('Select 4-8 Players for Tournament')}
+              </h3>
+              <p className={patterns.modal.subtitle}>
                 {t('Choose between 4-8 players for tournament')} ({selectedTournamentPlayers.length}/8)
               </p>
             </div>
             
-            <div className={patterns.spacing.stack.md}>
-              {userPlayers.map((player) => (
-                <div
-                  key={player.id}
-                  className={`${components.card.base} ${components.card.variants.glass} ${components.card.padding.sm} ${
-                    selectedTournamentPlayers.includes(player.id) ? 'ring-2 ring-blue-500' : ''
-                  }`}
-                >
-                  <label className={`${patterns.flex.rowBetween} cursor-pointer`}>
+            <div className={patterns.modal.body}>
+              <div className={patterns.spacing.stack.sm}>
+                {userPlayers.map((player) => (
+                  <div
+                    key={player.id}
+                    className={`${patterns.modal.playerItem} ${
+                      selectedTournamentPlayers.includes(player.id) ? patterns.modal.playerSelected : ''
+                    }`}
+                    onClick={() => handleToggleTournamentPlayer(player.id)}
+                  >
                     <div className={patterns.flex.rowGap.md}>
                       <img
                         src={player.avatar}
                         alt={player.display_name}
                         className={patterns.avatar.sm}
                       />
-                  <span className={foundation.typography.body}>
-                    {player.display_name}
-                  </span>
+                      <span className={foundation.typography.body}>
+                        {player.display_name}
+                      </span>
                     </div>
-                  <input
-                    type="checkbox"
-                    checked={selectedTournamentPlayers.includes(player.id)}
-                    onChange={() => handleToggleTournamentPlayer(player.id)}
-                    disabled={
-                      !selectedTournamentPlayers.includes(player.id) &&
-                      selectedTournamentPlayers.length >= 8
-                    }
-                    className={components.checkbox.input}
-                  />
-                </label>
-                </div>
-              ))}
+                    <input
+                      type="checkbox"
+                      checked={selectedTournamentPlayers.includes(player.id)}
+                      onChange={() => {}} // Handled by div onClick
+                      disabled={
+                        !selectedTournamentPlayers.includes(player.id) &&
+                        selectedTournamentPlayers.length >= 8
+                      }
+                      className="pointer-events-none"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
             
             <div className={patterns.modal.footer}>
@@ -331,6 +334,6 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
           </div>
         </div>
       )}
-    </Card>
+    </>
   )
 }
