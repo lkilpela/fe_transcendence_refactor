@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Dashboard from '@/pages/DashBoard'
-import { LandingPage, RegisterPage, DesignSystemDemo } from '@/pages'
+import { LandingPage, LoginPage, RegisterPage, DesignSystemDemo, GamePage } from '@/pages'
 import GoogleCallback from '@/components/features/auth/GoogleCallback'
 
 /**
@@ -10,41 +10,21 @@ import GoogleCallback from '@/components/features/auth/GoogleCallback'
  * It includes both public and protected routes
  */
 const AppRoutes: React.FC = () => {
-  //const { isAuthenticated } = useAuth()
-
-  // Debug info
-  // console.log('🚀 AppRoutes rendering, isAuthenticated:', isAuthenticated)
+  // Uncomment when authentication is ready
+  // const { isAuthenticated } = useAuth()
 
   return (
     <Routes>
-      {/* Public Routes - Accessible to everyone */}
-      {/* <Route
-        path="/"
-        element={
-          isAuthenticated ? (
-            // Temporary placeholder since dashboard is disabled
-            <div className="p-8 text-center">
-              <h2>✅ Login Successful!</h2>
-              <p>Dashboard coming in Phase 2...</p>
-              <button onClick={() => window.location.reload()}>
-                Logout (Refresh page)
-              </button>
-            </div>
-          ) : (
-            <LandingPage />
-          )
-        }
-      /> */}
+      {/* Public Routes */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/auth/google/callback" element={<GoogleCallback />} />
       <Route path="/design-system" element={<DesignSystemDemo />} />
-
-      {/* Dashboard route */}
-      <Route
-        path="/dashboard"
-        element={<Dashboard />}
-      />
+      
+      {/* Protected Routes - Add ProtectedRoute wrapper when auth is ready */}
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/game" element={<GamePage />} />
 
       {/* Protected Routes - Only accessible to authenticated users */}
       {/* <Route
