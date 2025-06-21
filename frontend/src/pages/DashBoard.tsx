@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useAuth, useAvatar, useUserPlayers, useMatchHistories } from '@/hooks'
+import { useAuth, useUserPlayers, useMatchHistories } from '@/hooks'
 import { storage } from '@/utils/storage'
 import { PageLayout } from '@/components/layout'
 import {
@@ -10,16 +10,20 @@ import {
   TopPlayers,
 } from '@/components/features/dashboard'
 import { SearchBar } from '@/components/ui'
-import { Avatar, AvatarInput } from '@/components/ui/AvatarMenu'
 import { useNavigate } from 'react-router-dom'
-import { foundation, layouts, components, patterns } from '@/assets/design-system'
+import { foundation, layouts, patterns } from '@/assets/design-system'
 
 const Dashboard: React.FC = () => {
-  const { user, logout } = useAuth()
-  const { avatar, handleAvatarChange } = useAvatar(user?.id?.toString() || '')
+  const { user } = useAuth()
   const { userPlayers, createPlayer, updatePlayer, deletePlayer } = useUserPlayers()
   const { matches } = useMatchHistories()
   const navigate = useNavigate()
+
+  const handleSearch = (query: string) => {
+    if (query.trim()) {
+      navigate(`/search?query=${query}`)
+    }
+  }
 
   useEffect(() => {
     if (!user?.id) return
@@ -39,12 +43,6 @@ const Dashboard: React.FC = () => {
     }
     deleteUnfinishedMatches()
   }, [user?.id])
-
-  const handleSearch = (query: string) => {
-    if (query.trim()) {
-      navigate(`/search?query=${query}`)
-    }
-  }
 
   if (!user?.username) {
     return (
@@ -77,15 +75,6 @@ const Dashboard: React.FC = () => {
             </h1>
             <div className={patterns.flex.rowGap.lg}>
               <SearchBar onSearch={handleSearch} />
-              <AvatarInput onAvatarChange={handleAvatarChange}>
-                <Avatar src={avatar} alt="User Avatar" size="md" />
-              </AvatarInput>
-              <button 
-                onClick={logout} 
-                className={`${components.button.base} ${components.button.sizes.sm} ${patterns.button.danger}`}
-              >
-                Logout
-              </button>
             </div>
           </div>
 
