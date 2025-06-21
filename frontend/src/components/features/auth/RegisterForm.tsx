@@ -215,7 +215,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           <AuthFooter
             text="Already have an account?"
             linkText="Sign in"
-            onLinkClick={() => navigate('/')}
+            onLinkClick={() => navigate('/login')}
             disabled={isLoading}
           />
       </form>

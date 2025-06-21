@@ -15,3 +15,4 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+      - ./backend/database:/app/database
