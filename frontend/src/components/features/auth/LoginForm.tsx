@@ -24,7 +24,7 @@ interface LoginFormProps {
   isLoading?: boolean
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({
+export const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit,
   onForgotPassword,
   onSignUp,
@@ -137,5 +137,3 @@ const LoginForm: React.FC<LoginFormProps> = ({
     </AuthCard>
   )
 }
-
-export default LoginForm

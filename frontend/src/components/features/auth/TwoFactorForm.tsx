@@ -9,7 +9,7 @@ interface TwoFactorFormProps {
   onBackToLogin?: () => void
 }
 
-const TwoFactorForm: React.FC<TwoFactorFormProps> = ({
+export const TwoFactorForm: React.FC<TwoFactorFormProps> = ({
   tempToken,
   onSuccess,
   onBackToLogin,
@@ -83,5 +83,3 @@ const TwoFactorForm: React.FC<TwoFactorFormProps> = ({
     </AuthCard>
   )
 }
-
-export default TwoFactorForm

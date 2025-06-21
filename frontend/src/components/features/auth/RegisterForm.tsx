@@ -27,7 +27,7 @@ interface RegisterFormProps {
   isLoading?: boolean
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({
+export const RegisterForm: React.FC<RegisterFormProps> = ({
   onSubmit,
   onSuccess,
   onGoogleSignUp,
@@ -222,5 +222,3 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     </AuthCard>
   )
 }
-
-export default RegisterForm

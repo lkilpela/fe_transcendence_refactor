@@ -8,7 +8,7 @@ interface ForgotPasswordFormProps {
   onSubmitSuccess?: () => void
 }
 
-const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
+export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
   onBackToLogin,
   onSubmitSuccess,
 }) => {
@@ -101,5 +101,3 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
     </AuthCard>
   )
 }
-
-export default ForgotPasswordForm

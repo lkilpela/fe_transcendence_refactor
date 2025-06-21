@@ -2,7 +2,7 @@ import { useAuth } from '@/hooks/useAuth'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-const GoogleCallback: React.FC = () => {
+export const GoogleCallback: React.FC = () => {
   const [searchParams] = useSearchParams()
   const { loginWithGoogle } = useAuth()
   const navigate = useNavigate()
@@ -60,5 +60,3 @@ const GoogleCallback: React.FC = () => {
     </div>
   )
 }
-
-export default GoogleCallback
