@@ -161,4 +161,8 @@ dist
 
 .tap
 .env
-docs/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
