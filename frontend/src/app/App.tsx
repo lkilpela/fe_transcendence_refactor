@@ -1,6 +1,6 @@
 import React from 'react'
-import AppProviders from './AppProviders'
-import AppRoutes from './AppRoutes'
+import { AppProviders } from './AppProviders'
+import { AppRoutes } from './AppRoutes'
 
 /**
  * Main App Component
@@ -9,12 +9,10 @@ import AppRoutes from './AppRoutes'
  * - Layout handles UI structure
  * - Routes handle navigation
  */
-const App: React.FC = () => {
+export const App: React.FC = () => {
   return (
     <AppProviders>
         <AppRoutes />
     </AppProviders>
   )
 }
-
-export default App

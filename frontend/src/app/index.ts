@@ -1,4 +1,4 @@
 // App layer - Main application configuration and providers
-export { default as App } from './App'
-export { default as AppProviders } from './AppProviders'
-export { default as AppRoutes } from './AppRoutes' 
+export { App } from './App'
+export { AppProviders } from './AppProviders'
+export { AppRoutes } from './AppRoutes' 

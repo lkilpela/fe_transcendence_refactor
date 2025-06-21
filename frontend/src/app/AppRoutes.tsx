@@ -2,14 +2,14 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Dashboard from '@/pages/DashBoard'
 import { LandingPage, LoginPage, RegisterPage, DesignSystemDemo, GamePage } from '@/pages'
-import GoogleCallback from '@/components/features/auth/GoogleCallback'
+import { GoogleCallback } from '@/components/features/auth/GoogleCallback'
 
 /**
  * AppRoutes Component
  * This component defines all the routes in the application
  * It includes both public and protected routes
  */
-const AppRoutes: React.FC = () => {
+export const AppRoutes: React.FC = () => {
   // Uncomment when authentication is ready
   // const { isAuthenticated } = useAuth()
 
@@ -84,5 +84,3 @@ const AppRoutes: React.FC = () => {
     </Routes>
   )
 }
-
-export default AppRoutes

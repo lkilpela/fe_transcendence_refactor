@@ -11,12 +11,10 @@ interface AppProvidersProps {
  * Centralized providers component
  * All global providers and context are configured here
  */
-const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
+export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
   return (
     <AuthProvider>
       <Router>{children}</Router>
     </AuthProvider>
   )
 }
-
-export default AppProviders
