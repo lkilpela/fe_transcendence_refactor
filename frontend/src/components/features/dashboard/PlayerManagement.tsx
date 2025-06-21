@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { UserPlus, Trash2 } from 'lucide-react'
 import { Card, Button, Input } from '@/components/ui'
-import { foundation, patterns } from '@/assets/design-system'
+import { foundation, patterns, components } from '@/assets/design-system'
 import { UserPlayer } from '@/types'
 import useTranslate from '@/hooks/useTranslate'
+import { cn } from '@/utils/cn'
 
 interface PlayerManagementProps {
   userPlayers: UserPlayer[]
@@ -22,11 +23,11 @@ const CreatePlayerModal: React.FC<{
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!playerName.trim()) {
-      setError('Player name cannot be empty')
+      setError(t('Player name cannot be empty'))
       return
     }
     if (playerName.length > 20) {
-      setError('Player name must be 20 characters or less')
+      setError(t('Player name must be 20 characters or less'))
       return
     }
     onCreatePlayer(playerName.trim())
@@ -37,8 +38,8 @@ const CreatePlayerModal: React.FC<{
     <div className={patterns.modal.overlay}>
       <div className={patterns.modal.content}>
         <h3 className={foundation.typography.h3}>{t('Create New Player')}</h3>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+        <form onSubmit={handleSubmit} className={patterns.spacing.stack.md}>
+          <div className={patterns.spacing.stack.sm}>
             <Input
               type="text"
               value={playerName}
@@ -50,9 +51,9 @@ const CreatePlayerModal: React.FC<{
               maxLength={16}
               required
             />
-            {error && <div className="text-sm text-red-400 mt-1">{error}</div>}
+            {error && <div className={foundation.colors.semantic.error}>{error}</div>}
           </div>
-          <div className="flex items-center gap-2">
+          <div className={patterns.flex.rowGap.sm}>
             <Button
               type="button"
               onClick={onClose}
@@ -85,43 +86,45 @@ const PlayerManagement: React.FC<PlayerManagementProps> = ({
 
   return (
     <Card padding="lg">
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
+      <div className={patterns.spacing.stack.lg}>
+        <div className={patterns.flex.rowBetween}>
           <h2 className={foundation.typography.h3}>{t('Your Players')}</h2>
           <Button
             onClick={() => setShowCreateModal(true)}
             variant="primary"
             size="sm"
-            className="flex items-center gap-2"
+            className={patterns.flex.rowGap.sm}
           >
             <UserPlus size={16} />
             <span>{t('Create Player')}</span>
           </Button>
         </div>
 
-        <div className="space-y-3">
+        <div className={patterns.spacing.stack.md}>
           {userPlayers.map((player) => (
             <div
               key={player.id}
-              className="flex items-center justify-between p-4 rounded-lg bg-white/5 backdrop-blur-sm"
+              className={components.card.variants.interactive}
             >
-              <div className="flex items-center gap-3">
-                <img
-                  src={player.avatar}
-                  alt="Current avatar"
-                  className="w-8 h-8 rounded-full border-2"
-                />
-                <span className={foundation.typography.body}>{player.display_name}</span>
+              <div className={patterns.flex.rowBetween}>
+                <div className={patterns.flex.rowGap.md}>
+                  <img
+                    src={player.avatar}
+                    alt={t('Player avatar')}
+                    className={cn(components.avatar.base, components.avatar.sizes.sm)}
+                  />
+                  <span className={foundation.typography.body}>{player.display_name}</span>
+                </div>
+                <Button
+                  onClick={() => onDeletePlayer(player.id.toString())}
+                  variant="ghost"
+                  size="sm"
+                  className={foundation.colors.semantic.error}
+                  title={t('Delete player')}
+                >
+                  <Trash2 size={16} />
+                </Button>
               </div>
-              <Button
-                onClick={() => onDeletePlayer(player.id.toString())}
-                variant="ghost"
-                size="sm"
-                className="text-red-400 hover:text-red-300"
-                title="Delete player"
-              >
-                <Trash2 size={16} />
-              </Button>
             </div>
           ))}
         </div>
