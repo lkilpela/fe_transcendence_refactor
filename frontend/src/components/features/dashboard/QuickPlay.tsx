@@ -2,9 +2,16 @@ import { components, foundation, patterns } from '@/assets/design-system'
 import { Button, Card } from '@/components/ui'
 import useTranslate from '@/hooks/useTranslate'
 import { gameService } from '@/services/gameService'
-import { UserPlayer } from '@/types'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+interface UserPlayer {
+  id: number
+  display_name: string
+  avatar: string
+  isActive: boolean
+  points: number
+}
 
 interface QuickPlayProps {
   userPlayers: UserPlayer[]

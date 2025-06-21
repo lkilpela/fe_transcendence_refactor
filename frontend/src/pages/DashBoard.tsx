@@ -83,8 +83,6 @@ const Dashboard: React.FC = () => {
 
             <QuickPlay 
               userPlayers={userPlayers} 
-              onStartGame={() => {}} 
-              onJoinGame={() => {}} 
             />
           </div>
 

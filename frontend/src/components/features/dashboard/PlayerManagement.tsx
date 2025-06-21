@@ -9,6 +9,7 @@ import { cn } from '@/utils/cn'
 interface PlayerManagementProps {
   userPlayers: UserPlayer[]
   onCreatePlayer: (playerName: string) => void
+  onUpdatePlayer: (playerId: string, updates: Partial<UserPlayer>) => void
   onDeletePlayer: (playerId: string) => void
 }
 
