@@ -334,6 +334,29 @@ export const patterns = {
     )
   },
 
+  // Top players patterns
+  topPlayers: {
+    grid: 'mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4',
+    player: {
+      container: 'text-center space-y-2',
+      avatarWrapper: 'relative mx-auto w-fit',
+      avatar: 'w-16 h-16 rounded-full border-2 border-white/20',
+      crown: 'absolute -top-1 -right-1 text-lg',
+      name: 'text-sm font-medium text-white truncate',
+      percentage: 'text-lg font-bold text-green-400',
+      record: 'text-xs text-gray-400'
+    },
+    empty: {
+      container: 'text-center py-8',
+      message: foundation.typography.body,
+      subtitle: foundation.typography.small
+    },
+    encouragement: {
+      container: 'mt-4 text-center',
+      message: foundation.typography.small
+    }
+  },
+
   // Game patterns
   game: {
     container: cn(
@@ -396,6 +419,113 @@ export const patterns = {
       offline: 'bg-gray-400',
       away: 'bg-yellow-400',
       busy: 'bg-red-400'
+    }
+  },
+
+  // Tournament bracket patterns
+  tournament: {
+    // Main bracket container
+    bracket: {
+      container: cn(
+        foundation.glass.light,
+        'rounded-3xl p-12 backdrop-blur-sm border border-white/20'
+      ),
+      title: {
+        container: 'text-center mb-12',
+        text: cn(foundation.typography.h1, 'text-white mb-4'),
+        divider: 'w-32 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full'
+      },
+      rounds: {
+        container: 'flex gap-16 justify-center items-center min-h-96',
+        round: 'flex flex-col justify-center space-y-12',
+        matches: 'space-y-16'
+      }
+    },
+
+    // Round headers
+    round: {
+      header: 'text-center mb-8',
+      badge: {
+        base: 'inline-block px-6 py-3 rounded-full text-white font-bold text-xl',
+        final: 'bg-gradient-to-r from-yellow-500 to-yellow-600',
+        semifinal: 'bg-gradient-to-r from-purple-500 to-purple-600',
+        regular: 'bg-gradient-to-r from-blue-500 to-blue-600'
+      }
+    },
+
+    // Player cards in bracket
+    player: {
+      base: cn(
+        'flex items-center justify-between p-4 rounded-xl border-2 transition-all min-w-48'
+      ),
+      winner: 'bg-green-500/30 border-green-400 text-green-100 shadow-lg shadow-green-500/20',
+      loser: 'bg-red-500/20 border-red-400/50 text-red-200',
+      pending: 'bg-white/10 border-white/30 text-white hover:bg-white/15',
+      name: {
+        base: foundation.typography.h3,
+        winner: 'font-bold text-green-100',
+        default: 'text-white'
+      },
+      score: {
+        base: cn(foundation.typography.h2, 'font-mono font-bold min-w-8 text-center'),
+        winner: 'text-green-200',
+        loser: 'text-red-300',
+        pending: 'text-gray-300'
+      }
+    },
+
+    // Match components
+    match: {
+      container: 'space-y-4',
+      players: 'space-y-2 relative',
+      vsIndicator: {
+        container: 'absolute -right-12 top-1/2 -translate-y-1/2',
+        badge: 'bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse'
+      },
+      button: cn(
+        components.button.base,
+        components.button.variants.primary,
+        components.button.sizes.lg,
+        'w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3'
+      ),
+      connector: {
+        container: 'flex justify-end items-center',
+        line: 'w-16 h-1 bg-gradient-to-r from-white/30 to-white/60 rounded-full',
+        dot: 'w-4 h-4 bg-white/60 rounded-full ml-2'
+      }
+    },
+
+    // Winner celebration
+    winner: {
+      container: 'min-h-screen flex items-center justify-center',
+      content: 'text-center space-y-8 max-w-2xl',
+      trophy: 'text-8xl mb-8',
+      title: cn(foundation.typography.h1, 'text-6xl text-yellow-400'),
+      subtitle: cn(foundation.typography.h2, 'text-4xl text-white'),
+      champion: cn(foundation.typography.h1, 'text-5xl text-yellow-300 font-bold'),
+      button: cn(
+        components.button.base,
+        components.button.variants.primary,
+        components.button.sizes.lg,
+        'mt-8 px-8 py-4 text-xl'
+      )
+    },
+
+    // Page layout
+    page: {
+      container: 'min-h-screen py-8',
+      wrapper: 'max-w-7xl mx-auto px-8',
+      header: {
+        container: 'flex items-center justify-between mb-12',
+        info: 'space-y-2',
+        title: cn(foundation.typography.h1, 'text-4xl text-white'),
+        round: cn(foundation.typography.h3, 'text-blue-400'),
+        reset: 'text-red-400 hover:text-red-300'
+      },
+      progress: {
+        container: 'text-center mt-8',
+        text: cn(foundation.typography.body, 'text-gray-400')
+      }
     }
   },
 

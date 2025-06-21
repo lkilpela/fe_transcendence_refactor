@@ -66,9 +66,27 @@ export interface ProcessedMatch {
   mode: '1v1' | 'tournament'
 }
 
+export interface TournamentMatch {
+  match_id: number
+  date: string
+  round: number
+  players: {
+    player_id: number
+    score: number
+  }[]
+  winner?: {
+    player_id: number
+  } | null
+}
+
 export interface Tournament {
-  status: string
-  [key: string]: unknown
+  id: number
+  name: string
+  status: 'pending' | 'finished'
+  current_round: number
+  winner_id: number | null
+  created_at: string
+  matches: TournamentMatch[]
 }
 
 export interface MatchData {

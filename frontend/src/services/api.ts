@@ -18,10 +18,11 @@ export const setSessionExpiredCallback = (callback: (() => void) | null) => {
 /**
  * Create headers for API requests
  * @param token - The JWT token for authentication
+ * @param hasBody - Whether the request has a body
  * @returns The headers object
  */
-const createHeaders = (token: string | null) => ({
-  'Content-Type': 'application/json',
+const createHeaders = (token: string | null, hasBody: boolean = false) => ({
+  ...(hasBody ? { 'Content-Type': 'application/json' } : {}),
   ...(token ? { Authorization: `Bearer ${token}` } : {}),
 })
 
@@ -76,9 +77,10 @@ const handleResponse = async <T>(res: Response): Promise<T> => {
  */
 export const request = async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
   const token = storage.get('token', null)
+  const hasBody = !!options.body
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
-    headers: createHeaders(token),
+    headers: createHeaders(token, hasBody),
   })
   return handleResponse<T>(res)
 }

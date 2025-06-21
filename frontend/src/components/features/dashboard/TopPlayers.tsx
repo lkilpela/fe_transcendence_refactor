@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react'
 import useTranslate from '@/hooks/useTranslate'
 import { Card } from '@/components/ui'
-import { foundation, patterns, components } from '@/assets/design-system'
-import { cn } from '@/utils/cn'
+import { foundation, patterns } from '@/assets/design-system'
 
 interface TopPlayer {
   id: string
@@ -36,36 +35,76 @@ export const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
 
   const t = useTranslate()
 
+  if (topPlayers.length === 0) {
+    return (
+      <Card padding="lg">
+        <h2 className={foundation.typography.h3}>{t('TOP PLAYERS')}</h2>
+        <div className={patterns.topPlayers.empty.container}>
+          <p className={patterns.topPlayers.empty.message}>No player stats yet</p>
+          <p className={patterns.topPlayers.empty.subtitle}>Play some matches to see rankings!</p>
+        </div>
+      </Card>
+    )
+  }
+
   return (
     <Card padding="lg">
       <h2 className={foundation.typography.h3}>{t('TOP PLAYERS')}</h2>
-      <div className={patterns.spacing.section}>
-        {topPlayers.map((player) => {
-          const percentage = ((player.wins * 100) / (player.wins + player.losses)).toFixed(1)
-
+      
+      {/* Clean Grid Layout */}
+      <div className={patterns.topPlayers.grid}>
+        {topPlayers.map((player, index) => {
+          const totalGames = player.wins + player.losses
+          const winPercentage = Math.round((player.wins * 100) / totalGames)
+          
           return (
-            <div key={player.id} className={patterns.match.container}>
-              <div className={patterns.match.players.container}>
+            <div 
+              key={player.id} 
+              className={patterns.topPlayers.player.container}
+            >
+              {/* Avatar */}
+              <div className={patterns.topPlayers.player.avatarWrapper}>
                 <img
                   src={player.avatar}
-                  alt={`${player.name}'s avatar`}
-                  className={cn(components.avatar.base, components.avatar.sizes.md)}
+                  alt={player.name}
+                  className={patterns.topPlayers.player.avatar}
                 />
-                <div>
-                  <p className={foundation.typography.body}>{player.name}</p>
-                  <p className={foundation.typography.small}>
-                    {player.wins}W - {player.losses}L
-                  </p>
-                </div>
+                
+                {/* Crown for #1 Player */}
+                {index === 0 && (
+                  <div className={patterns.topPlayers.player.crown}>
+                    👑
+                  </div>
+                )}
               </div>
-              <div className={patterns.align.right}>
-                <p className={foundation.typography.body}>{percentage}%</p>
-                <p className={foundation.typography.small}>Win Rate</p>
+              
+              {/* Player Name */}
+              <div className={patterns.topPlayers.player.name}>
+                {player.name}
+              </div>
+              
+              {/* Win Percentage */}
+              <div className={patterns.topPlayers.player.percentage}>
+                {winPercentage}%
+              </div>
+              
+              {/* Win/Loss Record */}
+              <div className={patterns.topPlayers.player.record}>
+                {player.wins}W-{player.losses}L
               </div>
             </div>
           )
         })}
       </div>
+      
+      {/* Encouragement message */}
+      {topPlayers.length < 4 && (
+        <div className={patterns.topPlayers.encouragement.container}>
+          <p className={patterns.topPlayers.encouragement.message}>
+            Play more matches to see more top players!
+          </p>
+        </div>
+      )}
     </Card>
   )
 }

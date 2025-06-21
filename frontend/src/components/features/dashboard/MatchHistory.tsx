@@ -1,10 +1,8 @@
 import React, { useMemo } from 'react'
 import { Card } from '@/components/ui'
-import { cn } from '@/utils/cn'
 import { foundation, patterns } from '@/assets/design-system'
 import { useUserPlayers, useTranslate } from '@/hooks'
 import { MatchHistoryProps, ProcessedMatch } from '@/types'
-import { components } from '@/assets/design-system'
 
 export const MatchHistory: React.FC<MatchHistoryProps> = ({ matches, className }) => {
   const { userPlayers } = useUserPlayers()
@@ -56,22 +54,13 @@ export const MatchHistory: React.FC<MatchHistoryProps> = ({ matches, className }
             key={match.id} 
             className={patterns.match.container}
           >
-            <div className={patterns.match.players.container}>
-              <span className={cn(
-                patterns.match.icon.base,
-                patterns.match.icon.mode[match.mode]
-              )}>
-                {match.mode === '1v1' ? '🏓' : '🏆'}
-              </span>
-              <div className={patterns.match.players.list}>
-                <PlayerInfo player={match.player} />
-                <span className={foundation.typography.small}>vs</span>
-                <PlayerInfo player={match.opponent} />
-              </div>
+            <div className={patterns.match.players.list}>
+              <PlayerInfo player={match.player} />
+              <span className={foundation.typography.small}>vs</span>
+              <PlayerInfo player={match.opponent} />
             </div>
             <div className={patterns.align.right}>
               <p className={foundation.typography.body}>{match.score}</p>
-              <p className={foundation.typography.small}>{match.date}</p>
             </div>
           </div>
         ))}
@@ -86,7 +75,7 @@ const PlayerInfo: React.FC<{ player: { name: string; avatar: string } }> = ({ pl
     <img 
       src={player.avatar} 
       alt={player.name} 
-      className={cn(components.avatar.base, components.avatar.sizes.md)}
+      className={patterns.avatar.md}
     />
     <span className={foundation.typography.body}>{player.name}</span>
   </div>
