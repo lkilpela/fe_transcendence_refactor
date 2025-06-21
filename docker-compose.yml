@@ -15,3 +15,5 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+    env_file:
+      - ./backend/.env
