@@ -4,13 +4,11 @@ import { authService } from '@/services/authService'
 import React, { useState } from 'react'
 
 interface TwoFactorFormProps {
-  tempToken: string
   onSuccess: (token: string) => void
   onBackToLogin?: () => void
 }
 
 export const TwoFactorForm: React.FC<TwoFactorFormProps> = ({
-  tempToken,
   onSuccess,
   onBackToLogin,
 }) => {
@@ -29,7 +27,7 @@ export const TwoFactorForm: React.FC<TwoFactorFormProps> = ({
     setError(undefined)
 
     try {
-      const response = await authService.verify2FA(code, tempToken)
+      const response = await authService.verify2FA(code)
       onSuccess(response.token)
     } catch (err) {
       setError(err instanceof Error ? err.message : '2FA verification failed')
