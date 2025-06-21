@@ -1,33 +1,21 @@
 import { RegisterForm } from '@/components/features'
 import { PageLayout } from '@/components/layout'
 import { Button } from '@/components/ui'
-import { useAuth } from '@/hooks/useAuth'
+import { patterns } from '@/assets/design-system'
 import { ArrowLeft } from 'lucide-react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate()
-  const { register, isLoading, error } = useAuth()
 
   const handleBackToHome = () => {
     navigate('/')
   }
 
-  const handleRegisterSubmit = async (data: {
-    username: string
-    email: string
-    password: string
-    confirmPassword: string
-  }) => {
-    try {
-      await register(data.username, data.email, data.password)
-      // Registration successful - navigate to login
-      navigate('/login')
-    } catch {
-      // Error is already handled by AuthProvider
-      // Component can add additional error handling here if needed
-    }
+  const handleRegistrationSuccess = () => {
+    // Navigate to login page after successful registration
+    navigate('/login')
   }
 
   const handleGoogleSignUp = async () => {
@@ -43,13 +31,13 @@ const RegisterPage: React.FC = () => {
       background="primary"
     >
       <div className="w-full">
-          {/* Back Button */}
+        {/* Back Button */}
         <div className="mb-6">
           <Button
             variant="ghost"
             size="sm"
             onClick={handleBackToHome}
-            className="flex items-center gap-2 text-white hover:text-gray-200"
+            className={patterns.button.back}
           >
             <ArrowLeft size={16} />
             Back
@@ -57,13 +45,9 @@ const RegisterPage: React.FC = () => {
         </div>
 
         <RegisterForm
-          onSubmit={handleRegisterSubmit}
+          onSuccess={handleRegistrationSuccess}
           onGoogleSignUp={handleGoogleSignUp}
-          isLoading={isLoading}
         />
-
-        {/* Error Display */}
-        {error && <div className="mt-4 text-center text-red-400">{error}</div>}
       </div>
     </PageLayout>
   )

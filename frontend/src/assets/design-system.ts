@@ -258,7 +258,8 @@ export const patterns = {
     xl: 'h-20 w-20 rounded-full border-2',
   },
   button: {
-    danger: 'text-red-400 hover:text-red-300'
+    danger: 'text-red-400 hover:text-red-300',
+    back: 'flex items-center gap-2 text-white hover:text-gray-200'
   },
   message: {
     error: cn(

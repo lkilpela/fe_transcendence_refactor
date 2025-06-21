@@ -22,11 +22,14 @@ interface RegisterFormData {
 
 interface RegisterFormProps {
   onSubmit?: (data: RegisterFormData) => void
+  onSuccess?: () => void
   onGoogleSignUp?: () => void
   isLoading?: boolean
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({
+  onSubmit,
+  onSuccess,
   onGoogleSignUp,
   isLoading = false,
 }) => {
@@ -87,12 +90,24 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     if (validateForm()) {
       try {
         setIsSubmitting(true)
-        await authService.register(
-          formData.username,
-          formData.email,
-          formData.password
-        )
-        navigate('/profile')
+        
+        // Call parent's onSubmit if provided, otherwise handle internally
+        if (onSubmit) {
+          await onSubmit(formData)
+        } else {
+          await authService.register(
+            formData.username,
+            formData.email,
+            formData.password
+          )
+        }
+        
+        // Call success callback or navigate by default
+        if (onSuccess) {
+          onSuccess()
+        } else {
+          navigate('/')
+        }
       } catch (error) {
         console.log('Registration error:', error)
         if (error instanceof Error) {
