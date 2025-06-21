@@ -68,6 +68,3 @@ export const DesignSystemDemo: React.FC = () => {
     </div>
   )
 }
-
-export default DesignSystemDemo
- 

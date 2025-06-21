@@ -1,14 +1,20 @@
-import { content, foundation, layouts } from '@/assets/design-system'
+import { foundation, layouts, patterns } from '@/assets/design-system'
 import { LoginForm, TwoFactorForm } from '@/components/features'
 import { useAuth } from '@/hooks/useAuth'
+import { Button } from '@/components/ui'
 import { PageLayout } from '@/components/layout'
+import { ArrowLeft } from 'lucide-react'
 import { cn } from '@/utils/cn'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const LoginPage: React.FC = () => {
+export const LoginPage: React.FC = () => {
   const { login, verify2FA, requires2FA, tempToken, isLoading } = useAuth()
   const navigate = useNavigate()
+
+  const handleBackToHome = () => {
+    navigate('/')
+  }
 
   const handleLoginSubmit = async (data: {
     username: string
@@ -42,10 +48,9 @@ const LoginPage: React.FC = () => {
   if (requires2FA && tempToken) {
     return (
       <PageLayout
-        showSidebar={true}
-        showHeader={false}
+        showHeader={true}
         showFooter={true}
-        showPongBackground={true}
+        showPongBackground={false}
         background="primary"
       >
         <div className={layouts.hero.section}>
@@ -75,27 +80,25 @@ const LoginPage: React.FC = () => {
   // Show login form (default)
   return (
     <PageLayout
-      showSidebar={true}
-      showHeader={false}
+      showHeader={true}
       showFooter={true}
-      showPongBackground={true}
+      showPongBackground={false}
       background="primary"
     >
-      <div className={layouts.hero.section}>
-        <div className={layouts.hero.container}>
-          <h1 className={cn(foundation.typography.h1, layouts.hero.title)}>
-            {content.landing.welcome.title}
-          </h1>
-          <p className={cn(foundation.typography.body, layouts.hero.subtitle)}>
-            {content.landing.welcome.subtitle}
-          </p>
-          <p
-            className={cn(foundation.typography.body, layouts.hero.description)}
+      <div className="w-full">
+        {/* Back Button */}
+        <div className="mb-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleBackToHome}
+            className={patterns.button.back} 
           >
-            {content.landing.welcome.description}
-          </p>
+            <ArrowLeft size={16} />
+            Back
+          </Button>
         </div>
-
+        
         {/* Login Form */}
         <div className="w-full">
           <LoginForm
@@ -110,5 +113,3 @@ const LoginPage: React.FC = () => {
     </PageLayout>
   )
 }
-
-export default LoginPage

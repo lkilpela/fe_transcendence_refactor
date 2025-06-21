@@ -13,7 +13,7 @@ import { SearchBar } from '@/components/ui'
 import { useNavigate } from 'react-router-dom'
 import { foundation, layouts, patterns } from '@/assets/design-system'
 
-const Dashboard: React.FC = () => {
+export const Dashboard: React.FC = () => {
   const { user } = useAuth()
   const { userPlayers, createPlayer, updatePlayer, deletePlayer } = useUserPlayers()
   const { matches } = useMatchHistories()
@@ -107,5 +107,3 @@ const Dashboard: React.FC = () => {
     </PageLayout>
   )
 }
-
-export default Dashboard

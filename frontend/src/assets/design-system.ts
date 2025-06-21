@@ -466,7 +466,8 @@ export const layouts = {
     title: 'mb-6',
     subtitle: 'mb-4 text-xl',
     description: 'mb-8 text-lg',
-    buttons: 'gap-4 sm:flex-row',
+    buttons: 'flex flex-col sm:flex-row gap-4 max-w-md mx-auto',
+    buttonLink: 'flex-1',
   },
 
   // Header section

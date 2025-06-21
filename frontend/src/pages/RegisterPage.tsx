@@ -6,7 +6,7 @@ import { ArrowLeft } from 'lucide-react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const RegisterPage: React.FC = () => {
+export const RegisterPage: React.FC = () => {
   const navigate = useNavigate()
 
   const handleBackToHome = () => {
@@ -27,7 +27,7 @@ const RegisterPage: React.FC = () => {
     <PageLayout
       showHeader={true}
       showFooter={true}
-      showPongBackground={true}
+      showPongBackground={false}
       background="primary"
     >
       <div className="w-full">
@@ -52,5 +52,3 @@ const RegisterPage: React.FC = () => {
     </PageLayout>
   )
 }
-
-export default RegisterPage

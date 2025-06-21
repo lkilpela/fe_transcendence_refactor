@@ -8,7 +8,7 @@ import { useGameState } from '@/hooks/useGameState'
 import { GameState } from '@/types'
 import { GAME_CONSTANTS } from '@/utils/constants'
 
-const GamePage: React.FC = () => {
+export const GamePage: React.FC = () => {
   const location = useLocation()
   const gameState = location.state as GameState
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -108,5 +108,3 @@ const GamePage: React.FC = () => {
     </PageLayout>
   )
 }
-
-export default GamePage 
