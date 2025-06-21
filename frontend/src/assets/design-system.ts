@@ -356,6 +356,40 @@ export const patterns = {
       'text-sm text-slate-400'
     )
   },
+
+  // Game patterns
+  game: {
+    container: cn(
+      'flex flex-col items-center w-full',
+      'space-y-6'
+    ),
+    header: {
+      container: cn(
+        'flex items-center justify-between',
+        'w-full max-w-[800px] mb-6'
+      ),
+      player: {
+        container: 'flex items-center gap-3',
+        info: (isRightAligned?: boolean) => cn(
+          'flex flex-col gap-2',
+          isRightAligned && 'items-end'
+        )
+      },
+      matchInfo: 'flex flex-col items-center gap-2'
+    },
+    canvas: {
+      wrapper: cn(
+        'relative overflow-hidden',
+        'w-[800px] h-[600px]',
+        foundation.glass.light
+      ),
+      element: 'block w-full h-full',
+      message: {
+        status: 'absolute top-8 left-1/2 -translate-x-1/2',
+        result: 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4'
+      }
+    }
+  }
 } as const
 
 // ===== FORMS SYSTEM

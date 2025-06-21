@@ -74,3 +74,11 @@ export interface Tournament {
 export interface MatchData {
   match_id: string
 }
+
+export interface GameState {
+  matchType: 'semifinal' | 'final' | '1v1'
+  matchId: number
+  player1: { name: string; avatar: string; id: number}
+  player2: { name: string; avatar: string; id: number }
+  returnTo?: string
+}
