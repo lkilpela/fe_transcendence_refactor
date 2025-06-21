@@ -1,6 +1,5 @@
 import { storage } from '../utils/storage'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://localhost:3001'
+import { API_URL } from '@/utils/constants'
 
 /**
  * Create headers for API requests
@@ -42,7 +41,7 @@ const handleResponse = async <T>(res: Response): Promise<T> => {
  */
 export const request = async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
   const token = storage.get('token', null)
-  const res = await fetch(`${API_BASE_URL}${endpoint}`, {
+  const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers: createHeaders(token),
   })

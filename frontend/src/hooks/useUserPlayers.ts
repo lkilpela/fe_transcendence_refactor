@@ -1,9 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { UserPlayer, RawPlayer } from '@/types'
 import { request } from '@/services'
-
-
-const API_URL = import.meta.env.VITE_API_URL || 'https://localhost:3001'
+import { API_URL } from '@/utils/constants'
 
 export const useUserPlayers = () => {
   const [userPlayers, setUserPlayers] = useState<UserPlayer[]>([])

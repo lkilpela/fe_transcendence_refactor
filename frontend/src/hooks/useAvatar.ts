@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { userService } from '@/services'
 import { User } from '@/types'
-
-const API_URL = import.meta.env.VITE_API_URL || 'https://localhost:3001'
+import { API_URL } from '@/utils/constants'
 
 export const useAvatar = (userId: string | null) => {
   const [avatar, setAvatar] = useState<string>('')

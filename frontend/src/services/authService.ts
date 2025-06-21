@@ -1,6 +1,7 @@
 import { LoginResponse, User } from '../types'
 import { storage } from '../utils/storage'
 import { request } from './api'
+import { API_URL } from '@/utils/constants'
 
 /**
  * Authentication service
@@ -83,7 +84,7 @@ export const authService = {
   getCurrentUser: (): User | null => storage.get('user', null),
 
   getGoogleAuthUrl: (): string =>
-    `${import.meta.env.VITE_API_URL}/api/auth/google`,
+    `${API_URL}/api/auth/google`,
 
   requestPasswordReset: async (email: string): Promise<void> => {
     await request('/password-reset', {
