@@ -14,6 +14,7 @@ export default defineConfig({
 			cert: fs.readFileSync(path.resolve(process.env.SSL_CERT!)),
 		},
 		port: 5173,
+		host: '0.0.0.0',
 		headers: {
 			'Cross-Origin-Opener-Policy': '',
 			'Cross-Origin-Embedder-Policy': '',
