@@ -366,6 +366,8 @@ export const forms = {
   auth: {
     card: 'mx-auto max-w-md p-8',
     header: 'mb-6 text-center',
+    iconContainer: 'mb-4 flex justify-center',
+    subtitle: 'mt-2',
     controls: patterns.flex.rowBetween,
     footer: patterns.align.center,
     link: 'text-sm text-blue-400 hover:text-blue-300 transition-colors',

@@ -57,16 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   return (
     <AuthCard>
-      <AuthHeader
-        title=""
-        icon={
-          <img
-            src="https://api.dicebear.com/7.x/avataaars/svg?seed=login&size=100"
-            alt="Avatar"
-            className={forms.auth.icon}
-          />
-        }
-      />
+      <AuthHeader />
 
       <form onSubmit={handleSubmit} className={forms.container}>
         <FormField

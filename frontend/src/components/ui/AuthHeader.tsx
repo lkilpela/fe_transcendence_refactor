@@ -3,18 +3,36 @@ import { cn } from '@/utils/cn'
 import React from 'react'
 
 interface AuthHeaderProps {
-  title: string
+  title?: string
   subtitle?: string
   icon?: React.ReactNode
+  showDefaultAvatar?: boolean
+  avatarSeed?: string
 }
 
-const AuthHeader: React.FC<AuthHeaderProps> = ({ title, subtitle, icon }) => {
+const AuthHeader: React.FC<AuthHeaderProps> = ({ 
+  title = '', 
+  subtitle, 
+  icon, 
+  showDefaultAvatar = true,
+  avatarSeed = 'login'
+}) => {
+  const defaultAvatar = (
+    <img
+      src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${avatarSeed}&size=100`}
+      alt="Avatar"
+      className={forms.auth.icon}
+    />
+  )
+
+  const displayIcon = icon || (showDefaultAvatar ? defaultAvatar : null)
+
   return (
     <div className={forms.auth.header}>
-      {icon && <div className="mb-4 flex justify-center">{icon}</div>}
-      <h3 className={foundation.typography.h3}>{title}</h3>
+      {displayIcon && <div className={forms.auth.iconContainer}>{displayIcon}</div>}
+      {title && <h3 className={foundation.typography.h3}>{title}</h3>}
       {subtitle && (
-        <p className={cn(foundation.typography.body, 'mt-2')}>{subtitle}</p>
+        <p className={cn(foundation.typography.body, forms.auth.subtitle)}>{subtitle}</p>
       )}
     </div>
   )
