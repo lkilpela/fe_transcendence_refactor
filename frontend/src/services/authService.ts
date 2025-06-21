@@ -12,30 +12,65 @@ export const authService = {
     username: string,
     password: string,
     rememberMe?: boolean,
-  ): Promise<void> => {
-    const {
-      token,
-      id,
-      username: name,
-    } = await request<LoginResponse>('/', {
+  ): Promise<{ requires2FA?: boolean; userId?: number }> => {
+    const response = await fetch(`${API_URL}/login`, {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password, rememberMe }),
     })
-    storage.set('token', token)
-    storage.set('user', { id, username: name })
+
+    const data = await response.json().catch(() => null)
+
+    if (response.status === 206) {
+      // 2FA required
+      return { requires2FA: true, userId: data.userId }
+    }
+
+    if (response.status === 200) {
+      // Successful login
+      const { token, id, username: name } = data
+      storage.set('token', token)
+      storage.set('user', { id, username: name })
+      return {}
+    }
+
+    // Handle other error cases
+    if (response.status === 401) {
+      storage.remove('token')
+    }
+    
+    throw new Error(data?.error || data?.message || `Login failed with status ${response.status}`)
   },
 
-  login2FA: async (code: string): Promise<void> => {
-    const {
-      token,
-      id,
-      username: name,
-    } = await request<LoginResponse>('/login/2fa', {
+  login2FA: async (userId: number, code: string): Promise<void> => {
+    const { token } = await request<{ token: string }>('/login/2fa', {
       method: 'POST',
-      body: JSON.stringify({ code }),
+      body: JSON.stringify({ userId, code }),
     })
     storage.set('token', token)
-    storage.set('user', { id, username: name })
+    
+    // Fetch complete user data after successful 2FA
+    try {
+      const userResponse = await fetch(`${API_URL}/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      if (userResponse.ok) {
+        const userData = await userResponse.json()
+        storage.set('user', { 
+          id: userData.id, 
+          username: userData.username,
+          email: userData.email,
+          avatar_url: userData.avatar_url 
+        })
+      } else {
+        // Fallback to minimal user info if user fetch fails
+        storage.set('user', { id: userId, username: '' })
+      }
+    } catch (error) {
+      console.error('Failed to fetch user data after 2FA:', error)
+      // Fallback to minimal user info
+      storage.set('user', { id: userId, username: '' })
+    }
   },
 
   googleLogin: async (googleToken: string): Promise<void> => {
@@ -51,16 +86,15 @@ export const authService = {
   },
 
   check2FAStatus: async (): Promise<{ enabled: boolean }> => {
-    return request('/2fa/status')
+    return request('/api/2fa/status')
   },
 
   verify2FA: async (
     code: string,
-    tempToken: string,
   ): Promise<{ token: string }> => {
-    const response = await request<{ token: string }>('/auth/2fa/verify', {
+    const response = await request<{ token: string }>('/api/2fa/verify', {
       method: 'POST',
-      body: JSON.stringify({ code, tempToken }),
+      body: JSON.stringify({ token: code }),
     })
     return response
   },

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useAuth, useAvatar, useUserPlayers, useMatchHistories } from '@/hooks'
+import { storage } from '@/utils/storage'
 import { PageLayout } from '@/components/layout'
 import {
   PlayerManagement,
@@ -11,9 +12,7 @@ import {
 import { SearchBar } from '@/components/ui'
 import { Avatar, AvatarInput } from '@/components/ui/AvatarMenu'
 import { useNavigate } from 'react-router-dom'
-import { foundation, layouts } from '@/assets/design-system'
-import { cn } from '@/utils/cn'
-import { request } from '@/services'
+import { foundation, layouts, components, patterns } from '@/assets/design-system'
 
 const Dashboard: React.FC = () => {
   const { user, logout } = useAuth()
@@ -27,8 +26,12 @@ const Dashboard: React.FC = () => {
 
     const deleteUnfinishedMatches = async () => {
       try {
-          await request<{ message: string }>('/match-histories', {
-            method: 'DELETE'
+          const token = storage.get('token', null)
+          await fetch(`${import.meta.env.VITE_API_URL || 'https://localhost:3001'}/match-histories`, {
+            method: 'DELETE',
+            headers: {
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
           })
       } catch (error) {
           console.error('Error deleting unfinished matches:', error)
@@ -43,20 +46,20 @@ const Dashboard: React.FC = () => {
     }
   }
 
-  // if (!user?.username) {
-  //   return (
-  //     <PageLayout
-  //       showSidebar={true}
-  //       showHeader={true}
-  //       showFooter={true}
-  //       background="primary"
-  //     >
-  //       <div className={cn(foundation.typography.body, layouts.hero.section)}>
-  //         Please log in to view the dashboard
-  //       </div>
-  //     </PageLayout>
-  //   )
-  // }
+  if (!user?.username) {
+    return (
+      <PageLayout
+        showSidebar={true}
+        showHeader={true}
+        showFooter={true}
+        background="primary"
+      >
+        <div className={foundation.typography.body}>
+          Please log in to view the dashboard
+        </div>
+      </PageLayout>
+    )
+  }
 
   return (
     <PageLayout
@@ -67,38 +70,48 @@ const Dashboard: React.FC = () => {
     >
       <div className={layouts.hero.section}>
         <div className={layouts.hero.container}>
+          {/* Header */}
           <div className={layouts.grid.header}>
-            <h1 className={cn(foundation.typography.h1, layouts.hero.title)}>
+            <h1 className={foundation.typography.h1}>
               Welcome to Dashboard
             </h1>
-            <div className="flex items-center gap-4">
+            <div className={patterns.flex.rowGap.lg}>
               <SearchBar onSearch={handleSearch} />
               <AvatarInput onAvatarChange={handleAvatarChange}>
                 <Avatar src={avatar} alt="User Avatar" size="md" />
               </AvatarInput>
-              <button onClick={logout} className="ml-4">Logout</button>
+              <button 
+                onClick={logout} 
+                className={`${components.button.base} ${components.button.sizes.sm} ${patterns.button.danger}`}
+              >
+                Logout
+              </button>
             </div>
           </div>
 
-          <div className={layouts.grid.twoColumn}>
-            <QuickPlay 
-              userPlayers={userPlayers} 
-            />
-            <PlayerManagement
-              userPlayers={userPlayers}
-              onCreatePlayer={createPlayer}
-              onUpdatePlayer={updatePlayer}
-              onDeletePlayer={deletePlayer}
-            />
-          </div>
+          {/* Main Content Grid */}
+          <div className={patterns.spacing.stack.xl}>
+            {/* Quick Play & Player Management */}
+            <div className={layouts.grid.twoColumn}>
+              <QuickPlay userPlayers={userPlayers} />
+              <PlayerManagement
+                userPlayers={userPlayers}
+                onCreatePlayer={createPlayer}
+                onUpdatePlayer={updatePlayer}
+                onDeletePlayer={deletePlayer}
+              />
+            </div>
 
-          <div className={layouts.grid.twoColumnWithMargin}>
-            <GameStats userPlayers={userPlayers} />
-            <MatchHistory matches={matches} />
-          </div>
+            {/* Stats & Match History */}
+            <div className={layouts.grid.twoColumn}>
+              <GameStats userPlayers={userPlayers} />
+              <MatchHistory matches={matches} />
+            </div>
 
-          <div className="mt-6">
-            <TopPlayers players={userPlayers} />
+            {/* Top Players */}
+            <div className={patterns.spacing.section}>
+              <TopPlayers players={userPlayers} />
+            </div>
           </div>
         </div>
       </div>

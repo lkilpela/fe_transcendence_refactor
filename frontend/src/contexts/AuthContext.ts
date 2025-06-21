@@ -14,7 +14,7 @@ export interface AuthContextType {
   login2FA: (code: string) => Promise<void>
   loginWithGoogle: (googleToken: string) => Promise<void>
   logout: () => Promise<void>
-  verify2FA: (token: string) => Promise<void>
+  verify2FA: (code: string) => Promise<void>
   requires2FA: boolean
   tempToken: string | null
 }

@@ -2,6 +2,20 @@ import { storage } from '../utils/storage'
 import { API_URL } from '@/utils/constants'
 
 /**
+ * Callback function to handle session expiration
+ * This will be set by the AuthProvider to handle logout when session expires
+ */
+let onSessionExpired: (() => void) | null = null
+
+/**
+ * Set the session expiration callback
+ * @param callback - Function to call when session expires
+ */
+export const setSessionExpiredCallback = (callback: (() => void) | null) => {
+  onSessionExpired = callback
+}
+
+/**
  * Create headers for API requests
  * @param token - The JWT token for authentication
  * @returns The headers object
@@ -19,7 +33,11 @@ const createHeaders = (token: string | null) => ({
 const handleResponse = async <T>(res: Response): Promise<T> => {
   if (res.status === 401) {
     storage.remove('token')
-    // Don't automatically redirect, let the component handle it
+    storage.remove('user')
+    // Notify the auth context about session expiration
+    if (onSessionExpired) {
+      onSessionExpired()
+    }
     throw new Error('Session expired')
   }
 

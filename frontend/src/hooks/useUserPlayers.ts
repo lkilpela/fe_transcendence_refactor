@@ -26,6 +26,10 @@ export const useUserPlayers = () => {
         setUserPlayers(mapped)
       } catch (error) {
         console.error('Failed to fetch players:', error)
+        // Don't show alert for session expired errors as it's handled by AuthProvider
+        if (error instanceof Error && error.message !== 'Session expired') {
+          alert('Failed to fetch players. Please try again.')
+        }
       }
     }
 
@@ -54,6 +58,10 @@ export const useUserPlayers = () => {
       setUserPlayers(mapped)
     } catch (error) {
       console.error(error)
+      if (error instanceof Error && error.message === 'Session expired') {
+        // Don't show alert for session expired as it's handled by AuthProvider
+        return
+      }
       alert(`Failed to create player: ${playerName}`)
     }
   }, [])
@@ -81,6 +89,10 @@ export const useUserPlayers = () => {
         )
       } catch (error) {
         console.error(error)
+        if (error instanceof Error && error.message === 'Session expired') {
+          // Don't show alert for session expired as it's handled by AuthProvider
+          return
+        }
         alert(`Failed to update player: ${playerId}`)
       }
     },
@@ -95,6 +107,10 @@ export const useUserPlayers = () => {
       setUserPlayers((prev) => prev.filter((player) => player.id.toString() !== playerId))
     } catch (error) {
       console.error(error)
+      if (error instanceof Error && error.message === 'Session expired') {
+        // Don't show alert for session expired as it's handled by AuthProvider
+        return
+      }
       alert(`Failed to delete player: ${playerId}`)
     }
   }, [])
