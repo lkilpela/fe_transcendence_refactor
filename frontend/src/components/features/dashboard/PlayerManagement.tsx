@@ -105,14 +105,14 @@ export const PlayerManagement: React.FC<PlayerManagementProps> = ({
           {userPlayers.map((player) => (
             <div
               key={player.id}
-              className={components.card.variants.interactive}
+              className={cn(components.card.base, components.card.variants.glass, components.card.padding.md)}
             >
               <div className={patterns.flex.rowBetween}>
                 <div className={patterns.flex.rowGap.md}>
                   <img
                     src={player.avatar}
                     alt={t('Player avatar')}
-                    className={cn(components.avatar.base, components.avatar.sizes.sm)}
+                    className={patterns.avatar.sm}
                   />
                   <span className={foundation.typography.body}>{player.display_name}</span>
                 </div>

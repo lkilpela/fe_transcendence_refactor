@@ -282,21 +282,36 @@ export const patterns = {
     )
   },
 
-  // Modal patterns
+  // Modal patterns - Simple & Clean
   modal: {
-    overlay: cn(
-      'fixed inset-0 bg-black/50 flex items-center justify-center',
-      foundation.glass.strong
-    ),
+    // Base overlay - covers entire screen
+    overlay: 'fixed inset-0 bg-black/60 flex items-center justify-center z-50',
+    
+    // Content container - clean and simple
     content: cn(
-      'w-full max-w-md p-6 rounded-lg',
-      foundation.glass.light
+      'bg-white/10 backdrop-blur-md border border-white/20',
+      'rounded-xl p-6 mx-4 max-w-md w-full',
+      'shadow-xl'
     ),
-    header: cn(
-      foundation.typography.h3,
-      'mb-4'
+    
+    // Header - simple title area
+    header: 'mb-4',
+    title: foundation.typography.h3,
+    subtitle: cn(foundation.typography.small, 'text-gray-300 mt-1'),
+    
+    // Body - main content area
+    body: 'mb-6',
+    
+    // Footer - action buttons
+    footer: 'flex gap-3 justify-end',
+    
+    // Player selection item
+    playerItem: cn(
+      'flex items-center justify-between p-3 rounded-lg',
+      'bg-white/5 border border-white/10 hover:bg-white/10',
+      'transition-colors cursor-pointer'
     ),
-    footer: 'flex items-center gap-2 mt-4'
+    playerSelected: 'ring-2 ring-blue-500 bg-blue-500/10'
   },
 
   // Feature-specific patterns
@@ -339,21 +354,22 @@ export const patterns = {
   },
   gameModeButton: {
     base: cn(
-      'flex flex-col items-center justify-center p-8',
-      'bg-slate-800/50 hover:bg-slate-700/50',
+      'flex flex-col items-center justify-center p-6',
+      foundation.glass.light,
+      'hover:bg-white/15 border border-white/20 hover:border-white/30',
       'rounded-xl transition-all duration-200',
-      'min-w-[200px] aspect-square'
+      'min-h-[180px] w-full'
     ),
     icon: cn(
-      'text-4xl mb-4',
-      'text-slate-400'
+      'text-5xl mb-3',
+      'text-white'
     ),
     title: cn(
-      'text-2xl font-medium text-slate-300',
+      'text-xl font-semibold text-white',
       'mb-2'
     ),
     players: cn(
-      'text-sm text-slate-400'
+      'text-sm text-gray-300'
     )
   },
 
@@ -541,6 +557,7 @@ export const layouts = {
     header: 'flex justify-between items-center mb-8',
     twoColumn: 'grid grid-cols-1 md:grid-cols-2 gap-6',
     twoColumnWithMargin: 'grid grid-cols-1 md:grid-cols-2 gap-6 mt-6',
+    gameModes: 'grid grid-cols-1 md:grid-cols-2 gap-6',
   },
 
   // UNUSED PATTERNS - COMMENTED OUT ❌

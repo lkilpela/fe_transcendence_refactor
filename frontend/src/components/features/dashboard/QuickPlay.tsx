@@ -1,4 +1,4 @@
-import { components, foundation, patterns } from '@/assets/design-system'
+import { components, foundation, patterns, layouts } from '@/assets/design-system'
 import { Button, Card } from '@/components/ui'
 import useTranslate from '@/hooks/useTranslate'
 import { gameService } from '@/services/gameService'
@@ -163,7 +163,7 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
     <Card padding="lg">
       <div className={patterns.spacing.stack.md}>
         <h2 className={foundation.typography.h3}>{t('Game Modes')}</h2>
-        <div className={patterns.flex.rowGap.lg}>
+        <div className={layouts.grid.gameModes}>
           <Button
             onClick={handleOneVsOneClick}
             variant="primary"
@@ -193,28 +193,53 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
       {showModal1v1 && (
         <div className={patterns.modal.overlay}>
           <div className={patterns.modal.content}>
-            <h3 className={foundation.typography.h3}>
-              {t('Select 2 Players For 1v1 Match')}
-            </h3>
-            <div className={patterns.spacing.stack.sm}>
-              {userPlayers.map((player) => (
-                <label key={player.id} className={patterns.flex.rowBetween}>
-                  <span className={foundation.typography.body}>
-                    {player.display_name}
-                  </span>
-                  <input
-                    type="checkbox"
-                    checked={selected1v1Players.includes(player.id)}
-                    onChange={() => handleToggle1v1Player(player.id)}
-                    disabled={
-                      !selected1v1Players.includes(player.id) &&
-                      selected1v1Players.length >= 2
-                    }
-                    className={components.checkbox.input}
-                  />
-                </label>
-              ))}
+            {/* Header */}
+            <div className={patterns.modal.header}>
+              <h3 className={patterns.modal.title}>
+                {t('Select Players')}
+              </h3>
+              <p className={patterns.modal.subtitle}>
+                {t('Choose 2 players')} ({selected1v1Players.length}/2)
+              </p>
             </div>
+            
+            {/* Body */}
+            <div className={patterns.modal.body}>
+              <div className={patterns.spacing.stack.sm}>
+                {userPlayers.map((player) => (
+                  <div
+                    key={player.id}
+                    className={`${patterns.modal.playerItem} ${
+                      selected1v1Players.includes(player.id) ? patterns.modal.playerSelected : ''
+                    }`}
+                    onClick={() => handleToggle1v1Player(player.id)}
+                  >
+                    <div className={patterns.flex.rowGap.sm}>
+                      <img
+                        src={player.avatar}
+                        alt={player.display_name}
+                        className={patterns.avatar.sm}
+                      />
+                      <span className={foundation.typography.body}>
+                        {player.display_name}
+                      </span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={selected1v1Players.includes(player.id)}
+                      onChange={() => {}} // Handled by div onClick
+                      disabled={
+                        !selected1v1Players.includes(player.id) &&
+                        selected1v1Players.length >= 2
+                      }
+                      className="pointer-events-none"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Footer */}
             <div className={patterns.modal.footer}>
               <Button
                 onClick={() => setShowModal1v1(false)}
@@ -240,28 +265,49 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
       {showModalTourn && (
         <div className={patterns.modal.overlay}>
           <div className={patterns.modal.content}>
-            <h3 className={foundation.typography.h3}>
-              {t('Select 4-8 Players for Tournament')}
-            </h3>
-            <div className={patterns.spacing.stack.sm}>
+            <div className={patterns.modal.header}>
+              <h3 className={foundation.typography.h3}>
+                {t('Select 4-8 Players for Tournament')}
+              </h3>
+              <p className={foundation.typography.small}>
+                {t('Choose between 4-8 players for tournament')} ({selectedTournamentPlayers.length}/8)
+              </p>
+            </div>
+            
+            <div className={patterns.spacing.stack.md}>
               {userPlayers.map((player) => (
-                <label key={player.id} className={patterns.flex.rowBetween}>
-                  <span className={foundation.typography.body}>
-                    {player.display_name}
-                  </span>
-                  <input
-                    type="checkbox"
-                    checked={selectedTournamentPlayers.includes(player.id)}
-                    onChange={() => handleToggleTournamentPlayer(player.id)}
-                    disabled={
-                      !selectedTournamentPlayers.includes(player.id) &&
-                      selectedTournamentPlayers.length >= 8
-                    }
-                    className={components.checkbox.input}
-                  />
-                </label>
+                <div
+                  key={player.id}
+                  className={`${components.card.base} ${components.card.variants.glass} ${components.card.padding.sm} ${
+                    selectedTournamentPlayers.includes(player.id) ? 'ring-2 ring-blue-500' : ''
+                  }`}
+                >
+                  <label className={`${patterns.flex.rowBetween} cursor-pointer`}>
+                    <div className={patterns.flex.rowGap.md}>
+                      <img
+                        src={player.avatar}
+                        alt={player.display_name}
+                        className={patterns.avatar.sm}
+                      />
+                      <span className={foundation.typography.body}>
+                        {player.display_name}
+                      </span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={selectedTournamentPlayers.includes(player.id)}
+                      onChange={() => handleToggleTournamentPlayer(player.id)}
+                      disabled={
+                        !selectedTournamentPlayers.includes(player.id) &&
+                        selectedTournamentPlayers.length >= 8
+                      }
+                      className={components.checkbox.input}
+                    />
+                  </label>
+                </div>
               ))}
             </div>
+            
             <div className={patterns.modal.footer}>
               <Button
                 onClick={() => setShowModalTourn(false)}
