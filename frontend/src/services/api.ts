@@ -26,19 +26,36 @@ const createHeaders = (token: string | null) => ({
 })
 
 /**
+ * Custom error class for session expiration
+ */
+export class SessionExpiredError extends Error {
+  constructor() {
+    super('Session expired')
+    this.name = 'SessionExpiredError'
+  }
+}
+
+/**
  * Handle API response
  * @param res - The response object
  * @returns The response data
  */
 const handleResponse = async <T>(res: Response): Promise<T> => {
   if (res.status === 401) {
+    // Clean up local storage
     storage.remove('token')
     storage.remove('user')
+    
     // Notify the auth context about session expiration
     if (onSessionExpired) {
-      onSessionExpired()
+      // Use setTimeout to avoid race conditions and allow AuthProvider to handle this gracefully
+      setTimeout(() => {
+        onSessionExpired?.()
+      }, 0)
     }
-    throw new Error('Session expired')
+    
+    // Throw a custom error that can be easily identified and handled
+    throw new SessionExpiredError()
   }
 
   const data = await res.json().catch(() => null)

@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
-import { request } from '@/services'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { request, SessionExpiredError } from '@/services'
 
 export interface MatchPlayer {
   player_id: number
@@ -28,18 +28,30 @@ export const useMatchHistories = () => {
   const [matches, setMatches] = useState<MatchHistory[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<unknown>(null)
+  const fetchingRef = useRef(false)
 
   const fetchMatches = useCallback(async () => {
+    // Prevent duplicate requests
+    if (fetchingRef.current) return
+    
+    fetchingRef.current = true
     setLoading(true)
+    
     try {
       const data = await request<MatchHistory[]>('/match-histories')
       setMatches(data)
       setError(null)
     } catch (err) {
+      // Handle session expiration silently - AuthProvider will handle the redirect
+      if (err instanceof SessionExpiredError) {
+        return
+      }
+      
       console.error(err)
       setError(err)
     } finally {
       setLoading(false)
+      fetchingRef.current = false
     }
   }, [])
 
@@ -48,6 +60,11 @@ export const useMatchHistories = () => {
       const match = await request<MatchHistory>(`/match-histories/${id}`)
       return match
     } catch (err) {
+      // Handle session expiration silently - AuthProvider will handle the redirect
+      if (err instanceof SessionExpiredError) {
+        return
+      }
+      
       console.error(err)
       throw err
     }
@@ -65,6 +82,11 @@ export const useMatchHistories = () => {
       setMatches((prev) => [...prev, response.item])
       return response.item
     } catch (err) {
+      // Handle session expiration silently - AuthProvider will handle the redirect
+      if (err instanceof SessionExpiredError) {
+        return
+      }
+      
       console.error(err)
       throw err
     }
@@ -84,6 +106,11 @@ export const useMatchHistories = () => {
       )
       return response.item
     } catch (err) {
+      // Handle session expiration silently - AuthProvider will handle the redirect
+      if (err instanceof SessionExpiredError) {
+        return
+      }
+      
       console.error(err)
       throw err
     }
@@ -96,6 +123,11 @@ export const useMatchHistories = () => {
       })
       setMatches((prev) => prev.filter((match) => match.id !== id))
     } catch (err) {
+      // Handle session expiration silently - AuthProvider will handle the redirect
+      if (err instanceof SessionExpiredError) {
+        return
+      }
+      
       console.error(err)
       throw err
     }

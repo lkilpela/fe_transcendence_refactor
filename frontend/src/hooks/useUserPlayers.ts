@@ -1,14 +1,22 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { UserPlayer, RawPlayer } from '@/types'
-import { request } from '@/services'
+import { request, SessionExpiredError } from '@/services'
 import { API_URL } from '@/utils/constants'
 
 export const useUserPlayers = () => {
   const [userPlayers, setUserPlayers] = useState<UserPlayer[]>([])
+  const [loading, setLoading] = useState(false)
+  const fetchingRef = useRef(false)
 
   // Fetch all players when component mounts
   useEffect(() => {
     const fetchPlayers = async () => {
+      // Prevent duplicate requests
+      if (fetchingRef.current) return
+      
+      fetchingRef.current = true
+      setLoading(true)
+      
       try {
         const rawPlayers = await request<RawPlayer[]>('/players')
         const mapped = rawPlayers.map((r) => ({
@@ -25,11 +33,16 @@ export const useUserPlayers = () => {
         }))
         setUserPlayers(mapped)
       } catch (error) {
-        console.error('Failed to fetch players:', error)
-        // Don't show alert for session expired errors as it's handled by AuthProvider
-        if (error instanceof Error && error.message !== 'Session expired') {
-          alert('Failed to fetch players. Please try again.')
+        // Handle session expiration silently - AuthProvider will handle the redirect
+        if (error instanceof SessionExpiredError) {
+          return
         }
+        
+        console.error('Failed to fetch players:', error)
+        alert('Failed to fetch players. Please try again.')
+      } finally {
+        setLoading(false)
+        fetchingRef.current = false
       }
     }
 
@@ -57,11 +70,12 @@ export const useUserPlayers = () => {
       }))
       setUserPlayers(mapped)
     } catch (error) {
-      console.error(error)
-      if (error instanceof Error && error.message === 'Session expired') {
-        // Don't show alert for session expired as it's handled by AuthProvider
+      // Handle session expiration silently - AuthProvider will handle the redirect
+      if (error instanceof SessionExpiredError) {
         return
       }
+      
+      console.error(error)
       alert(`Failed to create player: ${playerName}`)
     }
   }, [])
@@ -88,11 +102,12 @@ export const useUserPlayers = () => {
           prev.map((p) => (p.id.toString() === playerId ? updated : p))
         )
       } catch (error) {
-        console.error(error)
-        if (error instanceof Error && error.message === 'Session expired') {
-          // Don't show alert for session expired as it's handled by AuthProvider
+        // Handle session expiration silently - AuthProvider will handle the redirect
+        if (error instanceof SessionExpiredError) {
           return
         }
+        
+        console.error(error)
         alert(`Failed to update player: ${playerId}`)
       }
     },
@@ -106,17 +121,19 @@ export const useUserPlayers = () => {
       })
       setUserPlayers((prev) => prev.filter((player) => player.id.toString() !== playerId))
     } catch (error) {
-      console.error(error)
-      if (error instanceof Error && error.message === 'Session expired') {
-        // Don't show alert for session expired as it's handled by AuthProvider
+      // Handle session expiration silently - AuthProvider will handle the redirect
+      if (error instanceof SessionExpiredError) {
         return
       }
+      
+      console.error(error)
       alert(`Failed to delete player: ${playerId}`)
     }
   }, [])
 
   return {
     userPlayers,
+    loading,
     createPlayer,
     updatePlayer,
     deletePlayer,

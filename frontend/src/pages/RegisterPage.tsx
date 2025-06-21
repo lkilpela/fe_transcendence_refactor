@@ -15,7 +15,7 @@ const RegisterPage: React.FC = () => {
 
   const handleRegistrationSuccess = () => {
     // Navigate to login page after successful registration
-    navigate('/login')
+    navigate('/dashboard')
   }
 
   const handleGoogleSignUp = async () => {
