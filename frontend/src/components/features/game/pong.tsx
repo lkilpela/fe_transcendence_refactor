@@ -104,13 +104,13 @@ export const Pong: React.FC<PongProps> = ({
     let goalScored = false  // Prevent multiple scoring on same ball
 
     const keyDownHandler = (e: KeyboardEvent) => {
-      if (['ArrowUp', 'ArrowDown', ' ','Spacebar'].includes(e.key)) e.preventDefault()
+      if (['ArrowUp', 'ArrowDown', ' ','Spacer'].includes(e.key)) e.preventDefault()
       if (e.key === 'w' || e.key === 'W') paddle1Up = true
       if (e.key === 's' || e.key === 'S') paddle1Down = true
       if (e.key === 'ArrowUp') paddle2Up = true
       if (e.key === 'ArrowDown') paddle2Down = true
 
-      if (e.key === 'Spacebar' || e.key === ' ') setMatchStarted(true)
+      if (e.key === 'Spacer' || e.key === ' ') setMatchStarted(true)
     }
 
     const keyUpHandler = (e: KeyboardEvent) => {
