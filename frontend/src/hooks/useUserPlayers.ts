@@ -1,7 +1,17 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { UserPlayer, RawPlayer } from '@/types'
+import { UserPlayer } from '@/types'
 import { request, SessionExpiredError } from '@/services'
 import { API_URL } from '@/utils/constants'
+
+interface RawPlayer {
+  id: number
+  display_name: string
+  avatar?: string
+  wins: number
+  losses: number
+  isActive?: boolean
+  points?: number
+}
 
 export const useUserPlayers = () => {
   const [userPlayers, setUserPlayers] = useState<UserPlayer[]>([])

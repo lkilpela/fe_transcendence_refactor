@@ -100,13 +100,13 @@ export const PlayerManagement: React.FC<PlayerManagementProps> = ({
           </Button>
         </div>
 
-        {/* Simplified Player List */}
+        {/* Player List using design system patterns */}
         {userPlayers.length > 0 ? (
-          <div className="space-y-2">
+          <div className={patterns.spacing.stack.sm}>
             {userPlayers.map((player) => (
               <div
                 key={player.id}
-                className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+                className={patterns.modal.playerItem}
               >
                 <div className={patterns.flex.rowGap.sm}>
                   <img
@@ -118,7 +118,7 @@ export const PlayerManagement: React.FC<PlayerManagementProps> = ({
                 </div>
                 <button
                   onClick={() => onDeletePlayer(player.id.toString())}
-                  className="p-1 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded transition-colors"
+                  className={patterns.button.iconDanger}
                   title={t('Delete player')}
                 >
                   <Trash2 size={14} />
@@ -127,10 +127,12 @@ export const PlayerManagement: React.FC<PlayerManagementProps> = ({
             ))}
           </div>
         ) : (
-          <div className="text-center py-4">
-            <p className={foundation.typography.small}>
-              {t('No players created yet')}
-            </p>
+          <div className={patterns.align.center}>
+            <div className={patterns.spacing.stack.sm}>
+              <p className={foundation.typography.body}>
+                {t('No players created yet')}
+              </p>
+            </div>
           </div>
         )}
       </div>

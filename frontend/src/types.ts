@@ -23,16 +23,6 @@ export interface UserPlayer {
   losses: number
 }
 
-export interface RawPlayer {
-  id: number
-  display_name: string
-  avatar?: string
-  wins: number
-  losses: number
-  isActive?: boolean
-  points?: number
-}
-
 export interface TournamentMatch {
   match_id: number
   date: string
