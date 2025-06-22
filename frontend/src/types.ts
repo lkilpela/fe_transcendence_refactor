@@ -33,39 +33,6 @@ export interface RawPlayer {
   points?: number
 }
 
-export interface Match {
-  id: number
-  type: '1v1' | 'tournament'
-  tournament_id: number | null
-  date: string
-  round: number | null
-  winner_id: number
-  players: {
-    player_id: number
-    score: number
-  }[]
-}
-
-export interface MatchHistoryProps {
-  matches: Match[]
-  className?: string
-}
-
-export interface ProcessedMatch {
-  id: string
-  player: {
-    name: string
-    avatar: string
-  }
-  opponent: {
-    name: string
-    avatar: string
-  }
-  score: string
-  date: string
-  mode: '1v1' | 'tournament'
-}
-
 export interface TournamentMatch {
   match_id: number
   date: string

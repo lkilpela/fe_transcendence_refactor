@@ -2,7 +2,25 @@ import React, { useMemo } from 'react'
 import { Card } from '@/components/ui'
 import { foundation, patterns } from '@/assets/design-system'
 import { useUserPlayers, useTranslate } from '@/hooks'
-import { MatchHistoryProps, ProcessedMatch } from '@/types'
+
+interface Match {
+  id: number
+  type: string
+  tournament_id: number | null
+  date: string
+  round: number | null
+  winner_id: number | null
+  status?: string
+  players: {
+    player_id: number
+    score: number
+  }[]
+}
+
+interface MatchHistoryProps {
+  matches: Match[]
+  className?: string
+}
 
 export const MatchHistory: React.FC<MatchHistoryProps> = ({ matches, className }) => {
   const { userPlayers } = useUserPlayers()
@@ -41,7 +59,7 @@ export const MatchHistory: React.FC<MatchHistoryProps> = ({ matches, className }
           mode: match.type
         }
       })
-      .filter((match): match is ProcessedMatch => match !== null)
+      .filter((match): match is NonNullable<typeof match> => match !== null)
   }, [matches, userPlayers])
 
   return (
