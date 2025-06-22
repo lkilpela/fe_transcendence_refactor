@@ -69,60 +69,8 @@ export const Pong: React.FC<PongProps> = ({
 
       // Call parent callback
       onMatchEnd?.(winner)
-
-      if (!gameState) {
-        setTimeout(() => {
-          navigate('/dashboard')
-        }, 3000)
-        return
-      }
-
-      // Send match result to backend
-      await sendMatchResult(gameState.matchId, winner.id, currentScores.player1, currentScores.player2)
-
-      async function sendMatchResult(matchId: number, winnerId: number, score1: number, score2: number) {
-        try {
-          const response = await fetch(`/api/match-histories/${matchId}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify({
-              winner_id: winnerId,
-              players: [
-                {
-                  player_id: gameState.player1.id,
-                  score: score1,
-                },
-                {
-                  player_id: gameState.player2.id,
-                  score: score2,
-                }
-              ]
-            })
-          })
-          if (!response.ok) {
-            throw new Error('Failed to update match result')
-          }
-        } catch (error) {
-          console.log('Failed to update match result', error)
-        }
-      }
-
-      setTimeout(() => {
-        if (gameState?.returnTo) {
-          navigate(gameState.returnTo, {
-            state: {
-              matchType: gameState.matchType,
-              matchIndex: gameState.matchId,
-              winner,
-            },
-          })
-        }
-      }, 3000)
     }
-  }, [gameState, navigate, onMatchEnd])
+  }, [onMatchEnd, gameState])
 
   // Update parent components when scores change
   useEffect(() => {
@@ -141,8 +89,6 @@ export const Pong: React.FC<PongProps> = ({
     const ctx = canvas.getContext('2d')!
     canvas.width = CANVAS_WIDTH
     canvas.height = CANVAS_HEIGHT
-    document.addEventListener('keydown', keyDownHandler)
-    document.addEventListener('keyup', keyUpHandler)
 
     // Game variables
     let paddle1Y = CANVAS_HEIGHT / 2 - PADDLE_HEIGHT / 2
@@ -157,7 +103,7 @@ export const Pong: React.FC<PongProps> = ({
     let ballDirectionY = 0
     let goalScored = false  // Prevent multiple scoring on same ball
 
-    function keyDownHandler(e: KeyboardEvent) {
+    const keyDownHandler = (e: KeyboardEvent) => {
       if (['ArrowUp', 'ArrowDown', ' ','Spacebar'].includes(e.key)) e.preventDefault()
       if (e.key === 'w' || e.key === 'W') paddle1Up = true
       if (e.key === 's' || e.key === 'S') paddle1Down = true
@@ -167,7 +113,7 @@ export const Pong: React.FC<PongProps> = ({
       if (e.key === 'Spacebar' || e.key === ' ') setMatchStarted(true)
     }
 
-    function keyUpHandler(e: KeyboardEvent) {
+    const keyUpHandler = (e: KeyboardEvent) => {
       if (['ArrowUp', 'ArrowDown'].includes(e.key)) e.preventDefault()
       if (e.key === 'w' || e.key === 'W') paddle1Up = false
       if (e.key === 's' || e.key === 'S') paddle1Down = false
@@ -175,7 +121,10 @@ export const Pong: React.FC<PongProps> = ({
       if (e.key === 'ArrowDown') paddle2Down = false
     }
 
-    function resetBall() {
+    document.addEventListener('keydown', keyDownHandler)
+    document.addEventListener('keyup', keyUpHandler)
+
+      const resetBall = () => {
       ballX = CANVAS_WIDTH / 2
       ballY = CANVAS_HEIGHT / 2
       ballSpeedX.current = (Math.random() > 0.5 ? 1 : -1) * 3
@@ -184,7 +133,7 @@ export const Pong: React.FC<PongProps> = ({
       goalScored = false  // Reset goal flag
     }
 
-    function onGoal(x: number, y: number) {
+    const onGoal = (x: number, y: number) => {
         // generate ~30 particles bursting out
         let angle = 0;
         for (let i = 0; i < 40; i++) {
@@ -211,7 +160,7 @@ export const Pong: React.FC<PongProps> = ({
         }, 1000);  // 1s delay
     }
 
-    function update() {
+    const update = () => {
       if (gameOver || !matchStarted || isPaused) return
 
       // Move paddles
@@ -280,7 +229,7 @@ export const Pong: React.FC<PongProps> = ({
       }
     }
 
-    function draw() {
+    const draw = () => {
         // Black background
         ctx.fillStyle = 'black'
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
