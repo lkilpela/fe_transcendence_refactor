@@ -181,11 +181,11 @@ export const Dashboard: React.FC = () => {
               onDeletePlayer={deletePlayer}
             />
 
-                         {/* Secondary Info - Conditional rendering */}
+             {/* Secondary Info - Conditional rendering */}
              {hasMatches && (
                <div className={layouts.grid.twoColumn}>
-                 <MatchHistory matches={matches as any} />
-                 <TopPlayers players={userPlayers as any} />
+                 <MatchHistory matches={matches} />
+                 <TopPlayers players={userPlayers} />
                </div>
              )}
 
@@ -196,7 +196,7 @@ export const Dashboard: React.FC = () => {
                    📊 View Detailed Stats
                  </summary>
                  <div className={patterns.spacing.stack.lg}>
-                   <GameStats userPlayers={userPlayers as any} />
+                   <GameStats userPlayers={userPlayers} />
                  </div>
                </details>
              )}

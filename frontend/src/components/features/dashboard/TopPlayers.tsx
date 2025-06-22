@@ -2,18 +2,10 @@ import React, { useMemo } from 'react'
 import useTranslate from '@/hooks/useTranslate'
 import { Card } from '@/components/ui'
 import { foundation, patterns } from '@/assets/design-system'
-
-interface TopPlayer {
-  id: string
-  name: string
-  points: number
-  avatar: string
-  wins: number
-  losses: number
-}
+import { UserPlayer } from '@/types'
 
 interface TopPlayersProps {
-  players: TopPlayer[]
+  players: UserPlayer[]
 }
 
 export const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
@@ -66,7 +58,7 @@ export const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
               <div className={patterns.topPlayers.player.avatarWrapper}>
                 <img
                   src={player.avatar}
-                  alt={player.name}
+                  alt={player.display_name}
                   className={patterns.topPlayers.player.avatar}
                 />
                 
@@ -80,7 +72,7 @@ export const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
               
               {/* Player Name */}
               <div className={patterns.topPlayers.player.name}>
-                {player.name}
+                {player.display_name}
               </div>
               
               {/* Win Percentage */}
