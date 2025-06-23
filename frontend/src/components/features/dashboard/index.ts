@@ -1,6 +1,5 @@
 export { MatchHistory } from './MatchHistory'
 export { QuickPlay } from './QuickPlay'
-export { TopPlayers } from './TopPlayers' 
+export { TopPlayers } from './TopPlayers'
 export { GameStats } from './GameStats'
 export { PlayerManagement } from './PlayerManagement'
-export { AvatarMenu } from './AvatarMenu'
