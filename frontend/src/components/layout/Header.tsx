@@ -5,7 +5,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const Header: React.FC = () => {
-  const { logout, user } = useAuth()
+  const { logout, user, isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = async (): Promise<void> => {
@@ -21,19 +21,21 @@ const Header: React.FC = () => {
     <header className={layouts.header.base}>
       <div className={layouts.header.container}>
         <h1 className={layouts.header.title}>Ping.Pong.Play!</h1>
-        <div className={layouts.header.userSection}>
-          <span className={layouts.header.username}>
-            {user?.username || 'User'}
-          </span>
-          <button 
-            onClick={handleLogout}
-            className={layouts.header.logoutButton}
-            type="button"
-            title="Sign Out"
-          >
-            <LogOut size={20} />
-          </button>
-        </div>
+        {isAuthenticated && user && (
+          <div className={layouts.header.userSection}>
+            <span className={layouts.header.username}>
+              {user.username}
+            </span>
+            <button 
+              onClick={handleLogout}
+              className={layouts.header.logoutButton}
+              type="button"
+              title="Sign Out"
+            >
+              <LogOut size={20} />
+            </button>
+          </div>
+        )}
       </div>
     </header>
   )

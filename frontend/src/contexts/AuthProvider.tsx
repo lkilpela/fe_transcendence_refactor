@@ -78,6 +78,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = async () => {
     await authService.logout()
     setUser(null)
+    setRequires2FA(false)
+    setTempUserId(null)
+    setError(null)
   }
 
   const verify2FA = async (code: string) => {
