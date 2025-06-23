@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { LandingPage, LoginPage, RegisterPage, Dashboard, DesignSystemDemo, GamePage, TournamentPage, ProfilePage, SearchResults, SettingsPage } from '@/pages'
+import { LandingPage, LoginPage, RegisterPage, Dashboard, DesignSystemDemo, GamePage, TournamentPage, ProfilePage, SearchResults, SettingsPage, HelpPage } from '@/pages'
 import { GoogleCallback } from '@/components/features/auth/GoogleCallback'
 import { ProtectedRoute } from '@/components/layout'
 
@@ -18,6 +18,7 @@ export const AppRoutes: React.FC = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/auth/google/callback" element={<GoogleCallback />} />
       <Route path="/design-system" element={<DesignSystemDemo />} />
+      <Route path="/help" element={<HelpPage />} />
       
       {/* Protected Routes - Only accessible to authenticated users */}
       <Route
