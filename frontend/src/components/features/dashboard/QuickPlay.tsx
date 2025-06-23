@@ -1,17 +1,10 @@
 import { foundation, patterns, layouts } from '@/assets/design-system'
-import { Button, Card } from '@/components/ui'
+import { Button, Card, Avatar } from '@/components/ui'
 import useTranslate from '@/hooks/useTranslate'
 import { gameService } from '@/services/gameService'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-interface UserPlayer {
-  id: number
-  display_name: string
-  avatar: string
-  isActive: boolean
-  points: number
-}
+import { UserPlayer } from '@/types'
 
 interface QuickPlayProps {
   userPlayers: UserPlayer[]
@@ -25,7 +18,7 @@ interface QuickPlayProps {
  */
 export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
   const navigate = useNavigate()
-  const hasActivePlayers = userPlayers.length > 0
+  const hasActivePlayers = userPlayers.some((p) => p.isActive)
   const hasEnoughPlayers1v1 = userPlayers.length >= 2
   const hasEnoughPlayersTourn = userPlayers.length >= 4
 
@@ -40,13 +33,15 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
 
   const handleOneVsOneClick = () => {
     if (!hasActivePlayers) {
-      alert('Please create a player before starting a 1v1 match')
+      alert('Please create a player before starting a match')
       return
     }
+
     if (!hasEnoughPlayers1v1) {
-      alert('You need at least 2 players to start a 1v1 match')
+      alert('You need at least 2 players for a 1v1 match')
       return
     }
+
     setSelected1v1Players([])
     setShowModal1v1(true)
   }
@@ -217,10 +212,10 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
                     onClick={() => handleToggle1v1Player(player.id)}
                   >
                     <div className={patterns.flex.rowGap.sm}>
-                      <img
+                      <Avatar
                         src={player.avatar}
                         alt={player.display_name}
-                        className={patterns.avatar.sm}
+                        size="sm"
                       />
                   <span className={foundation.typography.body}>
                     {player.display_name}
@@ -267,15 +262,17 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
       {showModalTourn && (
         <div className={patterns.modal.overlay}>
           <div className={patterns.modal.content}>
+            {/* Header */}
             <div className={patterns.modal.header}>
               <h3 className={patterns.modal.title}>
-                {t('Select 4-8 Players for Tournament')}
+                {t('Select Tournament Players')}
               </h3>
               <p className={patterns.modal.subtitle}>
-                {t('Choose between 4-8 players for tournament')} ({selectedTournamentPlayers.length}/8)
+                {t('Choose 4-8 players')} ({selectedTournamentPlayers.length}/8)
               </p>
             </div>
             
+            {/* Body */}
             <div className={patterns.modal.body}>
               <div className={patterns.spacing.stack.sm}>
                 {userPlayers.map((player) => (
@@ -286,11 +283,11 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
                     }`}
                     onClick={() => handleToggleTournamentPlayer(player.id)}
                   >
-                    <div className={patterns.flex.rowGap.md}>
-                      <img
+                    <div className={patterns.flex.rowGap.sm}>
+                      <Avatar
                         src={player.avatar}
                         alt={player.display_name}
-                        className={patterns.avatar.sm}
+                        size="sm"
                       />
                       <span className={foundation.typography.body}>
                         {player.display_name}
@@ -311,6 +308,7 @@ export const QuickPlay: React.FC<QuickPlayProps> = ({ userPlayers }) => {
               </div>
             </div>
             
+            {/* Footer */}
             <div className={patterns.modal.footer}>
               <Button
                 onClick={() => setShowModalTourn(false)}

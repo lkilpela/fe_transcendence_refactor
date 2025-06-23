@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Card } from '@/components/ui'
+import { Card, Avatar } from '@/components/ui'
 import { foundation, patterns } from '@/assets/design-system'
 import { useUserPlayers, useTranslate } from '@/hooks'
 
@@ -90,10 +90,10 @@ export const MatchHistory: React.FC<MatchHistoryProps> = ({ matches, className }
 // Extracted player info component to reduce nesting and repetition
 const PlayerInfo: React.FC<{ player: { name: string; avatar: string } }> = ({ player }) => (
   <div className={patterns.flex.rowGap.sm}>
-    <img 
+    <Avatar 
       src={player.avatar} 
       alt={player.name} 
-      className={patterns.avatar.md}
+      size="md"
     />
     <span className={foundation.typography.body}>{player.name}</span>
   </div>

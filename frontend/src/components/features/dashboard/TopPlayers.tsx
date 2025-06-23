@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useTranslate from '@/hooks/useTranslate'
-import { Card } from '@/components/ui'
+import { Card, Avatar } from '@/components/ui'
 import { foundation, patterns } from '@/assets/design-system'
 import { UserPlayer } from '@/types'
 import { request } from '@/services/api'
@@ -73,7 +73,7 @@ export const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
             >
               {/* Avatar */}
               <div className={patterns.topPlayers.player.avatarWrapper}>
-                <img
+                <Avatar
                   src={player.avatar}
                   alt={player.display_name}
                   className={patterns.topPlayers.player.avatar}

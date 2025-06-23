@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { UserPlus, Trash2 } from 'lucide-react'
-import { Card, Button, Input } from '@/components/ui'
+import { Card, Button, Input, Avatar } from '@/components/ui'
 import { foundation, patterns } from '@/assets/design-system'
 import { UserPlayer } from '@/types'
 import useTranslate from '@/hooks/useTranslate'
@@ -109,10 +109,10 @@ export const PlayerManagement: React.FC<PlayerManagementProps> = ({
                 className={patterns.modal.playerItem}
               >
                 <div className={patterns.flex.rowGap.sm}>
-                  <img
+                  <Avatar
                     src={player.avatar}
                     alt={player.display_name}
-                    className={patterns.avatar.sm}
+                    size="sm"
                   />
                   <span className={foundation.typography.body}>{player.display_name}</span>
                 </div>

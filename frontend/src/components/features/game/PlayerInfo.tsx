@@ -1,5 +1,6 @@
 import React from 'react'
 import { patterns, foundation } from '@/assets/design-system'
+import { Avatar } from '@/components/ui'
 
 interface PlayerInfoProps {
   player: { name: string; avatar: string; id: number } | undefined
@@ -19,10 +20,10 @@ export const PlayerInfo: React.FC<PlayerInfoProps> = React.memo(({
   return (
     <div className={patterns.game.header.player.container}>
       {!isRightAligned && (
-        <img
+        <Avatar
           src={player?.avatar}
-          alt={player?.name}
-          className={patterns.avatar.lg}
+          alt={player?.name || defaultName}
+          size="lg"
         />
       )}
       <div className={patterns.game.header.player.info(isRightAligned)}>
@@ -33,10 +34,10 @@ export const PlayerInfo: React.FC<PlayerInfoProps> = React.memo(({
         <span className={foundation.typography.small}>{controls}</span>
       </div>
       {isRightAligned && (
-        <img
+        <Avatar
           src={player?.avatar}
-          alt={player?.name}
-          className={patterns.avatar.lg}
+          alt={player?.name || defaultName}
+          size="lg"
         />
       )}
     </div>

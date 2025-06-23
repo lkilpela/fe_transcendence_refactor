@@ -7,8 +7,8 @@ export { useAuth } from './useAuth'
 // export { default as useFormValidation } from './useFormValidation'
 
 // // User-related hooks
-export { useAvatar } from './useAvatar'
 export { useUserPlayers } from './useUserPlayers'
+export { useUserProfile } from './useUserProfile'
 
 // // Game/Match hooks
 export { useMatchHistories } from './useMatchHistories'
