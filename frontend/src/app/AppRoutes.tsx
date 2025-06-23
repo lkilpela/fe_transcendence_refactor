@@ -1,7 +1,8 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { LandingPage, LoginPage, RegisterPage, Dashboard, DesignSystemDemo, GamePage, TournamentPage, ProfilePage } from '@/pages'
+import { LandingPage, LoginPage, RegisterPage, Dashboard, DesignSystemDemo, GamePage, TournamentPage, ProfilePage, SearchResults } from '@/pages'
 import { GoogleCallback } from '@/components/features/auth/GoogleCallback'
+import { ProtectedRoute } from '@/components/layout'
 
 /**
  * AppRoutes Component
@@ -9,9 +10,6 @@ import { GoogleCallback } from '@/components/features/auth/GoogleCallback'
  * It includes both public and protected routes
  */
 export const AppRoutes: React.FC = () => {
-  // Uncomment when authentication is ready
-  // const { isAuthenticated } = useAuth()
-
   return (
     <Routes>
       {/* Public Routes */}
@@ -21,15 +19,8 @@ export const AppRoutes: React.FC = () => {
       <Route path="/auth/google/callback" element={<GoogleCallback />} />
       <Route path="/design-system" element={<DesignSystemDemo />} />
       
-      {/* Protected Routes - Add ProtectedRoute wrapper when auth is ready */}
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/game" element={<GamePage />} />
-      <Route path="/tournament" element={<TournamentPage />} />
-      <Route path="/profile/:id" element={<ProfilePage />} />
-      <Route path="/search" element={<div>Search functionality coming soon</div>} />
-
       {/* Protected Routes - Only accessible to authenticated users */}
-      {/* <Route
+      <Route
         path="/dashboard"
         element={
           <ProtectedRoute>
@@ -41,7 +32,7 @@ export const AppRoutes: React.FC = () => {
         path="/game"
         element={
           <ProtectedRoute>
-            <Pong />
+            <GamePage />
           </ProtectedRoute>
         }
       />
@@ -49,7 +40,7 @@ export const AppRoutes: React.FC = () => {
         path="/tournament"
         element={
           <ProtectedRoute>
-            <Tournament />
+            <TournamentPage />
           </ProtectedRoute>
         }
       />
@@ -69,20 +60,9 @@ export const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="/help" element={<Help />} />
-      <Route
-        path="/settings"
-        element={
-          <ProtectedRoute>
-            <Settings />
-          </ProtectedRoute>
-        }
-      /> */}
 
       {/* 404 Route - Shows when no matching route is found */}
       <Route path="*" element={<div>404 Not Found</div>} />
-
-      {/* <Route path="/oauth2callback" element={<OAuth2Callback />} /> */}
     </Routes>
   )
 }

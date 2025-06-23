@@ -3,6 +3,7 @@ import { cn } from '@/utils/cn'
 import { BarChart3, HelpCircle, Home, Settings, Trophy, User } from 'lucide-react'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/hooks/useAuth'
 
 interface SidebarProps {
   isOpen?: boolean
@@ -15,11 +16,12 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const navigate = useNavigate()
   const location = useLocation()
+  const { user } = useAuth()
 
   const navItems = [
     { icon: Home, label: 'Home', path: '/' },
     { icon: BarChart3, label: 'Dashboard', path: '/dashboard' },
-    { icon: User, label: 'Profile', path: '/profile' },
+    { icon: User, label: 'Profile', path: user ? `/profile/${user.id}` : '/profile' },
     { icon: Trophy, label: 'Tournament', path: '/tournament' },
     { icon: Settings, label: 'Settings', path: '/settings' },
     { icon: HelpCircle, label: 'Help', path: '/help' },
