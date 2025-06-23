@@ -8,7 +8,7 @@ export { useAuth } from './useAuth'
 
 // // User-related hooks
 export { useUserPlayers } from './useUserPlayers'
-export { useUserProfile } from './useUserProfile'
+export { useUserProfile } from './useUserProfile'   
 
 // // Game/Match hooks
 export { useMatchHistories } from './useMatchHistories'
