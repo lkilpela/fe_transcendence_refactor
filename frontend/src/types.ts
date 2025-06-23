@@ -3,6 +3,7 @@ export interface User {
   username: string
   email: string
   avatar_url?: string
+  online_status?: boolean
   created_at?: string
   updated_at?: string
 }
@@ -53,7 +54,7 @@ export interface MatchData {
 export interface GameState {
   matchType: 'semifinal' | 'final' | '1v1'
   matchId: number
-  player1: { name: string; avatar: string; id: number}
+  player1: { name: string; avatar: string; id: number }
   player2: { name: string; avatar: string; id: number }
   returnTo?: string
 }

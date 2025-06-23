@@ -1,14 +1,18 @@
 import React, { useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useTranslate from '@/hooks/useTranslate'
 import { Card } from '@/components/ui'
 import { foundation, patterns } from '@/assets/design-system'
 import { UserPlayer } from '@/types'
+import { request } from '@/services/api'
 
 interface TopPlayersProps {
   players: UserPlayer[]
 }
 
 export const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
+  const navigate = useNavigate()
+  
   // Sort and slice top 4 players based on win percentage
   const topPlayers = useMemo(() => {
     if (!Array.isArray(players)) return []
@@ -26,6 +30,18 @@ export const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
   }, [players])
 
   const t = useTranslate()
+
+  const handlePlayerClick = async (playerId: number) => {
+    try {
+      // Get player info to find the user_id for navigation
+      const player = await request<UserPlayer & { user_id: number }>(`/players/${playerId}`)
+      if (player.user_id) {
+        navigate(`/profile/${player.user_id}`)
+      }
+    } catch (error) {
+      console.error('Error navigating to player profile:', error)
+    }
+  }
 
   if (topPlayers.length === 0) {
     return (
@@ -52,7 +68,8 @@ export const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
           return (
             <div 
               key={player.id} 
-              className={patterns.topPlayers.player.container}
+              className={`${patterns.topPlayers.player.container} cursor-pointer hover:opacity-80 transition-opacity`}
+              onClick={() => handlePlayerClick(player.id)}
             >
               {/* Avatar */}
               <div className={patterns.topPlayers.player.avatarWrapper}>
@@ -71,7 +88,7 @@ export const TopPlayers: React.FC<TopPlayersProps> = ({ players }) => {
               </div>
               
               {/* Player Name */}
-              <div className={patterns.topPlayers.player.name}>
+              <div className={`${patterns.topPlayers.player.name} hover:underline`}>
                 {player.display_name}
               </div>
               
