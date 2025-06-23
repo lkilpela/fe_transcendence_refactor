@@ -4,11 +4,13 @@ import { authService } from '@/services/authService'
 import React, { useState } from 'react'
 
 interface TwoFactorFormProps {
+  tempToken?: string
   onSuccess: (token: string) => void
   onBackToLogin?: () => void
 }
 
 export const TwoFactorForm: React.FC<TwoFactorFormProps> = ({
+  tempToken: _tempToken,
   onSuccess,
   onBackToLogin,
 }) => {

@@ -1,5 +1,5 @@
-import { storage } from '../utils/storage'
 import { API_URL } from '@/utils/constants'
+import { storage } from '../utils/storage'
 
 /**
  * Callback function to handle session expiration
@@ -46,7 +46,7 @@ const handleResponse = async <T>(res: Response): Promise<T> => {
     // Clean up local storage
     storage.remove('token')
     storage.remove('user')
-    
+
     // Notify the auth context about session expiration
     if (onSessionExpired) {
       // Use setTimeout to avoid race conditions and allow AuthProvider to handle this gracefully
@@ -54,7 +54,7 @@ const handleResponse = async <T>(res: Response): Promise<T> => {
         onSessionExpired?.()
       }, 0)
     }
-    
+
     // Throw a custom error that can be easily identified and handled
     throw new SessionExpiredError()
   }
@@ -75,7 +75,10 @@ const handleResponse = async <T>(res: Response): Promise<T> => {
  * @param options - The request options
  * @returns The response data
  */
-export const request = async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
+export const request = async <T>(
+  endpoint: string,
+  options: RequestInit = {},
+): Promise<T> => {
   const token = storage.get('token', null)
   const hasBody = !!options.body
   const res = await fetch(`${API_URL}${endpoint}`, {
@@ -84,3 +87,4 @@ export const request = async <T>(endpoint: string, options: RequestInit = {}): P
   })
   return handleResponse<T>(res)
 }
+

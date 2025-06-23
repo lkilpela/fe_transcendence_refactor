@@ -1,4 +1,5 @@
 export { authService } from './authService'
 export { gameService } from './gameService'
 export { friendService } from './friendService'
+export { settingsService } from './settingsService'
 export { request, SessionExpiredError } from './api'

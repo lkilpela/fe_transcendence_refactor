@@ -238,6 +238,107 @@ export const patterns = {
     error: cn(foundation.typography.small, 'text-red-400'),
   },
 
+  // Settings page patterns
+  settings: {
+    // Container for settings page
+    container:
+      'w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto px-3 py-4 space-y-3',
+
+    // Page title
+    title: 'text-lg sm:text-xl font-bold text-white text-center mb-4',
+
+    // Field containers
+    fieldContainer: 'space-y-2',
+    fieldWrapper: 'py-2',
+
+    // Labels for form fields
+    fieldLabel: 'block text-xs sm:text-sm text-gray-400',
+
+    // Input fields (editing state)
+    input:
+      'w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white text-sm focus:border-blue-500 focus:outline-none placeholder-gray-500',
+
+    // Display fields (non-editing state)
+    display:
+      'w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white text-sm cursor-pointer hover:bg-gray-700 min-h-[2.25rem] flex items-center',
+
+    // Message boxes
+    messageError:
+      'bg-red-900/50 border border-red-500 rounded px-3 py-2 text-red-300 text-xs sm:text-sm',
+    messageSuccess:
+      'bg-green-900/50 border border-green-500 rounded px-3 py-2 text-green-300 text-xs sm:text-sm',
+
+    // Action buttons
+    dangerButton:
+      'w-full px-3 py-2 mt-4 bg-red-900/50 hover:bg-red-900/70 border border-red-500 rounded text-red-300 text-sm transition-colors min-h-[2.25rem]',
+    dangerButtonInline:
+      'w-full px-3 py-2 bg-red-900/50 hover:bg-red-900/70 border border-red-500 rounded text-red-300 text-sm transition-colors min-h-[2.25rem]',
+    successButton:
+      'w-full px-3 py-2 bg-green-700 hover:bg-green-600 rounded text-white text-sm transition-colors min-h-[2.25rem]',
+    successButtonInline:
+      'w-full px-3 py-2 mt-3 bg-green-700 hover:bg-green-600 rounded text-white text-sm transition-colors min-h-[2.25rem]',
+
+    // Two-factor authentication specific
+    qrContainer: 'p-4 text-center bg-gray-800 border border-gray-600 rounded',
+    qrImage: 'w-32 h-32 mx-auto border border-gray-600 rounded',
+    qrInput:
+      'mt-3 text-center w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white text-sm focus:border-blue-500 focus:outline-none placeholder-gray-500',
+    qrMessage: 'text-xs text-center text-green-300',
+
+    // Avatar upload specific
+    avatarContainer: 'text-center space-y-3',
+    avatarImage:
+      'w-20 h-20 mx-auto rounded-full object-cover border-2 border-gray-600',
+    avatarUploadWrapper: 'relative inline-block',
+    avatarUploadInput:
+      'absolute inset-0 w-full h-full opacity-0 cursor-pointer',
+    avatarUploadButton:
+      'px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white text-sm hover:bg-gray-700 transition-colors',
+    avatarError: 'text-red-300 text-xs',
+    avatarSuccess: 'text-green-300 text-xs',
+
+    // Editable field specific
+    editableFieldContainer: 'space-y-2',
+    editableFieldHeader: 'flex items-center gap-2 mb-2',
+    editableFieldIcon: 'text-white',
+    editableFieldLabel: 'block text-sm font-medium text-gray-300',
+    editableFieldInput: cn(
+      foundation.glass.light,
+      'w-full p-3 rounded-lg text-white border border-white/20 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 placeholder:text-gray-400',
+    ),
+    editableFieldDisplay: cn(
+      foundation.glass.light,
+      'p-3 rounded-lg border border-white/20 text-white',
+    ),
+    editableFieldActions: 'flex justify-end',
+    editableFieldActionsGroup: 'flex items-center gap-2',
+    editableFieldButtonEdit:
+      'flex items-center gap-2 px-3 py-2 rounded-lg text-blue-400 hover:text-blue-300 hover:bg-blue-500/20 transition-all duration-200',
+    editableFieldButtonSave:
+      'flex items-center gap-2 px-3 py-2 rounded-lg text-green-400 hover:text-green-300 hover:bg-green-500/20 transition-all duration-200',
+    editableFieldButtonCancel:
+      'flex items-center gap-2 px-3 py-2 rounded-lg text-gray-400 hover:text-gray-300 hover:bg-gray-500/20 transition-all duration-200',
+  },
+
+  // Footer app preferences
+  appPreferences: {
+    container:
+      'flex flex-col sm:flex-row gap-3 sm:gap-6 items-center justify-center mb-4',
+    preference: 'flex items-center gap-2',
+    label: 'text-xs text-gray-400',
+    select:
+      'px-2 py-1 bg-gray-800 border border-gray-600 rounded text-white text-xs focus:border-blue-500 focus:outline-none',
+  },
+
+  // Friend status button variants
+  friendButton: {
+    remove: 'w-full text-red-400 hover:text-red-300 hover:bg-red-500/20',
+    cancel: 'w-full text-yellow-400 hover:text-yellow-300',
+    deny: 'flex-1 text-red-400 hover:text-red-300 hover:bg-red-500/20',
+    accept: 'flex-1',
+    add: 'w-full',
+  },
+
   // Modal patterns - Simple & Clean
   modal: {
     // Base overlay - covers entire screen

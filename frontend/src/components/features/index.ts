@@ -10,4 +10,7 @@ export * from './game'
 // Profile components
 export * from './profile'
 
+// Settings components
+export * from './settings'
+
 export { AuthContext } from '../../contexts/AuthContext'

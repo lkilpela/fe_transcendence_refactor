@@ -94,5 +94,3 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
     </div>
   )
 }
-
-export default UserPlayers 

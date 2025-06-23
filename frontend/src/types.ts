@@ -58,3 +58,20 @@ export interface GameState {
   player2: { name: string; avatar: string; id: number }
   returnTo?: string
 }
+
+export interface Friend {
+  user_id: number
+  friend_id: number
+  status: 'pending' | 'accepted'
+}
+
+export interface FriendStatusResponse {
+  item: Friend
+}
+
+export type FriendStatus = 'none' | 'pending' | 'accepted'
+
+export interface FriendRequestMessage {
+  message: string
+  item: Friend
+}

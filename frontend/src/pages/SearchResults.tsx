@@ -7,6 +7,7 @@ import { User } from '@/types'
 import { foundation, layouts, patterns } from '@/assets/design-system'
 import { Search, UserPlus, Users } from 'lucide-react'
 
+
 export const SearchResults: React.FC = () => {
   const [searchParams] = useSearchParams()
   const [users, setUsers] = useState<User[]>([])
@@ -123,7 +124,7 @@ const UserSearchCard: React.FC<UserSearchCardProps> = ({ user, onViewProfile }) 
       <div className={patterns.flex.rowGap.md}>
         <div className="relative">
           <Avatar 
-            src={user.avatar_url || '/placeholder-avatar.png'} 
+            src={user.avatar_url} 
             alt={user.username} 
             size="lg"
           />

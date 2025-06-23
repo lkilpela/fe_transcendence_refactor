@@ -185,5 +185,3 @@ const PlayerInfo: React.FC<PlayerInfoProps> = ({ playerId, isWinner, onClick }) 
     </div>
   )
 }
-
-export default ProfileMatchHistory 
