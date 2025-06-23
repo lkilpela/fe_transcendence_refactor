@@ -12,16 +12,26 @@ export const gameService = {
    * @param player2Id - ID of the second player
    * @returns Promise<MatchData> - The created match data
    */
-  createMatch: async (player1Id: number, player2Id: number): Promise<MatchData> => {
+  createMatch: async (
+    player1Id: number,
+    player2Id: number,
+  ): Promise<MatchData> => {
     return request<MatchData>('/match-histories', {
       method: 'POST',
       body: JSON.stringify({
         type: '1v1',
-        players: [
-          { player_id: player1Id },
-          { player_id: player2Id },
-        ],
+        players: [{ player_id: player1Id }, { player_id: player2Id }],
       }),
+    })
+  },
+
+  /**
+   * Clean up unfinished matches
+   * @returns Promise<void>
+   */
+  cleanupUnfinishedMatches: async (): Promise<void> => {
+    return request('/match-histories', {
+      method: 'DELETE',
     })
   },
 
@@ -58,6 +68,6 @@ export const gameService = {
    */
   getActiveTournament: async (): Promise<Tournament | undefined> => {
     const tournaments = await gameService.getTournaments()
-    return tournaments.find(t => t.status === 'pending')
-  }
-} 
+    return tournaments.find((t) => t.status === 'pending')
+  },
+}
