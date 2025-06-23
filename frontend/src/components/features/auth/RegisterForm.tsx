@@ -129,7 +129,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 
   return (
       <AuthCard>
-        <AuthHeader avatarSeed="register" />
+        <AuthHeader />
 
         <form onSubmit={handleSubmit} className={forms.container}>
           <FormField
@@ -140,7 +140,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             placeholder="Enter your username"
             value={formData.username}
             onChange={handleChange}
-            error={errors.username}
+            error={errors.username} 
             disabled={isLoading}
             required
           />
