@@ -10,7 +10,6 @@ interface TwoFactorFormProps {
 }
 
 export const TwoFactorForm: React.FC<TwoFactorFormProps> = ({
-  tempToken: _tempToken,
   onSuccess,
   onBackToLogin,
 }) => {

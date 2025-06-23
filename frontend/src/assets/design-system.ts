@@ -294,6 +294,8 @@ export const patterns = {
       'absolute inset-0 w-full h-full opacity-0 cursor-pointer',
     avatarUploadButton:
       'px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white text-sm hover:bg-gray-700 transition-colors',
+    avatarEditIcon:
+      'absolute bottom-0 right-0 bg-gray-700 rounded-full p-1.5 cursor-pointer hover:bg-gray-600 transition-colors',
     avatarError: 'text-red-300 text-xs',
     avatarSuccess: 'text-green-300 text-xs',
 
