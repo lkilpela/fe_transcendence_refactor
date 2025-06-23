@@ -1,27 +1,27 @@
 /**
  * 🎨 SIMPLIFIED DESIGN SYSTEM
  * 4-Layer Architecture: Foundation → Components → Patterns → Content
- * 
+ *
  * SIMPLIFIED ARCHITECTURE:
  * 1. FOUNDATION - Tokens, typography, states, glass effects
- * 2. COMPONENTS - Pre-composed UI elements  
+ * 2. COMPONENTS - Pre-composed UI elements
  * 3. PATTERNS - Layouts, utilities, common combinations
  * 4. CONTENT - Copy, assets, static content
  */
 
-import { cn } from "@/utils/cn"
+import { cn } from '@/utils/cn'
 
 // ===== FOUNDATION =====
 export const foundation = {
   // Spacing system
   spacing: {
-    xs: '0.25rem',   // 4px
-    sm: '0.5rem',    // 8px  
-    md: '1rem',      // 16px
-    lg: '1.5rem',    // 24px
-    xl: '2rem',      // 32px
-    '2xl': '3rem',   // 48px
-    '3xl': '4rem',   // 64px
+    xs: '0.25rem', // 4px
+    sm: '0.5rem', // 8px
+    md: '1rem', // 16px
+    lg: '1.5rem', // 24px
+    xl: '2rem', // 32px
+    '2xl': '3rem', // 48px
+    '3xl': '4rem', // 64px
   },
 
   // Color system
@@ -32,24 +32,24 @@ export const foundation = {
       dark: 'bg-slate-900',
       glass: 'bg-white/5 backdrop-blur-md',
     },
-    
+
     // Interactive colors
     blue: {
       400: '#60a5fa',
-      500: '#3b82f6', 
+      500: '#3b82f6',
       600: '#2563eb',
       700: '#1d4ed8',
       800: '#1e40af',
       900: '#1e3a8a',
     },
-    
+
     // Text colors
     text: {
       primary: 'text-white',
       secondary: 'text-gray-300',
       muted: 'text-gray-400',
     },
-    
+
     // Semantic colors
     semantic: {
       success: 'text-green-400',
@@ -62,7 +62,7 @@ export const foundation = {
   // Typography system (consolidated)
   typography: {
     h1: 'text-4xl font-bold tracking-tight text-white sm:text-5xl',
-    h2: 'text-3xl font-bold tracking-tight text-white sm:text-4xl', 
+    h2: 'text-3xl font-bold tracking-tight text-white sm:text-4xl',
     h3: 'text-2xl font-bold text-white sm:text-3xl',
     body: 'text-base text-gray-300 leading-relaxed',
     small: 'text-sm text-gray-400',
@@ -74,7 +74,8 @@ export const foundation = {
   // Interactive states (consolidated)
   states: {
     hover: 'hover:bg-white/10 transition-colors duration-200',
-    focus: 'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+    focus:
+      'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
     disabled: 'disabled:opacity-50 disabled:pointer-events-none',
     loading: 'animate-pulse',
     visible: 'opacity-100',
@@ -88,7 +89,7 @@ export const foundation = {
     light: 'bg-white/5 backdrop-blur-sm border-white/10',
     medium: 'bg-white/10 backdrop-blur-md border-white/20',
     strong: 'bg-white/20 backdrop-blur-lg border-white/30',
-  }
+  },
 }
 
 // ===== COMPONENTS =====
@@ -97,44 +98,52 @@ export const components = {
   button: {
     base: 'inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 focus:outline-none focus:ring-2 disabled:opacity-50 disabled:pointer-events-none',
     variants: {
-      primary: 'bg-blue-600 hover:bg-blue-700 text-white border border-transparent focus:ring-blue-500',
-      ghost: 'bg-transparent hover:bg-white/10 text-white border border-white/20 hover:border-white/30 backdrop-blur-sm',
+      primary:
+        'bg-blue-600 hover:bg-blue-700 text-white border border-transparent focus:ring-blue-500',
+      ghost:
+        'bg-transparent hover:bg-white/10 text-white border border-white/20 hover:border-white/30 backdrop-blur-sm',
     },
     sizes: {
       sm: 'px-3 py-2 text-sm rounded-md',
-      md: 'px-4 py-2.5 text-sm rounded-lg', 
+      md: 'px-4 py-2.5 text-sm rounded-lg',
       lg: 'px-6 py-3 text-base rounded-lg',
     },
     loading: {
       spinner: 'h-4 w-4 animate-spin rounded-full border-b-2 border-current',
     },
-    danger: 'text-red-400 hover:text-red-300'
+    danger: 'text-red-400 hover:text-red-300',
   },
 
   // Card system
   card: {
     base: 'rounded-2xl transition-all duration-200',
     variants: {
-      glass: cn(foundation.glass.light, 'hover:bg-white/10 hover:border-white/20'),
+      glass: cn(
+        foundation.glass.light,
+        'hover:bg-white/10 hover:border-white/20',
+      ),
       solid: 'bg-slate-800 border border-slate-700 hover:bg-slate-700',
     },
     padding: {
       sm: 'p-4',
-      md: 'p-6', 
+      md: 'p-6',
       lg: 'p-8',
-    }
+    },
   },
 
   // Input system
   input: {
     container: 'space-y-2',
     base: 'w-full transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400',
-    
+
     variants: {
-      default: cn(foundation.glass.light, 'text-white hover:border-white/30 focus:bg-white/10'),
+      default: cn(
+        foundation.glass.light,
+        'text-white hover:border-white/30 focus:bg-white/10',
+      ),
       error: 'bg-white/5 border border-red-500 text-white focus:ring-red-500',
     },
-    
+
     sizes: {
       md: 'px-4 py-3 text-base',
       lg: 'px-5 py-4 text-lg',
@@ -151,7 +160,8 @@ export const components = {
   // Checkbox system
   checkbox: {
     container: 'flex items-center text-sm text-white',
-    input: 'h-4 w-4 rounded border-white/20 bg-white/5 text-blue-500 transition-colors duration-200',
+    input:
+      'h-4 w-4 rounded border-white/20 bg-white/5 text-blue-500 transition-colors duration-200',
     label: 'cursor-pointer font-medium',
   },
 
@@ -210,13 +220,11 @@ export const patterns = {
     danger: 'text-red-400 hover:text-red-300',
     back: 'flex items-center gap-2 text-white hover:text-gray-200',
     icon: 'p-2 rounded-lg transition-colors',
-    iconDanger: 'p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors'
+    iconDanger:
+      'p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors',
   },
   message: {
-    error: cn(
-      foundation.typography.small,
-      'text-red-400'
-    )
+    error: cn(foundation.typography.small, 'text-red-400'),
   },
 
   // Form patterns
@@ -225,83 +233,77 @@ export const patterns = {
     label: foundation.typography.small,
     input: cn(
       foundation.glass.light,
-      'p-2 rounded-lg text-white border border-white/20 focus:border-blue-500 focus:outline-none'
+      'p-2 rounded-lg text-white border border-white/20 focus:border-blue-500 focus:outline-none',
     ),
-    error: cn(
-      foundation.typography.small,
-      'text-red-400'
-    )
+    error: cn(foundation.typography.small, 'text-red-400'),
   },
 
   // Modal patterns - Simple & Clean
   modal: {
     // Base overlay - covers entire screen
-    overlay: 'fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]',
-    
+    overlay:
+      'fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]',
+
     // Content container - more opaque for better readability
     content: cn(
       'bg-slate-800/95 backdrop-blur-lg border border-white/30',
       'rounded-xl p-6 mx-4 max-w-lg w-full max-h-[80vh] overflow-y-auto',
-      'shadow-2xl relative z-[9999]'
+      'shadow-2xl relative z-[9999]',
     ),
-    
+
     // Header - simple title area
     header: 'mb-4',
     title: foundation.typography.h3,
     subtitle: cn(foundation.typography.small, 'text-gray-300 mt-1'),
-    
+
     // Body - main content area
     body: 'mb-6',
-    
+
     // Footer - action buttons
     footer: 'flex gap-3 justify-end',
-    
+
     // Player selection item - more opaque
     playerItem: cn(
       'flex items-center justify-between p-3 rounded-lg',
       'bg-slate-700/80 border border-white/20 hover:bg-slate-600/80',
-      'transition-colors cursor-pointer'
+      'transition-colors cursor-pointer',
     ),
-    playerSelected: 'ring-2 ring-blue-500 bg-blue-500/20 border-blue-500/50'
+    playerSelected: 'ring-2 ring-blue-500 bg-blue-500/20 border-blue-500/50',
   },
 
   // Feature-specific patterns
   match: {
     container: cn(
       'flex items-center justify-between p-4 rounded-lg',
-      foundation.glass.light
+      foundation.glass.light,
     ),
     icon: {
       base: 'text-xl',
       mode: {
         '1v1': foundation.colors.semantic.info,
-        tournament: foundation.colors.semantic.warning
-      }
+        tournament: foundation.colors.semantic.warning,
+      },
     },
     players: {
       container: 'flex items-center gap-3',
-      list: 'flex items-center gap-2'
-    }
+      list: 'flex items-center gap-2',
+    },
   },
   stats: {
     grid: 'mt-6 grid grid-cols-2 gap-4',
     card: {
-      base: cn(
-        components.card.base,
-        foundation.glass.light,
-        'p-4'
-      ),
+      base: cn(components.card.base, foundation.glass.light, 'p-4'),
       title: foundation.typography.small,
-      value: foundation.typography.h3
-    }
+      value: foundation.typography.h3,
+    },
   },
   select: {
     container: 'flex flex-col gap-2',
     label: foundation.typography.small,
     input: cn(
       foundation.glass.light,
-      'p-2 rounded-lg text-white border border-white/20 focus:border-blue-500 focus:outline-none'
-    )
+      'p-2 rounded-lg text-white border border-white/20 focus:border-blue-500 focus:outline-none',
+    ),
   },
   gameModeButton: {
     base: cn(
@@ -309,29 +311,11 @@ export const patterns = {
       foundation.glass.light,
       'hover:bg-white/15 border border-white/20 hover:border-white/30',
       'rounded-xl transition-all duration-200',
-      'min-h-[180px] w-full'
+      'min-h-[180px] w-full',
     ),
-    icon: cn(
-      'text-5xl mb-3',
-      'text-white'
-    ),
-    title: cn(
-      'text-xl font-semibold text-white',
-      'mb-2'
-    ),
-    players: cn(
-      'text-sm text-gray-300'
-    )
-  },
-
-  // User menu patterns
-  userMenu: {
-    container: 'flex items-center gap-3',
-    username: cn(foundation.typography.large, 'text-white'),
-    logoutButton: cn(
-      'p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20',
-      'rounded-lg transition-colors'
-    )
+    icon: cn('text-5xl mb-3', 'text-white'),
+    title: cn('text-xl font-semibold text-white', 'mb-2'),
+    players: cn('text-sm text-gray-300'),
   },
 
   // Top players patterns
@@ -344,51 +328,47 @@ export const patterns = {
       crown: 'absolute -top-1 -right-1 text-lg',
       name: 'text-sm font-medium text-white truncate',
       percentage: 'text-lg font-bold text-green-400',
-      record: 'text-xs text-gray-400'
+      record: 'text-xs text-gray-400',
     },
     empty: {
       container: 'text-center py-8',
       message: foundation.typography.body,
-      subtitle: foundation.typography.small
+      subtitle: foundation.typography.small,
     },
     encouragement: {
       container: 'mt-4 text-center',
-      message: foundation.typography.small
-    }
+      message: foundation.typography.small,
+    },
   },
 
   // Game patterns
   game: {
-    container: cn(
-      'flex flex-col items-center w-full',
-      'space-y-6'
-    ),
+    container: cn('flex flex-col items-center w-full', 'space-y-6'),
     header: {
       container: cn(
         'flex items-center justify-between',
-        'w-full max-w-[800px] mb-6'
+        'w-full max-w-[800px] mb-6',
       ),
       player: {
         container: 'flex items-center gap-3',
-        info: (isRightAligned?: boolean) => cn(
-          'flex flex-col gap-2',
-          isRightAligned && 'items-end'
-        )
+        info: (isRightAligned?: boolean) =>
+          cn('flex flex-col gap-2', isRightAligned && 'items-end'),
       },
-      matchInfo: 'flex flex-col items-center gap-2'
+      matchInfo: 'flex flex-col items-center gap-2',
     },
     canvas: {
       wrapper: cn(
         'relative overflow-hidden',
         'w-[800px] h-[600px]',
-        foundation.glass.light
+        foundation.glass.light,
       ),
       element: 'block w-full h-full',
       message: {
         status: 'absolute top-8 left-1/2 -translate-x-1/2',
-        result: 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4'
-      }
-    }
+        result:
+          'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4',
+      },
+    },
   },
 
   // Dropdown patterns
@@ -396,19 +376,19 @@ export const patterns = {
     container: cn(
       'absolute top-full right-0 mt-2 w-48',
       foundation.glass.medium,
-      'border rounded-lg p-4'
+      'border rounded-lg p-4',
     ),
     content: 'space-y-2',
     button: cn(
       'w-full flex items-center gap-3 px-3 py-2',
       'text-white rounded-lg transition-colors',
-      foundation.states.hover
+      foundation.states.hover,
     ),
     buttonDanger: cn(
       'w-full flex items-center gap-3 px-3 py-2',
       'text-red-400 hover:text-red-300 rounded-lg transition-colors',
-      foundation.states.hover
-    )
+      foundation.states.hover,
+    ),
   },
 
   // Status indicator patterns
@@ -418,8 +398,8 @@ export const patterns = {
       online: 'bg-green-400',
       offline: 'bg-gray-400',
       away: 'bg-yellow-400',
-      busy: 'bg-red-400'
-    }
+      busy: 'bg-red-400',
+    },
   },
 
   // Tournament bracket patterns
@@ -428,18 +408,19 @@ export const patterns = {
     bracket: {
       container: cn(
         foundation.glass.light,
-        'rounded-3xl p-12 backdrop-blur-sm border border-white/20'
+        'rounded-3xl p-12 backdrop-blur-sm border border-white/20',
       ),
       title: {
         container: 'text-center mb-12',
         text: cn(foundation.typography.h1, 'text-white mb-4'),
-        divider: 'w-32 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full'
+        divider:
+          'w-32 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full',
       },
       rounds: {
         container: 'flex gap-16 justify-center items-center min-h-96',
         round: 'flex flex-col justify-center space-y-12',
-        matches: 'space-y-16'
-      }
+        matches: 'space-y-16',
+      },
     },
 
     // Round headers
@@ -449,29 +430,33 @@ export const patterns = {
         base: 'inline-block px-6 py-3 rounded-full text-white font-bold text-xl',
         final: 'bg-gradient-to-r from-yellow-500 to-yellow-600',
         semifinal: 'bg-gradient-to-r from-purple-500 to-purple-600',
-        regular: 'bg-gradient-to-r from-blue-500 to-blue-600'
-      }
+        regular: 'bg-gradient-to-r from-blue-500 to-blue-600',
+      },
     },
 
     // Player cards in bracket
     player: {
       base: cn(
-        'flex items-center justify-between p-4 rounded-xl border-2 transition-all min-w-48'
+        'flex items-center justify-between p-4 rounded-xl border-2 transition-all min-w-48',
       ),
-      winner: 'bg-green-500/30 border-green-400 text-green-100 shadow-lg shadow-green-500/20',
+      winner:
+        'bg-green-500/30 border-green-400 text-green-100 shadow-lg shadow-green-500/20',
       loser: 'bg-red-500/20 border-red-400/50 text-red-200',
       pending: 'bg-white/10 border-white/30 text-white hover:bg-white/15',
       name: {
         base: foundation.typography.h3,
         winner: 'font-bold text-green-100',
-        default: 'text-white'
+        default: 'text-white',
       },
       score: {
-        base: cn(foundation.typography.h2, 'font-mono font-bold min-w-8 text-center'),
+        base: cn(
+          foundation.typography.h2,
+          'font-mono font-bold min-w-8 text-center',
+        ),
         winner: 'text-green-200',
         loser: 'text-red-300',
-        pending: 'text-gray-300'
-      }
+        pending: 'text-gray-300',
+      },
     },
 
     // Match components
@@ -480,19 +465,20 @@ export const patterns = {
       players: 'space-y-2 relative',
       vsIndicator: {
         container: 'absolute -right-12 top-1/2 -translate-y-1/2',
-        badge: 'bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse'
+        badge:
+          'bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse',
       },
       button: cn(
         components.button.base,
         components.button.variants.primary,
         components.button.sizes.lg,
-        'w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3'
+        'w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3',
       ),
       connector: {
         container: 'flex justify-end items-center',
         line: 'w-16 h-1 bg-gradient-to-r from-white/30 to-white/60 rounded-full',
-        dot: 'w-4 h-4 bg-white/60 rounded-full ml-2'
-      }
+        dot: 'w-4 h-4 bg-white/60 rounded-full ml-2',
+      },
     },
 
     // Winner celebration
@@ -502,13 +488,16 @@ export const patterns = {
       trophy: 'text-8xl mb-8',
       title: cn(foundation.typography.h1, 'text-6xl text-yellow-400'),
       subtitle: cn(foundation.typography.h2, 'text-4xl text-white'),
-      champion: cn(foundation.typography.h1, 'text-5xl text-yellow-300 font-bold'),
+      champion: cn(
+        foundation.typography.h1,
+        'text-5xl text-yellow-300 font-bold',
+      ),
       button: cn(
         components.button.base,
         components.button.variants.primary,
         components.button.sizes.lg,
-        'mt-8 px-8 py-4 text-xl'
-      )
+        'mt-8 px-8 py-4 text-xl',
+      ),
     },
 
     // Page layout
@@ -520,35 +509,21 @@ export const patterns = {
         info: 'space-y-2',
         title: cn(foundation.typography.h1, 'text-4xl text-white'),
         round: cn(foundation.typography.h3, 'text-blue-400'),
-        reset: 'text-red-400 hover:text-red-300'
+        reset: 'text-red-400 hover:text-red-300',
       },
       progress: {
         container: 'text-center mt-8',
-        text: cn(foundation.typography.body, 'text-gray-400')
-      }
-    }
+        text: cn(foundation.typography.body, 'text-gray-400'),
+      },
+    },
   },
-
-  // Avatar menu patterns
-  avatarMenu: {
-    container: 'relative',
-    trigger: 'flex items-center',
-    avatar: {
-      container: 'mb-4 relative flex justify-center',
-      editButton: cn(
-        'absolute bottom-0 right-0',
-        'bg-blue-600 hover:bg-blue-700 text-white',
-        'p-1 rounded-full transition-colors'
-      )
-    }
-  }
 } as const
 
 // ===== FORMS SYSTEM
 export const forms = {
   container: patterns.spacing.stack.xl,
   field: patterns.spacing.stack.sm,
-  
+
   // Auth-specific styles
   auth: {
     card: 'mx-auto max-w-md p-8',
@@ -561,7 +536,7 @@ export const forms = {
     fullWidth: 'w-full',
     icon: patterns.avatar.xl,
     error: 'text-sm text-red-400',
-  }
+  },
 }
 
 // ===== LAYOUTS SYSTEM
@@ -580,8 +555,12 @@ export const layouts = {
   // Header section
   header: {
     base: 'relative z-10 border-b border-white/10 px-6 py-4',
-    container: 'mx-auto flex max-w-6xl items-center justify-center relative',
-    title: 'text-xl font-bold text-white',
+    container: 'flex items-center justify-center w-full relative',
+    title: 'text-xl font-bold text-white text-center',
+    userSection: 'absolute right-0 flex items-center gap-3',
+    username: 'text-white font-medium',
+    logoutButton:
+      'p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors',
   },
 
   // Footer section
@@ -610,12 +589,12 @@ export const layouts = {
       'lg:min-h-[calc(100vh-4rem)] xl:min-h-[calc(100vh-6rem)]',
       'overflow-hidden rounded-3xl border border-white/10',
       foundation.colors.bg.primary,
-      'text-white'
+      'text-white',
     ),
     contentWrapper: cn(
       'relative z-10 flex w-full flex-col',
       'items-center justify-center',
-      'p-4 md:p-6 lg:p-8'
+      'p-4 md:p-6 lg:p-8',
     ),
   },
 
@@ -639,7 +618,8 @@ export const layouts = {
         inactive: 'text-gray-400 hover:bg-white/10 hover:text-white',
       },
       icon: 'h-6 w-6',
-      tooltip: 'pointer-events-none fixed left-20 z-[9999] whitespace-nowrap rounded bg-slate-800 px-2 py-1 text-sm text-white opacity-0 transition-opacity group-hover:opacity-100',
+      tooltip:
+        'pointer-events-none fixed left-20 z-[9999] whitespace-nowrap rounded bg-slate-800 px-2 py-1 text-sm text-white opacity-0 transition-opacity group-hover:opacity-100',
     },
   },
 
@@ -650,8 +630,6 @@ export const layouts = {
     twoColumnWithMargin: 'grid grid-cols-1 md:grid-cols-2 gap-6 mt-6',
     gameModes: 'grid grid-cols-1 md:grid-cols-2 gap-6',
   },
-
-
 }
 
 // ===== CONTENT
@@ -661,10 +639,8 @@ export const content = {
     welcome: {
       title: 'Ping. Pong. Play!',
       subtitle: 'Level Up Your Ping Pong Skills',
-      description: 'Smash, spin, and dominate the table. Prove you are the ultimate paddle master.',
-    }
+      description:
+        'Smash, spin, and dominate the table. Prove you are the ultimate paddle master.',
+    },
   },
-
-
 }
- 
