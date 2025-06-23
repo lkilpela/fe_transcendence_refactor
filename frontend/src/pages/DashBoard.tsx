@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useAuth, useUserPlayers, useMatchHistories } from '@/hooks'
-import { storage } from '@/utils/storage'
+import { gameService } from '@/services'
 import { PageLayout } from '@/components/layout'
 import {
   PlayerManagement,
@@ -127,13 +127,7 @@ export const Dashboard: React.FC = () => {
 
     const cleanupUnfinishedMatches = async () => {
       try {
-        const token = storage.get('token', null)
-        await fetch(`${import.meta.env.VITE_API_URL || 'https://localhost:3001'}/match-histories`, {
-          method: 'DELETE',
-          headers: {
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-        })
+        await gameService.cleanupUnfinishedMatches()
       } catch (error) {
         console.error('Error deleting unfinished matches:', error)
       }
