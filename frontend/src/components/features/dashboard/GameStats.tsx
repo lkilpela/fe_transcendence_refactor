@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import { Card } from '@/components/ui'
 import { foundation, patterns } from '@/assets/design-system'
-import useTranslate from '@/hooks/useTranslate'
+import { useTranslate } from '@/hooks'
 import { UserPlayer } from '@/types'
 
 interface GameStatsProps {

@@ -3,7 +3,7 @@ import { UserPlus, Trash2 } from 'lucide-react'
 import { Card, Button, Input, Avatar } from '@/components/ui'
 import { foundation, patterns } from '@/assets/design-system'
 import { UserPlayer } from '@/types'
-import useTranslate from '@/hooks/useTranslate'
+import { useTranslate } from '@/hooks'
 
 interface PlayerManagementProps {
   userPlayers: UserPlayer[]

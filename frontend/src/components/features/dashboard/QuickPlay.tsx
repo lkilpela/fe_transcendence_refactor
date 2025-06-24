@@ -1,6 +1,6 @@
 import { foundation, patterns, layouts } from '@/assets/design-system'
 import { Button, Card, Avatar } from '@/components/ui'
-import useTranslate from '@/hooks/useTranslate'
+import { useTranslate } from '@/hooks'
 import { gameService } from '@/services/gameService'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
