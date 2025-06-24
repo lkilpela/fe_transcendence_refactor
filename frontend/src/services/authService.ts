@@ -1,7 +1,7 @@
+import { API_URL, GOOGLE_OAUTH } from '@/utils/constants'
 import { LoginResponse, User } from '../types'
 import { storage } from '../utils/storage'
 import { request } from './api'
-import { API_URL } from '@/utils/constants'
 
 /**
  * Authentication service
@@ -38,8 +38,12 @@ export const authService = {
     if (response.status === 401) {
       storage.remove('token')
     }
-    
-    throw new Error(data?.error || data?.message || `Login failed with status ${response.status}`)
+
+    throw new Error(
+      data?.error ||
+        data?.message ||
+        `Login failed with status ${response.status}`,
+    )
   },
 
   login2FA: async (userId: number, code: string): Promise<void> => {
@@ -48,7 +52,7 @@ export const authService = {
       body: JSON.stringify({ userId, code }),
     })
     storage.set('token', token)
-    
+
     // Fetch complete user data after successful 2FA
     try {
       const userResponse = await fetch(`${API_URL}/users/${userId}`, {
@@ -56,11 +60,11 @@ export const authService = {
       })
       if (userResponse.ok) {
         const userData = await userResponse.json()
-        storage.set('user', { 
-          id: userData.id, 
+        storage.set('user', {
+          id: userData.id,
           username: userData.username,
           email: userData.email,
-          avatar_url: userData.avatar_url 
+          avatar_url: userData.avatar_url,
         })
       } else {
         // Fallback to minimal user info if user fetch fails
@@ -73,25 +77,11 @@ export const authService = {
     }
   },
 
-  googleLogin: async (googleToken: string): Promise<void> => {
-    const { token, id, username } = await request<LoginResponse>(
-      '/api/auth/google',
-      {
-        method: 'POST',
-        body: JSON.stringify({ token: googleToken }),
-      },
-    )
-    storage.set('token', token)
-    storage.set('user', { id, username })
-  },
-
   check2FAStatus: async (): Promise<{ enabled: boolean }> => {
     return request('/api/2fa/status')
   },
 
-  verify2FA: async (
-    code: string,
-  ): Promise<{ token: string }> => {
+  verify2FA: async (code: string): Promise<{ token: string }> => {
     const response = await request<{ token: string }>('/api/2fa/verify', {
       method: 'POST',
       body: JSON.stringify({ token: code }),
@@ -99,8 +89,16 @@ export const authService = {
     return response
   },
 
-  register: async (username: string, email: string, password: string): Promise<void> => {
-    const { token, id, username: name } = await request<LoginResponse>('/register', {
+  register: async (
+    username: string,
+    email: string,
+    password: string,
+  ): Promise<void> => {
+    const {
+      token,
+      id,
+      username: name,
+    } = await request<LoginResponse>('/register', {
       method: 'POST',
       body: JSON.stringify({ username, email, password }),
     })
@@ -117,8 +115,18 @@ export const authService = {
   isAuthenticated: (): boolean => !!storage.get('token', null),
   getCurrentUser: (): User | null => storage.get('user', null),
 
-  getGoogleAuthUrl: (): string =>
-    `${API_URL}/api/auth/google`,
+  getGoogleAuthUrl: (): string => {
+    const params = new URLSearchParams({
+      client_id: GOOGLE_OAUTH.CLIENT_ID,
+      redirect_uri: GOOGLE_OAUTH.REDIRECT_URI,
+      response_type: GOOGLE_OAUTH.RESPONSE_TYPE,
+      scope: GOOGLE_OAUTH.SCOPE,
+      access_type: GOOGLE_OAUTH.ACCESS_TYPE,
+      prompt: GOOGLE_OAUTH.PROMPT,
+    })
+
+    return `${GOOGLE_OAUTH.AUTH_URL}?${params.toString()}`
+  },
 
   requestPasswordReset: async (email: string): Promise<void> => {
     await request('/password-reset', {

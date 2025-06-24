@@ -41,3 +41,15 @@ export type LanguageOption = (typeof LANGUAGE_OPTIONS)[number]
 
 // Developer type
 export type Developer = (typeof DEVELOPERS)[number]
+
+// Google OAuth Configuration
+export const GOOGLE_OAUTH = {
+  CLIENT_ID:
+    '847383291975-9ten21d8j1vf3m2m1kod2i2js9c28o6e.apps.googleusercontent.com',
+  REDIRECT_URI: 'https://localhost:5173/oauth2callback',
+  SCOPE: 'openid email profile',
+  RESPONSE_TYPE: 'code',
+  ACCESS_TYPE: 'offline',
+  PROMPT: 'consent',
+  AUTH_URL: 'https://accounts.google.com/o/oauth2/v2/auth',
+} as const

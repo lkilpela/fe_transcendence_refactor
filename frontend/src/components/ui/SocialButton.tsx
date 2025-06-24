@@ -8,7 +8,6 @@ interface SocialButtonProps
   provider: 'google'
   isLoading?: boolean
   children?: React.ReactNode
-  onGoogleAuth?: (code: string) => void
 }
 
 const googleIcon = (
@@ -25,16 +24,15 @@ const SocialButton: React.FC<SocialButtonProps> = ({
   children,
   className,
   disabled,
-  onGoogleAuth,
   onClick,
   ...props
 }) => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (provider === 'google' && !onGoogleAuth) {
+    if (onClick) {
+      onClick(e)
+    } else if (provider === 'google') {
       // Default Google OAuth flow
       window.location.href = authService.getGoogleAuthUrl()
-    } else if (onClick) {
-      onClick(e)
     }
   }
 

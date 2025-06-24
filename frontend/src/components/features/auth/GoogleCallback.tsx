@@ -1,5 +1,5 @@
 import { useAuth } from '@/hooks/useAuth'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 export const GoogleCallback: React.FC = () => {
@@ -7,9 +7,14 @@ export const GoogleCallback: React.FC = () => {
   const { loginWithGoogle } = useAuth()
   const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
+  const [processing, setProcessing] = useState(false)
+  const hasProcessed = useRef(false)
 
   useEffect(() => {
     const handleCallback = async () => {
+      // Prevent multiple executions (React StrictMode protection)
+      if (processing || hasProcessed.current) return
+      
       const code = searchParams.get('code')
       const error = searchParams.get('error')
 
@@ -25,17 +30,33 @@ export const GoogleCallback: React.FC = () => {
         return
       }
 
+      // Mark as processed to prevent re-runs
+      hasProcessed.current = true
+      setProcessing(true)
+
       try {
+        console.log('Processing Google OAuth code:', code.substring(0, 20) + '...')
+        
+        // Clear the URL immediately to prevent reuse
+        window.history.replaceState({}, document.title, '/oauth2callback')
+        
         await loginWithGoogle(code)
         navigate('/dashboard')
       } catch (err) {
+        console.error('Google login error:', err)
         setError(err instanceof Error ? err.message : 'Google login failed')
+        
+        // Reset on error so user can try again
+        hasProcessed.current = false
+        
         setTimeout(() => navigate('/'), 3000)
+      } finally {
+        setProcessing(false)
       }
     }
 
     handleCallback()
-  }, [searchParams, loginWithGoogle, navigate])
+  }, [searchParams, loginWithGoogle, navigate, processing])
 
   if (error) {
     return (

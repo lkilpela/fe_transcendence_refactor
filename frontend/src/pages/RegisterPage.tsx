@@ -1,6 +1,7 @@
 import { RegisterForm } from '@/components/features'
 import { PageLayout } from '@/components/layout'
 import { Button } from '@/components/ui'
+import { authService } from '@/services/authService'
 import { patterns } from '@/assets/design-system'
 import { ArrowLeft } from 'lucide-react'
 import React from 'react'
@@ -19,8 +20,8 @@ export const RegisterPage: React.FC = () => {
   }
 
   const handleGoogleSignUp = async () => {
-    // TODO: Implement Google OAuth
-    console.log('Google sign up clicked')
+    // Redirect to Google OAuth
+    window.location.href = authService.getGoogleAuthUrl()
   }
 
   return (

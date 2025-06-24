@@ -16,7 +16,7 @@ export const AppRoutes: React.FC = () => {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/auth/google/callback" element={<GoogleCallback />} />
+      <Route path="/oauth2callback" element={<GoogleCallback />} />
       <Route path="/design-system" element={<DesignSystemDemo />} />
       <Route path="/help" element={<HelpPage />} />
       

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { authService } from '@/services/authService'
-import { setSessionExpiredCallback } from '@/services/api'
+import { setSessionExpiredCallback, request } from '@/services/api'
 import { User } from '@/types'
+import { storage } from '@/utils/storage'
 import { AuthContext, AuthContextType } from './AuthContext'
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -63,13 +64,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
-  const loginWithGoogle = async (googleToken: string) => {
+  const loginWithGoogle = async (authCode: string) => {
     try {
       setIsLoading(true)
-      await authService.googleLogin(googleToken)
+      setError(null)
+      
+      // Make API call directly in context (removes authService.googleLogin redundancy)
+      const response = await request<{ message: string; user: { token: string; id: number; username: string } }>(
+        '/api/auth/google',
+        {
+          method: 'POST',
+          body: JSON.stringify({ code: authCode }),
+        },
+      )
+      
+      // Extract user data from the response (backend returns: { message, user: { token, id, username } })
+      const { token, id, username } = response.user
+      
+      // Store auth data
+      storage.set('token', token)
+      storage.set('user', { id, username })
       setUser(authService.getCurrentUser())
+      
+      console.log('Google login successful - Token stored:', token ? 'YES' : 'NO')
     } catch (err) {
       setError((err as Error).message)
+      throw err // Re-throw for GoogleCallback to handle
     } finally {
       setIsLoading(false)
     }

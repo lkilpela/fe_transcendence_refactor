@@ -3,6 +3,7 @@ import { LoginForm, TwoFactorForm } from '@/components/features'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/ui'
 import { PageLayout } from '@/components/layout'
+import { authService } from '@/services/authService'
 import { ArrowLeft } from 'lucide-react'
 import { cn } from '@/utils/cn'
 import React from 'react'
@@ -40,8 +41,10 @@ export const LoginPage: React.FC = () => {
   }
 
   const handleGoogleSignIn = async () => {
-    // Google OAuth handled by SocialButton component automatically
-    console.log('Google sign in clicked')
+    // Redirect to Google OAuth
+    const googleUrl = authService.getGoogleAuthUrl()
+    console.log('Google OAuth URL:', googleUrl)
+    window.location.href = googleUrl
   }
 
   // Show 2FA form if required

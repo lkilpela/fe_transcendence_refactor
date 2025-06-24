@@ -1,5 +1,5 @@
-import { createContext } from 'react'
 import { User } from '@/types'
+import { createContext } from 'react'
 
 export interface AuthContextType {
   user: User | null
@@ -12,7 +12,7 @@ export interface AuthContextType {
     rememberMe?: boolean,
   ) => Promise<void>
   login2FA: (code: string) => Promise<void>
-  loginWithGoogle: (googleToken: string) => Promise<void>
+  loginWithGoogle: (authCode: string) => Promise<void>
   logout: () => Promise<void>
   verify2FA: (code: string) => Promise<void>
   requires2FA: boolean
