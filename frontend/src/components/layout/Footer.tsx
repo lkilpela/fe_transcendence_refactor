@@ -1,15 +1,42 @@
 import { layouts, patterns } from '@/assets/design-system'
+import { storage } from '@/utils/storage'
 import { Github } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import i18n from '../../i18n/config'
 
 const Footer: React.FC = () => {
   const [language, setLanguage] = useState(i18n.language)
-  const [theme, setTheme] = useState('Dark')
+  const [theme, setTheme] = useState(() => {
+    // Initialize theme from localStorage or default to 'Dark'
+    return storage.get('theme', 'Dark')
+  })
 
   useEffect(() => {
     setLanguage(i18n.language)
   }, [])
+
+  useEffect(() => {
+    // Apply theme on component mount and when theme changes
+    applyTheme(theme)
+  }, [theme])
+
+  const applyTheme = (selectedTheme: string) => {
+    const html = document.documentElement
+    
+    if (selectedTheme === 'Dark') {
+      html.classList.add('dark')
+    } else if (selectedTheme === 'Light') {
+      html.classList.remove('dark')
+    } else if (selectedTheme === 'Auto') {
+      // System preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      if (prefersDark) {
+        html.classList.add('dark')
+      } else {
+        html.classList.remove('dark')
+      }
+    }
+  }
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng)
@@ -18,7 +45,10 @@ const Footer: React.FC = () => {
 
   const setThemePreference = (newTheme: string) => {
     setTheme(newTheme)
-    // Add theme logic here if needed
+    // Store theme preference in localStorage
+    storage.set('theme', newTheme)
+    // Apply the theme immediately
+    applyTheme(newTheme)
   }
 
   return (
@@ -79,7 +109,7 @@ const Footer: React.FC = () => {
             >
               <option value="Dark">Dark</option>
               <option value="Light">Light</option>
-              <option value="System">Auto</option>
+              <option value="Auto">Auto</option>
             </select>
           </div>
         </div>

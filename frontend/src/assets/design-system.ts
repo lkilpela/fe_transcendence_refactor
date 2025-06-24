@@ -28,9 +28,10 @@ export const foundation = {
   colors: {
     // App backgrounds
     bg: {
-      primary: 'bg-gradient-to-b from-[#1a1a2e] via-[#1c1c3a] to-[#000000]',
-      dark: 'bg-slate-900',
-      glass: 'bg-white/5 backdrop-blur-md',
+      primary:
+        'bg-gradient-to-b from-[#1a1a2e] via-[#1c1c3a] to-[#000000] dark:bg-gradient-to-b dark:from-[#1a1a2e] dark:via-[#1c1c3a] dark:to-[#000000] bg-gradient-to-b from-gray-50 via-white to-gray-100',
+      dark: 'bg-slate-900 dark:bg-slate-900 bg-gray-100',
+      glass: 'bg-white/5 backdrop-blur-md dark:bg-white/5 bg-black/5',
     },
 
     // Interactive colors
@@ -45,35 +46,37 @@ export const foundation = {
 
     // Text colors
     text: {
-      primary: 'text-white',
-      secondary: 'text-gray-300',
-      muted: 'text-gray-400',
+      primary: 'text-white dark:text-white text-gray-900',
+      secondary: 'text-gray-300 dark:text-gray-300 text-gray-600',
+      muted: 'text-gray-400 dark:text-gray-400 text-gray-500',
     },
 
     // Semantic colors
     semantic: {
-      success: 'text-green-400',
-      warning: 'text-yellow-400',
-      error: 'text-red-400',
-      info: 'text-blue-400',
+      success: 'text-green-400 dark:text-green-400 text-green-600',
+      warning: 'text-yellow-400 dark:text-yellow-400 text-yellow-600',
+      error: 'text-red-400 dark:text-red-400 text-red-600',
+      info: 'text-blue-400 dark:text-blue-400 text-blue-600',
     },
   },
 
   // Typography system (consolidated)
   typography: {
-    h1: 'text-4xl font-bold tracking-tight text-white sm:text-5xl',
-    h2: 'text-3xl font-bold tracking-tight text-white sm:text-4xl',
-    h3: 'text-2xl font-bold text-white sm:text-3xl',
-    body: 'text-base text-gray-300 leading-relaxed',
-    small: 'text-sm text-gray-400',
-    medium: 'text-base text-gray-300',
-    large: 'text-lg text-gray-300',
-    label: 'block text-sm font-medium text-gray-300',
+    h1: 'text-4xl font-bold tracking-tight text-white dark:text-white text-gray-900 sm:text-5xl',
+    h2: 'text-3xl font-bold tracking-tight text-white dark:text-white text-gray-900 sm:text-4xl',
+    h3: 'text-2xl font-bold text-white dark:text-white text-gray-900 sm:text-3xl',
+    body: 'text-base text-gray-300 dark:text-gray-300 text-gray-700 leading-relaxed',
+    small: 'text-sm text-gray-400 dark:text-gray-400 text-gray-600',
+    medium: 'text-base text-gray-300 dark:text-gray-300 text-gray-700',
+    large: 'text-lg text-gray-300 dark:text-gray-300 text-gray-700',
+    label:
+      'block text-sm font-medium text-gray-300 dark:text-gray-300 text-gray-700',
   },
 
   // Interactive states (consolidated)
   states: {
-    hover: 'hover:bg-white/10 transition-colors duration-200',
+    hover:
+      'hover:bg-white/10 dark:hover:bg-white/10 hover:bg-black/5 transition-colors duration-200',
     focus:
       'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
     disabled: 'disabled:opacity-50 disabled:pointer-events-none',
@@ -86,9 +89,12 @@ export const foundation = {
 
   // Glass morphism effects
   glass: {
-    light: 'bg-white/5 backdrop-blur-sm border-white/10',
-    medium: 'bg-white/10 backdrop-blur-md border-white/20',
-    strong: 'bg-white/20 backdrop-blur-lg border-white/30',
+    light:
+      'bg-white/5 backdrop-blur-sm border-white/10 dark:bg-white/5 dark:border-white/10 bg-black/5 border-black/10',
+    medium:
+      'bg-white/10 backdrop-blur-md border-white/20 dark:bg-white/10 dark:border-white/20 bg-black/10 border-black/20',
+    strong:
+      'bg-white/20 backdrop-blur-lg border-white/30 dark:bg-white/20 dark:border-white/30 bg-black/20 border-black/30',
   },
 }
 
@@ -99,9 +105,9 @@ export const components = {
     base: 'inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 focus:outline-none focus:ring-2 disabled:opacity-50 disabled:pointer-events-none',
     variants: {
       primary:
-        'bg-blue-600 hover:bg-blue-700 text-white border border-transparent focus:ring-blue-500',
+        'bg-blue-600 hover:bg-blue-700 text-white border border-transparent focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white',
       ghost:
-        'bg-transparent hover:bg-white/10 text-white border border-white/20 hover:border-white/30 backdrop-blur-sm',
+        'bg-transparent hover:bg-white/10 text-white border border-white/20 hover:border-white/30 backdrop-blur-sm dark:bg-transparent dark:hover:bg-white/10 dark:text-white dark:border-white/20 dark:hover:border-white/30 bg-transparent hover:bg-black/10 text-gray-900 border-gray-300 hover:border-gray-400',
     },
     sizes: {
       sm: 'px-3 py-2 text-sm rounded-md',
@@ -111,7 +117,8 @@ export const components = {
     loading: {
       spinner: 'h-4 w-4 animate-spin rounded-full border-b-2 border-current',
     },
-    danger: 'text-red-400 hover:text-red-300',
+    danger:
+      'text-red-400 hover:text-red-300 dark:text-red-400 dark:hover:text-red-300 text-red-600 hover:text-red-700',
   },
 
   // Card system
@@ -120,9 +127,10 @@ export const components = {
     variants: {
       glass: cn(
         foundation.glass.light,
-        'hover:bg-white/10 hover:border-white/20',
+        'hover:bg-white/10 hover:border-white/20 dark:hover:bg-white/10 dark:hover:border-white/20 hover:bg-black/10 hover:border-black/20',
       ),
-      solid: 'bg-slate-800 border border-slate-700 hover:bg-slate-700',
+      solid:
+        'bg-slate-800 border border-slate-700 hover:bg-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 bg-white border-gray-200 hover:bg-gray-50',
     },
     padding: {
       sm: 'p-4',
@@ -134,14 +142,15 @@ export const components = {
   // Input system
   input: {
     container: 'space-y-2',
-    base: 'w-full transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400',
+    base: 'w-full transition-all duration-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400 dark:placeholder:text-gray-400 placeholder:text-gray-500',
 
     variants: {
       default: cn(
         foundation.glass.light,
-        'text-white hover:border-white/30 focus:bg-white/10',
+        'text-white hover:border-white/30 focus:bg-white/10 dark:text-white dark:hover:border-white/30 dark:focus:bg-white/10 text-gray-900 hover:border-black/30 focus:bg-black/10',
       ),
-      error: 'bg-white/5 border border-red-500 text-white focus:ring-red-500',
+      error:
+        'bg-white/5 border border-red-500 text-white focus:ring-red-500 dark:bg-white/5 dark:border-red-500 dark:text-white dark:focus:ring-red-500 bg-red-50 border-red-500 text-red-900 focus:ring-red-500',
     },
 
     sizes: {
@@ -152,24 +161,25 @@ export const components = {
 
   // Label system
   label: {
-    base: 'block text-sm font-medium text-gray-300',
-    form: 'block text-sm font-medium text-gray-300 text-left',
-    required: 'ml-1 text-red-400',
+    base: 'block text-sm font-medium text-gray-300 dark:text-gray-300 text-gray-700',
+    form: 'block text-sm font-medium text-gray-300 dark:text-gray-300 text-gray-700 text-left',
+    required: 'ml-1 text-red-400 dark:text-red-400 text-red-600',
   },
 
   // Checkbox system
   checkbox: {
-    container: 'flex items-center text-sm text-white',
+    container:
+      'flex items-center text-sm text-white dark:text-white text-gray-900',
     input:
-      'h-4 w-4 rounded border-white/20 bg-white/5 text-blue-500 transition-colors duration-200',
+      'h-4 w-4 rounded border-white/20 bg-white/5 text-blue-500 transition-colors duration-200 dark:border-white/20 dark:bg-white/5 border-gray-300 bg-gray-50',
     label: 'cursor-pointer font-medium',
   },
 
   // Divider system
   divider: {
-    base: 'flex-1 border-t border-white/10',
+    base: 'flex-1 border-t border-white/10 dark:border-white/10 border-gray-200',
     withText: 'relative flex items-center justify-center',
-    textSpan: 'px-2 text-sm text-gray-400',
+    textSpan: 'px-2 text-sm text-gray-400 dark:text-gray-400 text-gray-600',
   },
 }
 
@@ -217,14 +227,18 @@ export const patterns = {
     xl: 'h-20 w-20 rounded-full border-2',
   },
   button: {
-    danger: 'text-red-400 hover:text-red-300',
-    back: 'flex items-center gap-2 text-white hover:text-gray-200',
+    danger:
+      'text-red-400 hover:text-red-300 dark:text-red-400 dark:hover:text-red-300 text-red-600 hover:text-red-700',
+    back: 'flex items-center gap-2 text-white hover:text-gray-200 dark:text-white dark:hover:text-gray-200 text-gray-900 hover:text-gray-700',
     icon: 'p-2 rounded-lg transition-colors',
     iconDanger:
-      'p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors',
+      'p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-500/20 text-red-600 hover:text-red-700 hover:bg-red-100',
   },
   message: {
-    error: cn(foundation.typography.small, 'text-red-400'),
+    error: cn(
+      foundation.typography.small,
+      'text-red-400 dark:text-red-400 text-red-600',
+    ),
   },
 
   // Form patterns
@@ -233,9 +247,12 @@ export const patterns = {
     label: foundation.typography.small,
     input: cn(
       foundation.glass.light,
-      'p-2 rounded-lg text-white border border-white/20 focus:border-blue-500 focus:outline-none',
+      'p-2 rounded-lg text-white border border-white/20 focus:border-blue-500 focus:outline-none dark:text-white dark:border-white/20 dark:focus:border-blue-500 text-gray-900 border-gray-300 focus:border-blue-500',
     ),
-    error: cn(foundation.typography.small, 'text-red-400'),
+    error: cn(
+      foundation.typography.small,
+      'text-red-400 dark:text-red-400 text-red-600',
+    ),
   },
 
   // Settings page patterns
@@ -657,27 +674,28 @@ export const layouts = {
 
   // Header section
   header: {
-    base: 'relative z-10 border-b border-white/10 px-6 py-4',
+    base: 'relative z-10 border-b border-white/10 dark:border-white/10 border-gray-200 px-6 py-4',
     container: 'flex items-center justify-center w-full relative',
-    title: 'text-xl font-bold text-white text-center',
+    title:
+      'text-xl font-bold text-white dark:text-white text-gray-900 text-center',
     userSection: 'absolute right-0 flex items-center gap-3',
-    username: 'text-white font-medium',
+    username: 'text-white dark:text-white text-gray-900 font-medium',
     logoutButton:
-      'p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors',
+      'p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-500/20 text-red-600 hover:text-red-700 hover:bg-red-100',
   },
 
   // Footer section
   footer: {
-    base: 'relative z-10 border-t border-white/10 px-6 py-8 text-center mt-auto',
+    base: 'relative z-10 border-t border-white/10 dark:border-white/10 border-gray-200 px-6 py-8 text-center mt-auto',
     container: 'mx-auto max-w-6xl space-y-4',
-    copyright: 'text-gray-400',
+    copyright: 'text-gray-400 dark:text-gray-400 text-gray-600',
     developers: {
       container: 'space-y-3',
       row: 'flex items-center justify-center space-x-4',
-      label: 'text-sm text-gray-500',
-      link: 'text-gray-400 transition-colors hover:text-white',
+      label: 'text-sm text-gray-500 dark:text-gray-500 text-gray-600',
+      link: 'text-gray-400 transition-colors hover:text-white dark:text-gray-400 dark:hover:text-white text-gray-600 hover:text-gray-900',
     },
-    tech: 'text-sm text-gray-500',
+    tech: 'text-sm text-gray-500 dark:text-gray-500 text-gray-600',
   },
 
   // Page structure
