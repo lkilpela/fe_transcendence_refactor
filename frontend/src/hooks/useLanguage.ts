@@ -1,6 +1,6 @@
 import i18n from '@/i18n/config'
 import { storage } from '@/utils/storage'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export type Language = 'en' | 'fi' | 'ja' | 'sv'
 
@@ -11,11 +11,11 @@ export const useLanguage = () => {
     return storedLang
   })
 
-  const setLanguage = (newLanguage: Language) => {
+  const setLanguage = useCallback((newLanguage: Language) => {
     setLanguageState(newLanguage)
     i18n.changeLanguage(newLanguage)
     storage.set('language', newLanguage)
-  }
+  }, [])
 
   // Sync with i18n changes
   useEffect(() => {
@@ -30,10 +30,10 @@ export const useLanguage = () => {
   // Load saved language on mount
   useEffect(() => {
     const savedLanguage = storage.get('language', null)
-    if (savedLanguage && savedLanguage !== language) {
+    if (savedLanguage) {
       setLanguage(savedLanguage as Language)
     }
-  }, [])
+  }, [setLanguage])
 
   return {
     language,
