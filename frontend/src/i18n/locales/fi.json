@@ -90,5 +90,9 @@
   },
 
   "Profile Settings": "Profiiliasetukset",
-  "Sign Out": "Kirjaudu ulos"
+  "Sign Out": "Kirjaudu ulos",
+
+  "Help & Game Rules": "Help & Game Rules",
+  "How to Play": "How to Play",
+  "Create at least 2 players in Dashboard": "Create at least 2 players in Dashboard"
 }

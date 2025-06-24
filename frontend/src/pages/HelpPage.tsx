@@ -1,19 +1,21 @@
 import React from 'react'
 import { PageLayout } from '@/components/layout'
 import { foundation, patterns } from '@/assets/design-system'
+import useTranslate from '@/hooks/useTranslate'
 
 export const HelpPage: React.FC = () => {
+  const t = useTranslate()
   return (
     <PageLayout showSidebar showHeader showFooter background="primary">
       <div className="max-w-3xl mx-auto p-6">
         
-        <h1 className={foundation.typography.h2}>Help & Game Rules</h1>
+        <h1 className={foundation.typography.h2}>{t('Help & Game Rules')}</h1>
 
         {/* How to Play */}
         <section className={patterns.spacing.section}>
-          <h2 className={foundation.typography.h3}>How to Play</h2>
+          <h2 className={foundation.typography.h3}>{t('How to Play')}</h2>
           <ol className={`list-decimal list-inside ${patterns.spacing.stack.sm} ${foundation.colors.text.primary}`}>
-            <li>Create at least 2 players in Dashboard</li>
+            <li>{t('Create at least 2 players in Dashboard')}</li>
             <li>Start a match using Quick Play</li>
             <li>Use keyboard controls to move your paddle</li>
             <li>Score points by hitting the ball past your opponent</li>

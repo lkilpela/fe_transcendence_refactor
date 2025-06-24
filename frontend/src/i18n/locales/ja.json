@@ -83,5 +83,9 @@
   },
 
   "Profile Settings": "プロフィール設定",
-  "Sign Out": "サインアウト"
+  "Sign Out": "サインアウト",
+
+  "Help & Game Rules": "ヘルプ & ゲームルール",
+  "How to Play": "遊び方",
+  "Create at least 2 players in Dashboard": "最低2つのプレイヤーを作成"
 }
