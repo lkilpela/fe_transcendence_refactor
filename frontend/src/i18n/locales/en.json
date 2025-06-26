@@ -1,14 +1,4 @@
 {
-  "hero": {
-    "title": "Ping. Pong. Play!",
-    "subtitle": "Level Up Your Ping Pong Skills",
-    "description": "Smash, spin, and dominate the table. Prove you are the ultimate paddle master."
-  },
-
-  "dashboard": {
-    "welcome": "Welcome"
-  },
-
   "Your Players": "Your Players",
   "Create New Player": "Create New Player",
   "Enter player name": "Enter player name",
@@ -94,6 +84,33 @@
 
   "Help & Game Rules": "Help & Game Rules",
   "How to Play": "How to Play",
-  "Create at least 2 players in Dashboard": "Create at least 2 players in Dashboard"
+  "Create at least 2 players in Dashboard": "Create at least 2 players in Dashboard",
+  "Start a match using Quick Play": "Start a match using Quick Play",
+  "Use keyboard controls to move your paddle": "Use keyboard controls to move your paddle",
+  "Score points by hitting the ball past your opponent": "Score points by hitting the ball past your opponent",
+
+  "Controls": "Controls",
+  "Player 1 (Left)": "Player 1 (Left)",
+  "W - Move Up": "W - Move Up",
+  "S - Move Down": "S - Move Down",
+  "Player 2 (Right)": "Player 2 (Right)",
+  "↑ - Move Up": "↑ - Move Up",
+  "↓ - Move Down": "↓ - Move Down",
+  "SPACE": "SPACE",
+  "ESC": "ESC",
+  "Pause/Resume": "Pause/Resume",
+  "Exit Game": "Exit Game",
+  "Rules": "Rules",
+  "Ball bounces off top and bottom walls": "Ball bounces off top and bottom walls",
+  "Score when ball passes opponent's paddle": "Score when ball passes opponent's paddle",
+  "First to reach target score wins": "First to reach target score wins",
+  "Tournaments": "Tournaments",
+  "Need 4+ players for elimination-style tournaments.": "Need 4+ players for elimination-style tournaments.",
+  "Single elimination - lose once, you're out": "Single elimination - lose once, you're out",
+  "Winners advance to next round": "Winners advance to next round",
+  "Tips": "Tips",
+  "Stay centered to cover more area": "Stay centered to cover more area",
+  "Anticipate ball trajectory": "Anticipate ball trajectory",
+  "Hit with different paddle parts for angles": "Hit with different paddle parts for angles"
 }
 
