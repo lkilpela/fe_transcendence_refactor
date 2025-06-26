@@ -1,10 +1,10 @@
 import React from 'react'
 import { PageLayout } from '@/components/layout'
 import { foundation, patterns } from '@/assets/design-system'
-import useTranslate from '@/hooks/useTranslate'
+import { useTranslate } from '@/hooks'
 
 export const HelpPage: React.FC = () => {
-  const t = useTranslate();
+  const t = useTranslate()
   return (
     <PageLayout showSidebar showHeader showFooter background="primary">
       <div className="max-w-3xl mx-auto p-6">
