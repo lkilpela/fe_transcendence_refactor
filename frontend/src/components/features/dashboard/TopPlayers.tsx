@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useTranslate from '@/hooks/useTranslate'
+import { useTranslate } from '@/hooks'
 import { Card, Avatar } from '@/components/ui'
 import { foundation, patterns } from '@/assets/design-system'
 import { UserPlayer } from '@/types'

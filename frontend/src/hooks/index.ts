@@ -14,7 +14,9 @@ export { useUserProfile } from './useUserProfile'
 export { useMatchHistories } from './useMatchHistories'
 
 // // Utility hooks
-export { default as useTranslate } from './useTranslate'
+export { useTranslate } from './useTranslate'
+export { useTheme, type Theme } from './useTheme'
+export { useLanguage, type Language } from './useLanguage'
 
 export { useGameState } from './useGameState'
 

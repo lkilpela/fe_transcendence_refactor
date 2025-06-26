@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import useTranslate from '@/hooks/useTranslate'
+import { useTranslate } from '@/hooks'
 import { GameState } from '@/types'
 
 // Constants
