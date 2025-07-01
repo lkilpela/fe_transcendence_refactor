@@ -1,12 +1,13 @@
 {
-  "hero": {
-    "hero.title": "ピン・ポン・プレイ！",
-    "hero.subtitle": "Level Up Your Ping Pong Skills",
-    "hero.description": "Smash, spin, and dominate the table. Prove you are the ultimate paddle master."
-  },
-  "dashboard": {
-    "welcome": "こんにちは"
-  },
+  "Ready to Play?": "準備はできた?",
+  "Create your first player to start playing Pong!": "プレイヤーを作成して試合を始めよう！",
+  "Almost Ready!": "準備完了までもう少し！",
+  "playersSummary": "{{count}}人のプレイヤーがいます。あと{{needed}}人作成してください！",
+  "View Detailed Stats": "統計を見る",
+
+  "No players created yet": "プレイヤーがまだいません",
+
+  "Welcome back,": "おかえりなさい、",
   "Your Players": "あなたのプレイヤー",
   "Create New Player": "新しいプレイヤーを作成",
   "Enter player name": "プレイヤー名を入力",
@@ -83,5 +84,36 @@
   },
 
   "Profile Settings": "プロフィール設定",
-  "Sign Out": "サインアウト"
+  "Sign Out": "サインアウト",
+
+  "Help & Game Rules": "ヘルプ & ゲームルール",
+  "How to Play": "遊び方",
+  "Create at least 2 players in Dashboard": "最低2つのプレイヤーを作成",
+  "Start a match using Quick Play": "クイックプレイを使用して試合を開始",
+  "Use keyboard controls to move your paddle": "キーボードを使用して、ラケットを動かす",
+  "Score points by hitting the ball past your opponent": "球を打ち返して点数を獲得",
+
+  "Controls": "操作方法",
+  "Player 1 (Left)": "プレイヤー1 (画面左)",
+  "W - Move Up": "W - 上へ移動",
+  "S - Move Down": "S - 下へ移動",
+  "Player 2 (Right)": "プレイヤー2 (画面右)",
+  "↑ - Move Up": "↑ - 上へ移動",
+  "↓ - Move Down": "↓ - 下へ移動",
+  "SPACE": "スペースキー",
+  "ESC": "ESCキー",
+  "Pause/Resume": "一時停止/再開",
+  "Exit Game": "試合終了",
+  "Rules": "ルール",
+  "Ball bounces off top and bottom walls": "球は壁にぶつかって跳ね返る",
+  "Score when ball passes opponent's paddle": "球が相手のパドルを通過すると得点",
+  "First to reach target score wins": "最初にターゲットスコアを取った方が勝ち",
+  "Tournaments": "トーナメント",
+  "Need 4+ players for elimination-style tournaments.": "勝ち抜き戦のトーナメントには4人以上のプレイヤーが必要",
+  "Single elimination - lose once, you're out": "勝ち抜き方式 - 一度負けたら終わり",
+  "Winners advance to next round": "勝者が次のラウンドへ進む",
+  "Tips": "コツ",
+  "Stay centered to cover more area": "中央に位置して、広い範囲をカバーしよう",
+  "Anticipate ball trajectory": "ボールの軌道を予測しよう",
+  "Hit with different paddle parts for angles": "パドルのいろいろな部分で打って角度をつけよう"
 }
