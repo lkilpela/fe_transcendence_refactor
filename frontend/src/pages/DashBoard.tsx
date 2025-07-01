@@ -13,6 +13,7 @@ import { SearchBar } from '@/components/ui'
 import { useNavigate } from 'react-router-dom'
 import { foundation, layouts, patterns } from '@/assets/design-system'
 import { UserPlayer } from '@/types'
+import { useTranslate } from '@/hooks'
 
 // Types for clean interfaces
 interface PlayerActions {
@@ -48,6 +49,8 @@ const SmartPrimaryAction: React.FC<SmartPrimaryActionProps> = ({
   const hasEnoughFor1v1 = playerCount >= 2
   const hasEnoughForTournament = playerCount >= 4
 
+  const t = useTranslate()
+
   // Common player management props
   const playerManagementProps = {
     userPlayers,
@@ -62,8 +65,8 @@ const SmartPrimaryAction: React.FC<SmartPrimaryActionProps> = ({
       <div className={patterns.align.center}>
         <div className={patterns.spacing.stack.lg}>
           <DashboardHeader
-            title="🎮 Ready to Play?"
-            subtitle="Create your first player to start playing Pong!"
+            title={`🎮 ${t('Ready to Play?')}`}
+            subtitle={t('Create your first player to start playing Pong!')}
           />
           <PlayerManagement {...playerManagementProps} />
         </div>
@@ -78,8 +81,13 @@ const SmartPrimaryAction: React.FC<SmartPrimaryActionProps> = ({
       <div className={patterns.spacing.stack.lg}>
         <div className={patterns.align.center}>
           <DashboardHeader
-            title="🏓 Almost Ready!"
-            subtitle={`You have ${playerCount} player${playerCount !== 1 ? 's' : ''}. Create ${playersNeeded} more to start playing!`}
+            title={`🏓 ${t('Almost Ready!')}`}
+            // subtitle={`You have ${playerCount} player${playerCount !== 1 ? 's' : ''}. Create ${playersNeeded} more to start playing!`}
+            subtitle={t('playersSummary', {
+              count: playerCount,
+              needed: playersNeeded,
+              plural: playerCount !== 1 ? 's' : ''
+            })}
           />
         </div>
         <div className={layouts.grid.twoColumn}>
@@ -115,6 +123,7 @@ export const Dashboard: React.FC = () => {
   const { userPlayers, createPlayer, updatePlayer, deletePlayer } = useUserPlayers()
   const { matches } = useMatchHistories()
   const navigate = useNavigate()
+  const t = useTranslate()
 
   const handleSearch = (query: string) => {
     if (query.trim()) {
@@ -157,7 +166,7 @@ export const Dashboard: React.FC = () => {
           {/* Header */}
           <div className={layouts.grid.header}>
             <h1 className={foundation.typography.h1}>
-              Welcome back, {user.username}!
+              {t('Welcome back,')} {user.username}!
             </h1>
             <div className={patterns.flex.rowGap.lg}>
               <SearchBar onSearch={handleSearch} />
@@ -187,7 +196,7 @@ export const Dashboard: React.FC = () => {
              {hasPlayers && (
                <details className={patterns.spacing.section}>
                  <summary className={patterns.button.back}>
-                   📊 View Detailed Stats
+                   📊 {t('View Detailed Stats')}
                  </summary>
                  <div className={patterns.spacing.stack.lg}>
                    <GameStats userPlayers={userPlayers} />

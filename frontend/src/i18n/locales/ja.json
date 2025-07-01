@@ -1,4 +1,13 @@
 {
+  "Ready to Play?": "準備はできた?",
+  "Create your first player to start playing Pong!": "プレイヤーを作成して試合を始めよう！",
+  "Almost Ready!": "準備完了までもう少し！",
+  "playersSummary": "{{count}}人のプレイヤーがいます。あと{{needed}}人作成してください！",
+  "View Detailed Stats": "統計を見る",
+
+  "No players created yet": "プレイヤーがまだいません",
+
+  "Welcome back,": "おかえりなさい、",
   "Your Players": "あなたのプレイヤー",
   "Create New Player": "新しいプレイヤーを作成",
   "Enter player name": "プレイヤー名を入力",

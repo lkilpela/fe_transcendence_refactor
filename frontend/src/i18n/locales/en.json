@@ -1,4 +1,13 @@
 {
+  "Ready to Play?": "Ready to Play?",
+  "Create your first player to start playing Pong!": "Create your first player to start playing Pong!",
+  "Almost Ready!": "Almost Ready!",
+  "playersSummary": "You have {{count}} player{{plural}}. Create {{needed}} more to start playing!",
+  "View Detailed Stats": "View Detailed Stats",
+
+  "No players created yet": "No players created yet",
+  
+  "Welcome back,": "Welcome back,",
   "Your Players": "Your Players",
   "Create New Player": "Create New Player",
   "Enter player name": "Enter player name",
